@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { shuffleOptions } from '../utils/shuffleOptions.js'
 import { mediaUrl } from '../utils/mediaUrl.js'
 import ChineseText from '../components/ChineseText.jsx'
+import ChineseTitle from '../components/ChineseTitle.jsx'
 import { chengyuById, chengyuData, chengyuThemes } from '../data/chengyuData.js'
 import { getChengyuExerciseHint } from '../data/chengyuExerciseHints.js'
 import {
@@ -54,7 +55,7 @@ function HintedChinese({ text, showPinyin = false, showTranslation = false, clas
   const translation = neutralHintTranslation(hint?.translation)
   return (
     <span className={`chengyu-hinted-text ${className}`.trim()}>
-      <span className="hint-zh">{text}</span>
+      <span className="hint-zh"><ChineseTitle text={text} /></span>
       {showPinyin && pinyin ? <span className="hint-pinyin">{pinyin}</span> : null}
       {showTranslation && translation ? <span className="hint-translation">{translation}</span> : null}
     </span>
@@ -268,7 +269,7 @@ function IdiomLearningCard({ item, onContinue }) {
         <strong>Что делать на этом шаге</strong>
         <ol>
           <li>Прочитай идиому и её значение.</li>
-          <li>Посмотри, как она используется в естественном примере.</li>
+          <li>Посмотри, как она используется в примере.</li>
           <li>Нажми кнопку внизу — дальше будет короткое задание без готового ответа.</li>
         </ol>
         <small>Нажми «拼音» или «Перевод» под идиомой, чтобы раскрыть подсказки к объяснению и примеру.</small>
@@ -295,7 +296,7 @@ function IdiomLearningCard({ item, onContinue }) {
         />
       </p>
       <div className="chengyu-example-box">
-        <span>自然表达 · естественный пример</span>
+        <span>例句 · Пример</span>
         <strong>
           <HintedChinese
             text={item.example}
