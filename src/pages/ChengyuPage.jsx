@@ -40,14 +40,23 @@ const MUST_HAVE = [
   'renshan', 'dachiyijing', 'jujing', 'shoumang', 'luanqibazao', 'ruxiang',
 ]
 
+function neutralHintTranslation(translation) {
+  if (typeof translation !== 'string') return ''
+
+  return translation
+    .replace(/\s*\(Неправильное употребление\.\)\s*$/iu, '')
+    .trim()
+}
+
 function HintedChinese({ text, showPinyin = false, showTranslation = false, className = '' }) {
   const hint = getChengyuExerciseHint(text)
   const pinyin = typeof hint?.pinyin === 'string' ? hint.pinyin.normalize('NFC') : ''
+  const translation = neutralHintTranslation(hint?.translation)
   return (
     <span className={`chengyu-hinted-text ${className}`.trim()}>
       <span className="hint-zh">{text}</span>
       {showPinyin && pinyin ? <span className="hint-pinyin">{pinyin}</span> : null}
-      {showTranslation && hint?.translation ? <span className="hint-translation">{hint.translation}</span> : null}
+      {showTranslation && translation ? <span className="hint-translation">{translation}</span> : null}
     </span>
   )
 }
