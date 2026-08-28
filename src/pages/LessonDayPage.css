@@ -153,6 +153,37 @@
   padding-left: 44px;
 }
 
+.lesson-engine-activity-wrap.is-completed > .engine-activity {
+  border-color: rgba(105, 130, 76, .38);
+  background: linear-gradient(135deg, #fbfcf7, #f2f6ea);
+}
+
+.lesson-engine-activity-wrap.is-completed .lesson-engine-number {
+  background: #dfead2;
+  color: #5c743d;
+}
+
+.lesson-activity-status {
+  position: absolute;
+  z-index: 2;
+  top: 18px;
+  right: 20px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.lesson-activity-status.completed {
+  background: #dfead2;
+  color: #58713a;
+}
+
+.lesson-activity-status.pending {
+  background: #f2ece4;
+  color: #8a7460;
+}
+
 .lesson-engine-activity-wrap + .lesson-engine-activity-wrap {
   margin-top: 13px;
 }
@@ -238,6 +269,12 @@
 
   .lesson-engine-number {
     display: none;
+  }
+
+  .lesson-activity-status {
+    position: static;
+    display: inline-flex;
+    margin: 0 0 7px 10px;
   }
 }
 

@@ -183,6 +183,14 @@ function ModuleLinkActivity({ activity }) {
 
   const record = getActivityRecord(activity.id)
   const completed = Boolean(record?.completed || completedFromModule)
+  const destination = useMemo(() => {
+    const params = new URLSearchParams()
+    if (activity.moduleReturnTo) params.set('returnTo', activity.moduleReturnTo)
+    if (activity.moduleNextRoute) params.set('next', activity.moduleNextRoute)
+    const query = params.toString()
+    if (!query) return activity.route
+    return `${activity.route}${activity.route.includes('?') ? '&' : '?'}${query}`
+  }, [activity])
 
   return (
     <ActivityShell
@@ -194,7 +202,7 @@ function ModuleLinkActivity({ activity }) {
       )}
 
       <div className="engine-module-actions">
-        <Link to={activity.route} className="engine-primary-link">
+        <Link to={destination} className="engine-primary-link">
           {completed ? 'Открыть снова' : 'Открыть раздел'} →
         </Link>
       </div>

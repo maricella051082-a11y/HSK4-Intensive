@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import ChineseText from '../components/ChineseText.jsx'
 import ChineseWordText from '../components/ChineseWordText.jsx'
 import MoyuCompanion from '../components/MoyuCompanion.jsx'
@@ -41,6 +41,9 @@ function getInitial() {
 }
 
 function ListeningPage() {
+  const [searchParams] = useSearchParams()
+  const returnTo = searchParams.get('returnTo') || '/lesson/lesson-1/day/1'
+  const nextRoute = searchParams.get('next') || '/lesson/lesson-1/day/1?activity=lesson1-day1-speaking'
   const initial = useMemo(() => getInitial(), [])
 
   const [stage, setStage] = useState(initial?.stage ?? 'texts')
@@ -243,13 +246,17 @@ function ListeningPage() {
             </div>
 
             <div className="listening-finish-actions">
+              <Link to={nextRoute} className="listening-primary-link">
+                Перейти к следующему заданию →
+              </Link>
+
+              <Link to={returnTo} className="listening-plan-link">
+                Вернуться к плану дня
+              </Link>
+
               <button type="button" className="listening-secondary" onClick={restart}>
                 Пройти ещё раз
               </button>
-
-              <Link to="/" className="listening-primary-link">
-                Вернуться на главную
-              </Link>
             </div>
           </section>
         </div>

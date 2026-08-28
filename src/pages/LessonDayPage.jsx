@@ -6,6 +6,10 @@ import { getLessonDay, getLessonPlan, getNextLessonPlan } from '../data/courseRe
 import { getCheckpointAfterLesson } from '../data/checkpointData.js'
 import { getLearningDashboardStats } from '../utils/learningStore.js'
 import {
+  getActivityRecord,
+  moduleCompletionMatches,
+} from '../utils/activityStore.js'
+import {
   STUDY_MODES,
   completePlannerDay,
   getActivitiesForMode,
@@ -242,22 +246,52 @@ export default function LessonDayPage() {
         </section>
 
         <div className="lesson-engine-activities">
-          {activities.map((activity, index) => (
+          {activities.map((activity, index) => {
+            const completed = Boolean(
+              getActivityRecord(activity.id)?.completed ||
+              moduleCompletionMatches(activity),
+            )
+            const nextActivity = activities[index + 1]
+            const afterNextActivity = activities[index + 2]
+            const returnTo = `/lesson/${lesson.lessonId}/day/${day.day}?activity=${encodeURIComponent(activity.id)}`
+            const nextPlanRoute = nextActivity
+              ? `/lesson/${lesson.lessonId}/day/${day.day}?activity=${encodeURIComponent(nextActivity.id)}`
+              : `/lesson/${lesson.lessonId}/day/${day.day}`
+            const afterNextRoute = afterNextActivity
+              ? `/lesson/${lesson.lessonId}/day/${day.day}?activity=${encodeURIComponent(afterNextActivity.id)}`
+              : `/lesson/${lesson.lessonId}/day/${day.day}`
+            const nextRoute = nextActivity?.type === 'moduleLink'
+              ? `${nextActivity.route}?${new URLSearchParams({
+                  returnTo: nextPlanRoute,
+                  next: afterNextRoute,
+                }).toString()}`
+              : nextPlanRoute
+
+            return (
             <div
-              className="lesson-engine-activity-wrap"
+              className={`lesson-engine-activity-wrap ${completed ? 'is-completed' : 'is-pending'}`}
               id={`activity-${activity.id}`}
               key={activity.id}
             >
               <div className="lesson-engine-number">
-                {String(index + 1).padStart(2, '0')}
+                {completed ? '✓' : String(index + 1).padStart(2, '0')}
+              </div>
+
+              <div className={`lesson-activity-status ${completed ? 'completed' : 'pending'}`}>
+                {completed ? '✓ Выполнено' : '○ Ещё не выполнено'}
               </div>
 
               <ActivityRenderer
-                activity={activity}
+                activity={{
+                  ...activity,
+                  moduleReturnTo: returnTo,
+                  moduleNextRoute: nextRoute,
+                }}
                 onStatusChange={() => forceRefresh((value) => value + 1)}
               />
             </div>
-          ))}
+            )
+          })}
         </div>
 
         <section className={['lesson-finish-day', canFinish ? 'ready' : ''].join(' ')}>

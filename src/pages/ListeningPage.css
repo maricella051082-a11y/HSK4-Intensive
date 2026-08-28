@@ -661,7 +661,8 @@
 }
 
 .listening-secondary,
-.listening-primary-link {
+.listening-primary-link,
+.listening-plan-link {
   padding: 11px 17px;
   border-radius: 999px;
   font: inherit;
@@ -678,6 +679,12 @@
 .listening-primary-link {
   background: #4f8087;
   color: white;
+  text-decoration: none;
+}
+
+.listening-plan-link {
+  border: 1px solid #9eb7b3;
+  color: #456d6a;
   text-decoration: none;
 }
 
