@@ -175,6 +175,14 @@
   opacity: .45;
 }
 
+.source-audio-state {
+  margin: -8px auto 14px;
+  color: #746d65;
+  font-size: 12px;
+  font-weight: 800;
+  text-align: center;
+}
+
 .recorder-card {
   width: min(720px, 100%);
   margin: 16px auto 0;

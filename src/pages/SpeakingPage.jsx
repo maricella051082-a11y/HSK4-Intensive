@@ -163,6 +163,7 @@ function SpeakingPage() {
   const [micError, setMicError] = useState('')
   const [audioSaveState, setAudioSaveState] = useState('')
   const [audioRefreshKey, setAudioRefreshKey] = useState(0)
+  const [sourceAudioState, setSourceAudioState] = useState('')
 
   const mediaRecorderRef = useRef(null)
   const mediaStreamRef = useRef(null)
@@ -171,6 +172,7 @@ function SpeakingPage() {
   const transcriptRef = useRef('')
   const startedAtRef = useRef(null)
   const timerRef = useRef(null)
+  const sourceAudioRef = useRef(null)
 
   const currentRepeat = dailyRepeats[repeatIndex]
   const recognitionSupported = Boolean(getRecognitionConstructor())
@@ -207,6 +209,11 @@ function SpeakingPage() {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current)
 
+      if (sourceAudioRef.current) {
+        sourceAudioRef.current.pause()
+        sourceAudioRef.current = null
+      }
+
       if (recordingUrl) {
         URL.revokeObjectURL(recordingUrl)
       }
@@ -217,9 +224,33 @@ function SpeakingPage() {
     }
   }, [recordingUrl])
 
-  function playSource(audioPath) {
-    const audio = new Audio(mediaUrl(audioPath))
-    audio.play()
+  async function playSource(audioPath) {
+    if (!audioPath) {
+      setSourceAudioState('Аудиофайл для этого задания не указан.')
+      return
+    }
+
+    if (sourceAudioRef.current) {
+      sourceAudioRef.current.pause()
+    }
+
+    const audio = new Audio()
+    sourceAudioRef.current = audio
+    audio.preload = 'auto'
+    audio.src = mediaUrl(audioPath)
+    audio.currentTime = 0
+    setSourceAudioState('Загрузка аудио…')
+
+    audio.addEventListener('ended', () => {
+      if (sourceAudioRef.current === audio) setSourceAudioState('Прослушивание завершено.')
+    }, { once: true })
+
+    try {
+      await audio.play()
+      setSourceAudioState('▶ Фраза воспроизводится')
+    } catch {
+      setSourceAudioState('Не удалось запустить аудио. Нажмите ещё раз или обновите страницу.')
+    }
   }
 
   function clearCaptureUi() {
@@ -735,6 +766,7 @@ function SpeakingPage() {
             audioSaveState={audioSaveState}
             audioRefreshKey={audioRefreshKey}
             micError={micError}
+            sourceAudioState={sourceAudioState}
             onPlay={() => playSource(currentRepeat.audio)}
             onStart={() =>
               startRecording({ type: 'repeat', id: currentRepeat.id })
@@ -830,6 +862,7 @@ function RepeatStage({
   audioSaveState,
   audioRefreshKey,
   micError,
+  sourceAudioState,
   onPlay,
   onStart,
   onStop,
@@ -862,6 +895,10 @@ function RepeatStage({
       >
         ▶ Прослушать фразу
       </button>
+
+      {sourceAudioState && (
+        <p className="source-audio-state" role="status">{sourceAudioState}</p>
+      )}
 
       <Recorder
         isRecording={isRecording}
