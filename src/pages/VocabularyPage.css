@@ -137,6 +137,22 @@
   color: #978a7e;
   font-size: 12px;
   font-weight: 800;
+  text-align: right;
+}
+
+.task-counter strong,
+.task-counter span {
+  display: block;
+}
+
+.task-counter strong {
+  color: #6f6257;
+}
+
+.task-counter span {
+  margin-top: 3px;
+  color: #9a806b;
+  font-size: 11px;
 }
 
 .meaning-hanzi {

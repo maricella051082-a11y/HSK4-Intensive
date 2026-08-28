@@ -288,6 +288,27 @@ function VocabularyPage() {
       )
     ]
 
+  const currentCorrect = checked && current
+    ? ['sound', 'reverse'].includes(stage)
+      ? selected === current.id
+      : normalize(selected) === normalize(current.answer)
+    : false
+
+  const completedInStage = Math.min(
+    baseItems.length,
+    retryMode
+      ? baseItems.length - activeItems.length + Number(currentCorrect)
+      : index + Number(currentCorrect),
+  )
+
+  const taskProgress = {
+    current: index + 1,
+    queueTotal: activeItems.length,
+    completed: completedInStage,
+    total: baseItems.length,
+    retryMode,
+  }
+
   const wordOptions = useMemo(() => {
     if (
       !current ||
@@ -743,8 +764,7 @@ function VocabularyPage() {
             onReveal={() => setRevealed(true)}
             onKnown={() => handleMeaning(true)}
             onWeak={() => handleMeaning(false)}
-            current={index + 1}
-            total={activeItems.length}
+            progress={taskProgress}
           />
         )}
 
@@ -759,8 +779,7 @@ function VocabularyPage() {
             onNext={goNext}
             correct={checked && selected === current.id}
             retryMode={retryMode}
-            current={index + 1}
-            total={activeItems.length}
+            progress={taskProgress}
           />
         )}
 
@@ -775,8 +794,7 @@ function VocabularyPage() {
             onNext={goNext}
             correct={checked && selected === current.id}
             retryMode={retryMode}
-            current={index + 1}
-            total={activeItems.length}
+            progress={taskProgress}
           />
         )}
 
@@ -797,8 +815,7 @@ function VocabularyPage() {
                 normalize(selected) === normalize(current.answer)
               }
               retryMode={retryMode}
-              current={index + 1}
-              total={activeItems.length}
+              progress={taskProgress}
             />
           )}
       </div>
@@ -847,12 +864,11 @@ function MeaningCard({
   onReveal,
   onKnown,
   onWeak,
-  current,
-  total,
+  progress,
 }) {
   return (
     <section className="vocab-card meaning-card">
-      <TaskCounter current={current} total={total} />
+      <TaskCounter {...progress} />
 
       <div className="meaning-hanzi">{word.hanzi}</div>
 
@@ -945,12 +961,11 @@ function SoundTask({
   onNext,
   correct,
   retryMode,
-  current,
-  total,
+  progress,
 }) {
   return (
     <section className="vocab-card">
-      <TaskCounter current={current} total={total} />
+      <TaskCounter {...progress} />
 
       <div className="task-label">
         <span>听</span>
@@ -1012,12 +1027,11 @@ function ReverseTask({
   onNext,
   correct,
   retryMode,
-  current,
-  total,
+  progress,
 }) {
   return (
     <section className="vocab-card">
-      <TaskCounter current={current} total={total} />
+      <TaskCounter {...progress} />
 
       <div className="task-label">
         <span>义</span>
@@ -1073,8 +1087,7 @@ function GenericChoiceTask({
   onNext,
   correct,
   retryMode,
-  current,
-  total,
+  progress,
 }) {
   const prompt =
     stage === 'context' || stage === 'recognition'
@@ -1086,7 +1099,7 @@ function GenericChoiceTask({
 
   return (
     <section className="vocab-card">
-      <TaskCounter current={current} total={total} />
+      <TaskCounter {...progress} />
 
       <div className="task-label">
         <span>
@@ -1257,10 +1270,15 @@ function TaskButtons({
   )
 }
 
-function TaskCounter({ current, total }) {
+function TaskCounter({ current, queueTotal, completed, total, retryMode }) {
+  const remaining = Math.max(0, total - completed)
+
   return (
     <div className="task-counter">
-      {current} / {total}
+      <strong>
+        {retryMode ? `Повтор ошибки ${current} / ${queueTotal}` : `Карточка ${current} / ${total}`}
+      </strong>
+      <span>Выполнено: {completed} · Осталось: {remaining}</span>
     </div>
   )
 }
