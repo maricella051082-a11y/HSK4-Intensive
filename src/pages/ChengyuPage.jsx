@@ -5,7 +5,7 @@ import { mediaUrl } from '../utils/mediaUrl.js'
 import ChineseText from '../components/ChineseText.jsx'
 import ChineseTitle from '../components/ChineseTitle.jsx'
 import { chengyuById, chengyuData, chengyuThemes } from '../data/chengyuData.js'
-import { getChengyuExerciseHint } from '../data/chengyuExerciseHints.js'
+import { getChengyuExerciseHint, getChengyuFeedbackExamples } from '../data/chengyuExerciseHints.js'
 import {
   chengyuPictureTasks,
   chengyuQuestionTasks,
@@ -403,14 +403,14 @@ function ChoiceExercise({ item, type, onDone }) {
             onClick={() => setSelected(option)}
             className={`${selected === option ? 'selected' : ''} ${checked && option === answer ? 'correct' : ''} ${checked && selected === option && option !== answer ? 'wrong' : ''}`}
           >
-            <HintedChinese text={option} showPinyin={showPinyin} showTranslation={showTranslation} />
+            <ChineseTitle text={option} />
           </button>
         ))}
       </div>
       {!checked ? (
         <button type="button" className="chengyu-main" disabled={!selected} onClick={check}>Проверить</button>
       ) : (
-        <ExerciseFeedback item={item} correct={correct} onNext={onDone} />
+        <ExerciseFeedback item={item} type={type} correct={correct} onNext={onDone} />
       )}
     </div>
   )
@@ -455,7 +455,7 @@ function UnscrambleExercise({ item, type, onDone }) {
           <button type="button" className="chengyu-secondary" onClick={() => setPicked([])}>Сбросить</button>
           <button type="button" className="chengyu-main" disabled={picked.length !== targetChars.length} onClick={check}>Проверить</button>
         </div>
-      ) : <ExerciseFeedback item={item} correct={correct} onNext={onDone} />}
+      ) : <ExerciseFeedback item={item} type={type} correct={correct} onNext={onDone} />}
     </div>
   )
 }
@@ -492,7 +492,7 @@ function MissingExercise({ item, type, onDone }) {
       <div className="chengyu-char-bank">
         {options.map((char) => <button type="button" className={selected === char ? 'selected' : ''} disabled={checked} key={char} onClick={() => setSelected(char)}>{char}</button>)}
       </div>
-      {!checked ? <button type="button" className="chengyu-main" disabled={!selected} onClick={check}>Проверить</button> : <ExerciseFeedback item={item} correct={correct} onNext={onDone} />}
+      {!checked ? <button type="button" className="chengyu-main" disabled={!selected} onClick={check}>Проверить</button> : <ExerciseFeedback item={item} type={type} correct={correct} onNext={onDone} />}
     </div>
   )
 }
@@ -546,7 +546,7 @@ function TextExercise({ item, type, onDone }) {
           {type === 'speed' && normalizeChinese(value) === item.hanzi && !result.fast && (
             <div className="chengyu-soft-note">Ответ верный, но пока не автоматический. Цель — вспомнить за 6 секунд.</div>
           )}
-          <ExerciseFeedback item={item} correct={result.correct} onNext={onDone} />
+          <ExerciseFeedback item={item} type={type} correct={result.correct} onNext={onDone} />
         </>
       )}
     </div>
@@ -612,20 +612,35 @@ function SpeechExercise({ item, type, onDone }) {
         {!listening ? <button type="button" className="chengyu-secondary" onClick={start}>🎙 Начать говорить</button> : <button type="button" className="chengyu-secondary danger" onClick={stop}>■ Остановить</button>}
         <button type="button" className="chengyu-main" disabled={!transcript.trim() || checked} onClick={check}>Проверить речь</button>
       </div>
-      {checked && <ExerciseFeedback item={item} correct={correct} onNext={onDone} />}
+      {checked && <ExerciseFeedback item={item} type={type} correct={correct} onNext={onDone} />}
     </div>
   )
 }
 
-function ExerciseFeedback({ item, correct, onNext }) {
+function ExerciseFeedback({ item, type, correct, onNext }) {
+  const feedbackExamples = item.storyRich?.examples?.length
+    ? item.storyRich.examples
+    : getChengyuFeedbackExamples(item.hanzi)
+  const richExample = feedbackExamples.length
+    ? feedbackExamples[hash(`${item.id}:${type}`) % feedbackExamples.length]
+    : null
+  const exampleText = richExample?.[0] || item.example
+  const exampleHint = getChengyuExerciseHint(exampleText)
+  const examplePinyin = richExample?.[1] || exampleHint?.pinyin || ''
+  const exampleTranslation = richExample?.[2] || neutralHintTranslation(exampleHint?.translation)
+
   return (
     <div className={`chengyu-feedback ${correct ? 'ok' : 'retry'}`}>
       <strong>{correct ? '✓ Верно' : 'Нужно вернуть ещё раз'}</strong>
       <div className="chengyu-feedback-answer">
-        <b>{item.hanzi}</b> <span>{item.pinyin}</span>
+        <b><ChineseWithTooltip text={item.hanzi} /></b> <span>{item.pinyin}</span>
       </div>
-      <p>{item.explanation} · {item.translation}</p>
-      <small>{item.example}</small>
+      <p><ChineseTitle text={item.explanation} /> · {item.translation}</p>
+      <div className="chengyu-feedback-example">
+        <ChineseTitle text={exampleText} />
+        {examplePinyin && <small className="hint-pinyin">{examplePinyin}</small>}
+        {exampleTranslation && <small className="hint-translation">{exampleTranslation}</small>}
+      </div>
       <StoryQuickAccess item={item} compact />
       <button type="button" className="chengyu-main" onClick={onNext}>Дальше →</button>
     </div>
@@ -721,7 +736,7 @@ function StoryMiniQuiz({ exercise }) {
 
   return (
     <div className="chengyu-story-quiz">
-      <strong>{exercise.prompt}</strong>
+      <strong><ChineseTitle text={exercise.prompt} /></strong>
       <div className="chengyu-story-quiz-options">
         {options.map(({ option, index }) => (
           <button
@@ -735,7 +750,7 @@ function StoryMiniQuiz({ exercise }) {
             ].join(' ').trim()}
             onClick={() => setSelected(index)}
           >
-            {option}
+            <ChineseTitle text={option} />
           </button>
         ))}
       </div>
@@ -743,7 +758,7 @@ function StoryMiniQuiz({ exercise }) {
         <button type="button" className="chengyu-secondary" disabled={selected === null} onClick={() => setChecked(true)}>Проверить</button>
       ) : (
         <div className={`chengyu-story-quiz-result ${correct ? 'good' : 'bad'}`}>
-          {correct ? '✓ 正确' : `正确答案：${exercise.options[exercise.answer]}`}
+          {correct ? '✓ 正确' : <><ChineseTitle text="正确答案" />：<ChineseTitle text={exercise.options[exercise.answer]} /></>}
         </div>
       )}
     </div>
@@ -752,6 +767,7 @@ function StoryMiniQuiz({ exercise }) {
 
 function RichStoryDetails({ item, showPinyin, showTranslation }) {
   const [showSample, setShowSample] = useState(false)
+  const [zoomedImage, setZoomedImage] = useState(null)
   const rich = item.storyRich
   if (!rich) return null
 
@@ -759,22 +775,35 @@ function RichStoryDetails({ item, showPinyin, showTranslation }) {
 
   return (
     <div className="chengyu-story-rich">
-      <div className="chengyu-story-divider"><span>📖 故事 · дополнительный слой</span></div>
+      <div className="chengyu-story-divider"><span>📖 故事 · История идиомы</span></div>
 
       <div className="chengyu-story-image-grid">
         <figure>
-          <img src={mediaUrl(rich.images.main)} alt={`${item.hanzi} основная иллюстрация`} />
+          <button type="button" className="chengyu-story-image-button" onClick={() => setZoomedImage({ src: rich.images.main, alt: `${item.hanzi} основная иллюстрация` })}>
+            <img src={mediaUrl(rich.images.main)} alt={`${item.hanzi} основная иллюстрация`} />
+          </button>
           <figcaption>主图 · основной образ</figcaption>
         </figure>
         <figure>
-          <img src={mediaUrl(rich.images.comic)} alt={`${item.hanzi} мини-комикс`} />
+          <button type="button" className="chengyu-story-image-button" onClick={() => setZoomedImage({ src: rich.images.comic, alt: `${item.hanzi} мини-комикс` })}>
+            <img src={mediaUrl(rich.images.comic)} alt={`${item.hanzi} мини-комикс`} />
+          </button>
           <figcaption>迷你漫画 · мини-комикс</figcaption>
         </figure>
         <figure>
-          <img src={mediaUrl(rich.images.modern)} alt={`${item.hanzi} современная ситуация`} />
+          <button type="button" className="chengyu-story-image-button" onClick={() => setZoomedImage({ src: rich.images.modern, alt: `${item.hanzi} современная ситуация` })}>
+            <img src={mediaUrl(rich.images.modern)} alt={`${item.hanzi} современная ситуация`} />
+          </button>
           <figcaption>现代场景 · сегодня</figcaption>
         </figure>
       </div>
+
+      {zoomedImage && (
+        <div className="chengyu-image-lightbox" role="dialog" aria-modal="true" aria-label="Увеличенное изображение" onClick={() => setZoomedImage(null)}>
+          <button type="button" className="chengyu-image-lightbox-close" aria-label="Закрыть изображение" onClick={() => setZoomedImage(null)}>×</button>
+          <img src={mediaUrl(zoomedImage.src)} alt={zoomedImage.alt} onClick={(event) => event.stopPropagation()} />
+        </div>
+      )}
 
       <section className="chengyu-story-box">
         <div className="chengyu-story-box-head">
@@ -787,7 +816,7 @@ function RichStoryDetails({ item, showPinyin, showTranslation }) {
         <div className="chengyu-story-lines">
           {rich.storyZh.map((line, index) => (
             <div className="chengyu-story-line" key={`${item.id}-story-${index}`}>
-              <p>{line}</p>
+              <p><ChineseTitle text={line} /></p>
               {showPinyin && <small className="chengyu-story-pinyin">{rich.storyPinyin[index]}</small>}
               {showTranslation && <small className="chengyu-story-ru">{rich.storyRu[index]}</small>}
             </div>
@@ -803,7 +832,7 @@ function RichStoryDetails({ item, showPinyin, showTranslation }) {
           </div>
           <button type="button" className="chengyu-audio" onClick={() => speakChinese(rich.modernZh)}>🔊 听一听</button>
         </div>
-        <p className="chengyu-story-modern-zh">{rich.modernZh}</p>
+        <p className="chengyu-story-modern-zh"><ChineseTitle text={rich.modernZh} /></p>
         {showPinyin && <p className="chengyu-story-pinyin">{rich.modernPinyin}</p>}
         {showTranslation && <p className="chengyu-story-ru">{rich.modernRu}</p>}
       </section>
@@ -813,7 +842,7 @@ function RichStoryDetails({ item, showPinyin, showTranslation }) {
         <div className="chengyu-story-examples">
           {rich.examples.map(([zh, pinyin, ru]) => (
             <div key={zh}>
-              <p>{zh}</p>
+              <p><ChineseTitle text={zh} /></p>
               {showPinyin && <small className="chengyu-story-pinyin">{pinyin}</small>}
               {showTranslation && <small className="chengyu-story-ru">{ru}</small>}
             </div>
@@ -827,7 +856,7 @@ function RichStoryDetails({ item, showPinyin, showTranslation }) {
           {rich.memoryTips.map(([title, zh, ru]) => (
             <div key={title}>
               <strong>{title}</strong>
-              <p>{zh}</p>
+              <p><ChineseTitle text={zh} /></p>
               {showTranslation && <small>{ru}</small>}
             </div>
           ))}
@@ -845,20 +874,20 @@ function RichStoryDetails({ item, showPinyin, showTranslation }) {
 
       <section className="chengyu-story-box hskk">
         <span className="chengyu-story-label">HSKK · 说一说</span>
-        <p className="chengyu-story-hskk-prompt">{rich.hskkPrompt}</p>
+        <p className="chengyu-story-hskk-prompt"><ChineseTitle text={rich.hskkPrompt} /></p>
         <button type="button" className="chengyu-secondary" onClick={() => setShowSample((value) => !value)}>
           {showSample ? 'Скрыть опору' : 'Показать пример ответа'}
         </button>
-        {showSample && <div className="chengyu-story-sample">{rich.hskkSample}</div>}
+        {showSample && <div className="chengyu-story-sample"><ChineseTitle text={rich.hskkSample} /></div>}
       </section>
 
       <section className="chengyu-story-box deep">
         <span className="chengyu-story-label">深入了解 · если интересно глубже</span>
         <p><b>典源：</b>{rich.sourceBook}</p>
-        <p>{rich.sourceNoteZh}</p>
+        <p><ChineseTitle text={rich.sourceNoteZh} /></p>
         {showTranslation && <p className="chengyu-story-ru">{rich.sourceNoteRu}</p>}
         <div className="chengyu-classical-excerpt">
-          <b>原文一小句：</b>{rich.classicalExcerpt}
+          <b>原文一小句：</b><ChineseTitle text={rich.classicalExcerpt} />
           {showTranslation && <small>{rich.classicalRu}</small>}
         </div>
       </section>

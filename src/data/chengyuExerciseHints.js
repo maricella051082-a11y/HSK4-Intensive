@@ -1708,3 +1708,16 @@ export const chengyuExerciseHints = {
 export function getChengyuExerciseHint(text) {
   return chengyuExerciseHints[text] || null
 }
+
+export function getChengyuFeedbackExamples(hanzi) {
+  if (!hanzi) return []
+
+  return Object.entries(chengyuExerciseHints)
+    .filter(([text, hint]) => (
+      text !== hanzi
+      && text.includes(hanzi)
+      && /[。！？]$/.test(text)
+      && !/Неправильное употребление/i.test(hint.translation || '')
+    ))
+    .map(([text, hint]) => [text, hint.pinyin || '', hint.translation || ''])
+}

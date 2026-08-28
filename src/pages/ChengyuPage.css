@@ -14,7 +14,7 @@
 .chengyu-story-rich{margin:18px 0 6px;display:flex;flex-direction:column;gap:14px}
 .chengyu-story-divider{display:flex;align-items:center;gap:10px;color:#775e43;font-weight:900}
 .chengyu-story-divider:before,.chengyu-story-divider:after{content:"";height:1px;flex:1;background:rgba(129,99,68,.18)}
-.chengyu-story-image-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.chengyu-story-image-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start;gap:10px}
 .chengyu-story-image-grid figure{margin:0;padding:8px;border:1px solid rgba(128,98,67,.13);border-radius:16px;background:#fffaf1}
 .chengyu-story-image-grid img{display:block;width:100%;height:auto;border-radius:12px}
 .chengyu-story-image-grid figcaption{text-align:center;margin-top:7px;font-size:11px;color:#7b6e62;font-weight:800}
@@ -106,3 +106,10 @@
 /* Learning-card typography and navigation rules kept explicit after compact legacy styles. */
 .chengyu-hskk-counter{font-size:12px;margin-bottom:8px;font-weight:400;cursor:default}
 .chengyu-next-task{margin-top:14px;border:0;background:transparent;color:#697945;font-weight:900;cursor:pointer}
+.chengyu-feedback-example{margin-top:10px;padding:10px 12px;border-radius:12px;background:rgba(255,250,242,.72);font-size:17px;line-height:1.6}
+.chengyu-feedback-example small{display:block;margin-top:4px;font-size:13px}
+.chengyu-story-image-button{display:block;width:100%;padding:0;border:0;border-radius:12px;background:transparent;cursor:zoom-in}
+.chengyu-story-image-button:focus-visible{outline:3px solid #81904f;outline-offset:3px}
+.chengyu-image-lightbox{position:fixed;inset:0;z-index:120;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(35,29,23,.88);cursor:zoom-out}
+.chengyu-image-lightbox img{display:block;max-width:min(96vw,1400px);max-height:92vh;width:auto;height:auto;object-fit:contain;border-radius:12px;box-shadow:0 24px 80px rgba(0,0,0,.45);cursor:default}
+.chengyu-image-lightbox-close{position:fixed;top:14px;right:18px;z-index:1;width:44px;height:44px;border:0;border-radius:50%;background:#fffaf2;color:#443b31;font-size:30px;line-height:1;cursor:pointer}
