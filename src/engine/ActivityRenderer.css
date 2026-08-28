@@ -249,6 +249,23 @@
   font-weight: 900;
 }
 
+.engine-answer-language-help {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+  color: #6f675f;
+  line-height: 1.35;
+}
+
+.engine-answer-language-help small {
+  font-size: 12px;
+}
+
+.engine-answer-language-help .pinyin {
+  color: #a26738;
+  font-weight: 750;
+}
+
 .engine-retry-button {
   margin-top: 12px;
 }

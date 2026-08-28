@@ -1849,12 +1849,20 @@ function Feedback({ activity, correct, onRetry }) {
     <div className={`engine-feedback ${correct ? 'correct' : 'wrong'}`}>
       <strong>{correct ? '✓ Верно' : '✕ Нужно исправить'}</strong>
 
-      {(!correct || activity.answerTokens) && (
+      {activity.answer && (
         <div className="engine-correct-answer">
           <span>{correct ? 'Разбор ответа:' : 'Правильный ответ:'}</span>
           {activity.answerTokens ? (
             <>
               <WordTokens tokens={activity.answerTokens} />
+              <div className="engine-answer-language-help">
+                <small className="pinyin">
+                  {activity.answerTokens.map((token) => token[1]).filter(Boolean).join(' ')}
+                </small>
+                <small>
+                  {activity.answerTokens.map((token) => token[2]).filter(Boolean).join(' · ')}
+                </small>
+              </div>
               {activity.answer && /[\u3400-\u9fff]/.test(activity.answer) && (
                 <button
                   type="button"
@@ -1866,12 +1874,18 @@ function Feedback({ activity, correct, onRetry }) {
               )}
             </>
           ) : activity.answerPinyin || activity.answerTranslation ? (
-            <ChineseText
-              pinyin={activity.answerPinyin || ''}
-              translation={activity.answerTranslation || ''}
-            >
-              {activity.answer}
-            </ChineseText>
+            <>
+              <ChineseText
+                pinyin={activity.answerPinyin || ''}
+                translation={activity.answerTranslation || ''}
+              >
+                {activity.answer}
+              </ChineseText>
+              <div className="engine-answer-language-help">
+                {activity.answerPinyin && <small className="pinyin">{activity.answerPinyin}</small>}
+                {activity.answerTranslation && <small>{activity.answerTranslation}</small>}
+              </div>
+            </>
           ) : (
             <b>{activity.answer}</b>
           )}
@@ -1879,7 +1893,7 @@ function Feedback({ activity, correct, onRetry }) {
       )}
 
       {activity.explanation && !activity.examMode && (
-        <p>{activity.explanation}</p>
+        <p><ChineseTitle text={activity.explanation} /></p>
       )}
 
       {!correct && (
