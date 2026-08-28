@@ -1178,7 +1178,15 @@ function TaskButtons({
         </button>
       </div>
 
-      <p>{answerWord.exampleTranslation}</p>
+      <WordByWordExample
+        tokens={answerWord.sourceTokens}
+        sentence={answerWord.sourceContext}
+        onSpeak={speakChinese}
+      />
+
+      <p className="vocab-example-translation">
+        {answerWord.exampleTranslation}
+      </p>
 
       <button
         type="button"

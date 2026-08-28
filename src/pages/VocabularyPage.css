@@ -643,6 +643,15 @@
   font-size: 9px;
 }
 
+.vocab-feedback .word-by-word-example {
+  margin: 14px 0 8px;
+  background: rgba(255, 255, 255, 0.58);
+}
+
+.vocab-feedback .vocab-example-translation {
+  margin: 8px 0 14px;
+}
+
 .bank-grid .word-by-word-line {
   font-size: 12px;
   line-height: 1.65;
