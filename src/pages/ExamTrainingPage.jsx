@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { shuffleOptions } from '../utils/shuffleOptions.js'
+import { mediaUrl } from '../utils/mediaUrl.js'
 import ChineseText from '../components/ChineseText.jsx'
 import examTrainingLesson1, {
   examTrainingLesson1Meta,
@@ -483,7 +484,7 @@ function ExamTrainingPage() {
       <audio
         ref={audioRef}
         src={
-          examTrainingLesson1.sections[0].audio
+          mediaUrl(examTrainingLesson1.sections[0].audio)
         }
         preload="auto"
       />

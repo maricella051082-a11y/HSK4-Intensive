@@ -7,6 +7,7 @@ import speakingLesson1, {
 import HskkCloudRecording from '../firebase/HskkCloudRecording.jsx'
 import { saveHskkAudio } from '../firebase/hskkAudioStore.js'
 import { analyzeHskkResponse } from '../utils/hskkAutoFeedback.js'
+import { mediaUrl } from '../utils/mediaUrl.js'
 import './SpeakingPage.css'
 import {
   recordLearningError,
@@ -217,7 +218,7 @@ function SpeakingPage() {
   }, [recordingUrl])
 
   function playSource(audioPath) {
-    const audio = new Audio(audioPath)
+    const audio = new Audio(mediaUrl(audioPath))
     audio.play()
   }
 
@@ -1046,7 +1047,7 @@ function PictureStage({
 
       <div className="picture-layout">
         <div className="picture-frame">
-          <img src={task.image} alt="HSKK H81002 task 11" />
+          <img src={mediaUrl(task.image)} alt="HSKK H81002 task 11" />
         </div>
 
         <div className="picture-guide">

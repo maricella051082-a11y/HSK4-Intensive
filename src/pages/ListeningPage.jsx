@@ -8,6 +8,7 @@ import listeningLesson1, {
 import './ListeningPage.css'
 import { recordLearningError } from '../utils/learningStore.js'
 import { shuffleOptions } from '../utils/shuffleOptions.js'
+import { mediaUrl } from '../utils/mediaUrl.js'
 
 const STORAGE_KEY = 'hsk4-listening-lesson1-session'
 const RESULT_KEY = 'hsk4-listening-lesson1-result'
@@ -447,7 +448,7 @@ function TextbookStage({
 
       <audio
         className="main-audio"
-        src={track.audio}
+        src={mediaUrl(track.audio)}
         controls
         preload="metadata"
         onPlay={() => setPlayed(true)}
@@ -665,7 +666,7 @@ function IntensiveStage({
         </div>
       </div>
 
-      <audio className="main-audio" src={task.audio} controls preload="metadata" />
+      <audio className="main-audio" src={mediaUrl(task.audio)} controls preload="metadata" />
 
       <div className="dictation-line">
         <span>{task.promptBefore}</span>
@@ -837,7 +838,7 @@ function WorkbookStage({
 
       <audio
         className="main-audio"
-        src="/audio/listening/lesson1/wb-01-2-q06-12.mp3"
+        src={mediaUrl('/audio/listening/lesson1/wb-01-2-q06-12.mp3')}
         controls
         preload="metadata"
       />
@@ -1071,7 +1072,7 @@ function TransferStage({
 
   return (
     <section className="listening-card">
-      <audio ref={audioRef} src={transfer.audio} preload="auto" />
+      <audio ref={audioRef} src={mediaUrl(transfer.audio)} preload="auto" />
 
       <div className="listening-step">
         <span>真</span>
@@ -1194,7 +1195,7 @@ function AudioLibrary() {
             <article key={item.id}>
               <strong>{item.label}</strong>
               <small>{item.duration} · {item.source}</small>
-              <audio src={item.audio} controls preload="metadata" />
+              <audio src={mediaUrl(item.audio)} controls preload="metadata" />
             </article>
           ))}
         </div>
@@ -1208,7 +1209,7 @@ function AudioLibrary() {
             <article key={item.id}>
               <strong>{item.label}</strong>
               <small>{item.duration} · {item.source}</small>
-              <audio src={item.audio} controls preload="metadata" />
+              <audio src={mediaUrl(item.audio)} controls preload="metadata" />
             </article>
           ))}
         </div>

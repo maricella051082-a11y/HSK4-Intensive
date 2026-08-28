@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { shuffleOptions } from '../utils/shuffleOptions.js'
+import { mediaUrl } from '../utils/mediaUrl.js'
 import ChineseText from '../components/ChineseText.jsx'
 import ChineseTitle from '../components/ChineseTitle.jsx'
 import {
@@ -380,7 +381,7 @@ function ErrorQueue({ items, onChanged }) {
       </div>
 
       {item.audioPath && (
-        <audio className="review-source-audio" src={item.audioPath} controls preload="metadata" />
+        <audio className="review-source-audio" src={mediaUrl(item.audioPath)} controls preload="metadata" />
       )}
 
       {item.audioText && (

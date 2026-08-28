@@ -13,6 +13,7 @@ import HskkCloudRecording from '../firebase/HskkCloudRecording.jsx'
 import { saveHskkAudio } from '../firebase/hskkAudioStore.js'
 import { analyzeHskkResponse } from '../utils/hskkAutoFeedback.js'
 import { shuffleOptions } from '../utils/shuffleOptions.js'
+import { mediaUrl } from '../utils/mediaUrl.js'
 import './ActivityRenderer.css'
 
 function normalize(value) {
@@ -237,7 +238,7 @@ function AudioBankActivity({ activity }) {
               <strong>{track.title || track.label}</strong>
               {track.description && <span>{track.description}</span>}
             </div>
-            <audio controls preload="metadata" src={track.audio} />
+            <audio controls preload="metadata" src={mediaUrl(track.audio)} />
           </article>
         ))}
       </div>
@@ -530,7 +531,7 @@ function ChoiceActivity({ activity, onStatusChange }) {
   return (
     <ActivityShell activity={activity} record={record}>
       {activity.audio && (
-        <audio className="engine-audio" controls src={activity.audio} />
+        <audio className="engine-audio" controls src={mediaUrl(activity.audio)} />
       )}
 
       {activity.passage && (
@@ -607,7 +608,7 @@ function TtsChoiceActivity({ activity, onStatusChange }) {
     if (plays >= (activity.maxPlays || 2)) return
 
     if (activity.audio) {
-      const source = new Audio(activity.audio)
+      const source = new Audio(mediaUrl(activity.audio))
       source.play()
     } else {
       speakChinese(activity.ttsText)
@@ -770,7 +771,7 @@ function ListeningLadderActivity({ activity, onStatusChange }) {
         : activity.audio
 
     if (!path) return
-    const source = new Audio(path)
+    const source = new Audio(mediaUrl(path))
     source.play()
 
     if (kind === 'first') setFirstPlayed(true)
@@ -1132,7 +1133,7 @@ function GapFillActivity({ activity, onStatusChange }) {
   return (
     <ActivityShell activity={activity} record={record}>
       {activity.audio && (
-        <audio className="engine-audio" controls src={activity.audio} />
+        <audio className="engine-audio" controls src={mediaUrl(activity.audio)} />
       )}
 
       {activity.instruction && (
@@ -1283,7 +1284,7 @@ function ShadowingActivity({ activity, onStatusChange }) {
 
   function play() {
     if (!activity.audio) return
-    const audio = new Audio(activity.audio)
+    const audio = new Audio(mediaUrl(activity.audio))
     audio.play()
     setPlays((value) => value + 1)
   }
@@ -1588,7 +1589,7 @@ function SpeechActivity({ activity, onStatusChange }) {
       {activity.image && (
         <img
           className="engine-speaking-image"
-          src={activity.image}
+          src={mediaUrl(activity.image)}
           alt={activity.imageAlt || 'HSKK'}
         />
       )}
@@ -1630,7 +1631,7 @@ function SpeechActivity({ activity, onStatusChange }) {
           type="button"
           className="engine-audio-play-button"
           disabled={isRecording}
-          onClick={() => new Audio(activity.audio).play()}
+          onClick={() => new Audio(mediaUrl(activity.audio)).play()}
         >
           ▶ Прослушать
         </button>
@@ -1772,7 +1773,7 @@ function FreeWritingActivity({ activity, onStatusChange }) {
       {activity.image && (
         <img
           className="engine-writing-image"
-          src={activity.image}
+          src={mediaUrl(activity.image)}
           alt={activity.imageAlt || 'Задание по картинке'}
         />
       )}

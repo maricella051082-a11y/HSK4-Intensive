@@ -17,6 +17,7 @@ import { setPlannerDay, setStudyMode } from '../utils/coursePlanner.js'
 import { saveHskkAudio } from '../firebase/hskkAudioStore.js'
 import { analyzeHskkResponse } from '../utils/hskkAutoFeedback.js'
 import { shuffleOptions } from '../utils/shuffleOptions.js'
+import { mediaUrl } from '../utils/mediaUrl.js'
 import './DiagnosticPage.css'
 
 const STAGES = [
@@ -152,6 +153,7 @@ function DiagnosticPage() {
   const [recordingSeconds, setRecordingSeconds] = useState(0)
   const [liveTranscript, setLiveTranscript] = useState('')
   const [micError, setMicError] = useState('')
+  const [audioError, setAudioError] = useState('')
 
   const mediaRecorderRef = useRef(null)
   const mediaStreamRef = useRef(null)
@@ -205,15 +207,20 @@ function DiagnosticPage() {
     setAnswers((current) => ({ ...current, [id]: value }))
   }
 
-  function playBlock(block) {
+  async function playBlock(block) {
     if (playedBlocks[block.id]) return
 
     const audio = audioRefs.current[block.id]
     if (!audio) return
 
-    setPlayedBlocks((current) => ({ ...current, [block.id]: true }))
+    setAudioError('')
     audio.currentTime = 0
-    audio.play()
+    try {
+      await audio.play()
+      setPlayedBlocks((current) => ({ ...current, [block.id]: true }))
+    } catch {
+      setAudioError('Не удалось запустить аудио. Обновите страницу и попробуйте ещё раз.')
+    }
   }
 
   async function startRecording(context) {
@@ -828,7 +835,7 @@ function ListeningStage({
               ref={(element) => {
                 audioRefs.current[block.id] = element
               }}
-              src={block.audio}
+              src={mediaUrl(block.audio)}
               preload="auto"
             />
 
@@ -876,6 +883,8 @@ function ListeningStage({
           </article>
         ))}
       </div>
+
+      {audioError && <p className="diagnostic-error">{audioError}</p>}
 
       <SectionContinue
         ready={complete}
@@ -991,7 +1000,7 @@ function WritingStage({
         {diagnosticData.writingPictures.map((item) => (
           <article key={item.id}>
             <div className="diagnostic-picture-number">{item.number}</div>
-            <img src={item.image} alt={`HSK writing ${item.number}`} />
+            <img src={mediaUrl(item.image)} alt={`HSK writing ${item.number}`} />
             <strong>{item.keyword}</strong>
 
             <textarea
@@ -1112,7 +1121,7 @@ function SpeakingStage({
   function playRepeat(task) {
     if (played[task.id]) return
     setPlayed((current) => ({ ...current, [task.id]: true }))
-    new Audio(task.audio).play()
+    new Audio(mediaUrl(task.audio)).play()
   }
 
   return (
@@ -1189,7 +1198,7 @@ function SpeakingStage({
 
       <div className="diagnostic-speaking-picture">
         <img
-          src={diagnosticData.speaking.picture.image}
+          src={mediaUrl(diagnosticData.speaking.picture.image)}
           alt="HSKK H81002 task 11"
         />
 

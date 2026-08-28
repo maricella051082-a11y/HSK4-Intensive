@@ -7,6 +7,7 @@ import writingLesson1, {
 } from '../data/writingLesson1.js'
 import './WritingPage.css'
 import { recordLearningError } from '../utils/learningStore.js'
+import { mediaUrl } from '../utils/mediaUrl.js'
 
 const STORAGE_KEY = 'hsk4-writing-lesson1-session'
 const RESULT_KEY = 'hsk4-writing-lesson1-result'
@@ -891,7 +892,7 @@ function WritingPage() {
 
             <div className="writing-picture-layout">
               <img
-                src={currentTask.image}
+                src={mediaUrl(currentTask.image)}
                 alt={`рабочая тетрадь writing task ${currentTask.number}`}
               />
 

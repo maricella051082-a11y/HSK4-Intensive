@@ -1,6 +1,7 @@
 import { useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { shuffleOptions } from '../utils/shuffleOptions.js'
+import { mediaUrl } from '../utils/mediaUrl.js'
 import ChineseText from '../components/ChineseText.jsx'
 import { chengyuById, chengyuData, chengyuThemes } from '../data/chengyuData.js'
 import { getChengyuExerciseHint } from '../data/chengyuExerciseHints.js'
@@ -694,15 +695,15 @@ function RichStoryDetails({ item, showPinyin, showTranslation }) {
 
       <div className="chengyu-story-image-grid">
         <figure>
-          <img src={rich.images.main} alt={`${item.hanzi} основная иллюстрация`} />
+          <img src={mediaUrl(rich.images.main)} alt={`${item.hanzi} основная иллюстрация`} />
           <figcaption>主图 · основной образ</figcaption>
         </figure>
         <figure>
-          <img src={rich.images.comic} alt={`${item.hanzi} мини-комикс`} />
+          <img src={mediaUrl(rich.images.comic)} alt={`${item.hanzi} мини-комикс`} />
           <figcaption>迷你漫画 · мини-комикс</figcaption>
         </figure>
         <figure>
-          <img src={rich.images.modern} alt={`${item.hanzi} современная ситуация`} />
+          <img src={mediaUrl(rich.images.modern)} alt={`${item.hanzi} современная ситуация`} />
           <figcaption>现代场景 · сегодня</figcaption>
         </figure>
       </div>
@@ -950,7 +951,7 @@ function SpeechCoach({ prompt, targetIds, sample, image, onUsed }) {
 
   return (
     <div className="chengyu-speech-coach">
-      {image && <div className="chengyu-hskk-image"><img src={image} alt="HSKK 看图说话" /></div>}
+      {image && <div className="chengyu-hskk-image"><img src={mediaUrl(image)} alt="HSKK 看图说话" /></div>}
       <h3>{prompt}</h3>
       <p className="chengyu-first-rule">Первая попытка — без подсказок. 成语 появятся только после ответа.</p>
       <div className="chengyu-speech-box tall">{transcript || '🎙 Сначала дай полный ответ своими словами…'}</div>
