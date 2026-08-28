@@ -103,6 +103,8 @@ export function recordLearningError(entry) {
     translation: entry.translation || '',
     audioPath: entry.audioPath || '',
     audioText: entry.audioText || '',
+    image: entry.image || '',
+    imageAlt: entry.imageAlt || '',
     route: entry.route || '',
     wordId: entry.wordId || '',
     reviewMode: entry.reviewMode || 'notebook',

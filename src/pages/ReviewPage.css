@@ -340,6 +340,16 @@
   line-height: 1.65;
 }
 
+.review-error-image {
+  display: block;
+  width: min(560px, 100%);
+  max-height: 360px;
+  margin: 12px auto;
+  border-radius: 14px;
+  object-fit: contain;
+  background: #fff;
+}
+
 .review-source-audio {
   width: min(580px, 100%);
   margin: 8px auto;

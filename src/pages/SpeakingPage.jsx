@@ -477,6 +477,8 @@ function SpeakingPage() {
           title: '听后复述',
           prompt: 'Передай главную мысль 课文5 своими словами.',
           userAnswer: transcript,
+          image: speakingLesson1.pictureTask.image,
+          imageAlt: 'HSKK 看图说话',
           route: '/speaking',
           reviewMode: 'module',
         })

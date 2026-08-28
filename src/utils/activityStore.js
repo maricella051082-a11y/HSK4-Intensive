@@ -122,7 +122,9 @@ export function recordActivityAttempt(activity, {
       pinyin: activity.answerPinyin || '',
       translation: activity.answerTranslation || '',
       audioPath: activity.audio || '',
-      route: activity.route || '',
+      image: activity.image || '',
+      imageAlt: activity.imageAlt || '',
+      route: activity.route || (activity.skill === 'speaking' ? '/today' : ''),
       reviewMode: activity.reviewMode || 'notebook',
     })
   }

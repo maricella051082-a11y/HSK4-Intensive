@@ -2,6 +2,8 @@ import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { shuffleOptions } from '../utils/shuffleOptions.js'
 import { mediaUrl } from '../utils/mediaUrl.js'
+import { getAllLessonPlans } from '../data/courseRegistry.js'
+import speakingLesson1 from '../data/speakingLesson1.js'
 import ChineseText from '../components/ChineseText.jsx'
 import ChineseTitle from '../components/ChineseTitle.jsx'
 import {
@@ -68,6 +70,31 @@ function errorTypeLabel(type) {
     picture_no_structure: 'структура 看图说话',
     chengyu_recall: '成语: не вспомнилось / употреблено не по ситуации',
   }[type] || type
+}
+
+const courseActivities = getAllLessonPlans().flatMap((lesson) =>
+  lesson.days.flatMap((day) => day.activities || []),
+)
+
+function reviewImage(item) {
+  if (item.image) return item.image
+
+  const exact = courseActivities.find((activity) => activity.id === item.itemId)
+  if (exact?.image) return exact.image
+
+  const related = courseActivities.find(
+    (activity) =>
+      activity.lessonId === item.lessonId &&
+      activity.errorType === item.type &&
+      activity.image,
+  )
+  if (related?.image) return related.image
+
+  if (item.type === 'picture_no_structure' && item.route === '/speaking') {
+    return speakingLesson1.pictureTask.image
+  }
+
+  return ''
 }
 
 function WordByWordExample({ tokens = [], fallback, pinyin, translation }) {
@@ -142,8 +169,8 @@ function ReviewPage() {
               <span>активных ошибок</span>
             </article>
             <article>
-              <strong>{data.stats.srsActive}</strong>
-              <span>слов в повторении</span>
+              <strong>{data.stats.dueSrs}</strong>
+              <span>слов на сегодня</span>
             </article>
           </div>
         </section>
@@ -171,6 +198,7 @@ function ReviewPage() {
             dueSrs={data.dueSrs}
             dueErrors={data.dueErrors}
             dueChengyu={data.dueChengyu}
+            scheduledSrsCount={data.stats.srsActive}
             onChanged={refresh}
           />
         ) : (
@@ -184,7 +212,7 @@ function ReviewPage() {
   )
 }
 
-function TodayReview({ dueSrs, dueErrors, dueChengyu, onChanged }) {
+function TodayReview({ dueSrs, dueErrors, dueChengyu, scheduledSrsCount, onChanged }) {
   return (
     <div className="review-today-stack">
       <section className="review-section-card">
@@ -202,7 +230,13 @@ function TodayReview({ dueSrs, dueErrors, dueChengyu, onChanged }) {
         {dueSrs.length ? (
           <SrsQueue items={dueSrs} onChanged={onChanged} />
         ) : (
-          <EmptyState text="На сегодня слов для повторения нет." />
+          <EmptyState
+            text={
+              scheduledSrsCount > 0
+                ? `На сегодня слов нет. На следующие дни запланировано: ${scheduledSrsCount}.`
+                : 'На сегодня слов для повторения нет.'
+            }
+          />
         )}
       </section>
 
@@ -344,6 +378,9 @@ function ErrorQueue({ items, onChanged }) {
   }
 
   const answerValue = item.mode === 'choice' ? selected : inputValue
+  const image = reviewImage(item)
+  const practiceRoute = item.route || (item.type === 'picture_no_structure' ? '/today' : '')
+  const practiceOnly = !item.answer && Boolean(practiceRoute)
 
   function accepted(value) {
     const list = item.acceptedAnswers?.length
@@ -391,9 +428,20 @@ function ErrorQueue({ items, onChanged }) {
       )}
 
       {item.passage && <p className="error-passage">{item.passage}</p>}
+      {image && (
+        <img
+          className="review-error-image"
+          src={mediaUrl(image)}
+          alt={item.imageAlt || 'Изображение для задания 看图说话'}
+        />
+      )}
       <h3>{item.prompt || item.title}</h3>
 
-      {item.mode === 'choice' ? (
+      {practiceOnly ? (
+        <Link className="review-main-button review-link-button" to={practiceRoute}>
+          Перейти к устной тренировке →
+        </Link>
+      ) : item.mode === 'choice' ? (
         <div className="error-choice-grid">
           {shuffleOptions(item.options, item.key).map((option) => (
             <button
@@ -417,7 +465,7 @@ function ErrorQueue({ items, onChanged }) {
         />
       )}
 
-      {!checked ? (
+      {!practiceOnly && (!checked ? (
         <button
           type="button"
           className="review-main-button"
@@ -449,7 +497,7 @@ function ErrorQueue({ items, onChanged }) {
             Следующее →
           </button>
         </div>
-      )}
+      ))}
     </div>
   )
 }
