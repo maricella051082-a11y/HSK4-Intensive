@@ -97,6 +97,19 @@ function findWord(id) {
   return vocabularyLesson1All.find((word) => word.id === id)
 }
 
+const supplementalVocabularyHints = [
+  ['我', 'wǒ', 'я'], ['很', 'hěn', 'очень'], ['你', 'nǐ', 'ты'],
+  ['你们', 'nǐmen', 'вы'], ['的', 'de', 'определительная частица'],
+  ['从来', 'cónglái', 'никогда; когда-либо'], ['不', 'bù', 'не'],
+  ['没', 'méi', 'не; не было'], ['迟到', 'chídào', 'опаздывать'],
+  ['每天', 'měitiān', 'каждый день'], ['去过', 'qùguo', 'бывать; посещать'],
+  ['日本', 'Rìběn', 'Япония'], ['这件', 'zhè jiàn', 'эта (для одежды)'],
+  ['衣服', 'yīfu', 'одежда'], ['适合', 'shìhé', 'подходить'],
+  ['嫉妒', 'jídù', 'завидовать; ревновать (негативно)'],
+  ['过', 'guo', 'показатель прошлого опыта'], ['事物', 'shìwù', 'предмет; вещь'],
+  ['人', 'rén', 'человек'],
+]
+
 const vocabularyHintEntries = (() => {
   const hints = new Map()
 
@@ -108,6 +121,10 @@ const vocabularyHintEntries = (() => {
     word.sourceTokens?.forEach((token) => {
       if (!hints.has(token.hanzi)) hints.set(token.hanzi, token)
     })
+  })
+
+  supplementalVocabularyHints.forEach(([hanzi, pinyin, translation]) => {
+    if (!hints.has(hanzi)) hints.set(hanzi, { pinyin, translation })
   })
 
   return [...hints.entries()].sort(([left], [right]) => right.length - left.length)
@@ -1012,6 +1029,7 @@ function SoundTask({
         onCheck={onCheck}
         onNext={onNext}
         answerWord={word}
+        selectedWord={options.find((option) => option.id === selected)}
       />
     </section>
   )
@@ -1072,6 +1090,7 @@ function ReverseTask({
         onCheck={onCheck}
         onNext={onNext}
         answerWord={word}
+        selectedWord={options.find((option) => option.id === selected)}
       />
     </section>
   )
@@ -1170,6 +1189,11 @@ function GenericChoiceTask({
         >
           <strong>{correct ? '✓ Верно' : '✕ Нужно исправить'}</strong>
 
+          <p>
+            Ваш ответ:{' '}
+            <b><VocabularyTextWithHints text={selected} /></b>
+          </p>
+
           {!correct && (
             <p>
               Правильный ответ:{' '}
@@ -1207,6 +1231,7 @@ function TaskButtons({
   onCheck,
   onNext,
   answerWord,
+  selectedWord,
 }) {
   if (!checked) {
     return (
@@ -1229,6 +1254,32 @@ function TaskButtons({
       ].join(' ')}
     >
       <strong>{correct ? '✓ Верно' : '✕ Нужно исправить'}</strong>
+
+      <p>
+        Ваш ответ:{' '}
+        <b>
+          <ChineseText
+            pinyin={selectedWord?.pinyin || ''}
+            translation={selectedWord?.translation || ''}
+          >
+            {selectedWord?.hanzi || '—'}
+          </ChineseText>
+        </b>
+      </p>
+
+      {!correct && (
+        <p>
+          Правильный ответ:{' '}
+          <b>
+            <ChineseText
+              pinyin={answerWord.pinyin}
+              translation={answerWord.translation}
+            >
+              {answerWord.hanzi}
+            </ChineseText>
+          </b>
+        </p>
+      )}
 
       <div className="answer-word">
         <ChineseText
