@@ -61,6 +61,11 @@
   line-height: 1.55;
 }
 
+.chengyu-learn-card > .chengyu-hint-controls {
+  justify-content: center;
+  margin: 14px 0 8px;
+}
+
 .chengyu-collocation-label {
   margin: 16px 0 8px;
   color: #74695e;

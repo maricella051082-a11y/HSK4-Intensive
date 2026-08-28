@@ -59,6 +59,10 @@ export const chengyuExerciseHints = {
     "pinyin": "bàn tú ér fèi",
     "translation": "бросить на полпути"
   },
+  "事情还没做完就放弃。": {
+    "pinyin": "shì qíng hái méi zuò wán jiù fàng qì.",
+    "translation": "Дело ещё не закончено, а его уже бросили."
+  },
   "她关掉手机，一个下午只做一件事：准备明天的考试。": {
     "pinyin": "tā guān diào shǒu jī， yī gè xià wǔ zhǐ zuò yī jiàn shì： zhǔn bèi míng tiān de kǎo shì.",
     "translation": "Она выключила телефон и весь день занималась только одним делом — готовилась к завтрашнему экзамену."

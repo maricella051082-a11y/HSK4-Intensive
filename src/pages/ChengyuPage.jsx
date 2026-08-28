@@ -259,6 +259,8 @@ function StoryQuickAccess({ item, compact = false }) {
 
 function IdiomLearningCard({ item, onContinue }) {
   const meaning = item.storyRich?.shortMeaningRu || item.translation
+  const [showPinyin, setShowPinyin] = useState(false)
+  const [showTranslation, setShowTranslation] = useState(false)
 
   return (
     <div className="chengyu-learn-card">
@@ -269,7 +271,7 @@ function IdiomLearningCard({ item, onContinue }) {
           <li>Посмотри, как она используется в естественном примере.</li>
           <li>Нажми кнопку внизу — дальше будет короткое задание без готового ответа.</li>
         </ol>
-        <small>На китайский текст можно нажать или навести курсор: появятся pinyin и перевод.</small>
+        <small>Нажми «拼音» или «Перевод» под идиомой, чтобы раскрыть подсказки к объяснению и примеру.</small>
       </div>
 
       <div className="chengyu-big-hanzi">
@@ -277,12 +279,30 @@ function IdiomLearningCard({ item, onContinue }) {
       </div>
       <div className="chengyu-big-pinyin">{item.pinyin}</div>
       <p className="chengyu-translation chengyu-meaning-ru">{meaning}</p>
+
+      <HintControls
+        showPinyin={showPinyin}
+        showTranslation={showTranslation}
+        onTogglePinyin={() => setShowPinyin((value) => !value)}
+        onToggleTranslation={() => setShowTranslation((value) => !value)}
+      />
+
       <p className="chengyu-zh-explain">
-        <ChineseWithTooltip text={item.explanation} />
+        <HintedChinese
+          text={item.explanation}
+          showPinyin={showPinyin}
+          showTranslation={showTranslation}
+        />
       </p>
       <div className="chengyu-example-box">
         <span>自然表达 · естественный пример</span>
-        <strong><ChineseWithTooltip text={item.example} /></strong>
+        <strong>
+          <HintedChinese
+            text={item.example}
+            showPinyin={showPinyin}
+            showTranslation={showTranslation}
+          />
+        </strong>
       </div>
       <p className="chengyu-collocation-label">Часто употребляется рядом со словами:</p>
       <div className="chengyu-context-row">
