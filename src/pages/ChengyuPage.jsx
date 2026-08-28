@@ -259,8 +259,8 @@ function StoryQuickAccess({ item, compact = false }) {
 
 function IdiomLearningCard({ item, onContinue }) {
   const meaning = item.storyRich?.shortMeaningRu || item.translation
-  const [showPinyin, setShowPinyin] = useState(false)
-  const [showTranslation, setShowTranslation] = useState(false)
+  const [showPinyin, setShowPinyin] = useState(true)
+  const [showTranslation, setShowTranslation] = useState(true)
 
   return (
     <div className="chengyu-learn-card">
@@ -369,8 +369,8 @@ function ChoiceExercise({ item, type, onDone }) {
   const shown = stableShuffle(options, `${item.id}:${type}`)
   const [selected, setSelected] = useState('')
   const [checked, setChecked] = useState(false)
-  const [showPinyin, setShowPinyin] = useState(false)
-  const [showTranslation, setShowTranslation] = useState(false)
+  const [showPinyin, setShowPinyin] = useState(true)
+  const [showTranslation, setShowTranslation] = useState(true)
   const correct = selected === answer
 
   function check() {
@@ -420,8 +420,8 @@ function UnscrambleExercise({ item, type, onDone }) {
   const shuffled = stableShuffle(targetChars.map((char, index) => ({ char, key: `${char}-${index}` })), `${item.id}:chars`)
   const [picked, setPicked] = useState([])
   const [checked, setChecked] = useState(false)
-  const [showPinyin, setShowPinyin] = useState(false)
-  const [showTranslation, setShowTranslation] = useState(false)
+  const [showPinyin, setShowPinyin] = useState(true)
+  const [showTranslation, setShowTranslation] = useState(true)
 
   function pick(token) {
     if (picked.some((entry) => entry.key === token.key)) return
@@ -471,8 +471,8 @@ function MissingExercise({ item, type, onDone }) {
   const options = stableShuffle([answer, ...distractorChars], `${item.id}:missing-options`)
   const [selected, setSelected] = useState('')
   const [checked, setChecked] = useState(false)
-  const [showPinyin, setShowPinyin] = useState(false)
-  const [showTranslation, setShowTranslation] = useState(false)
+  const [showPinyin, setShowPinyin] = useState(true)
+  const [showTranslation, setShowTranslation] = useState(true)
   const display = chars.map((char, index) => index === blankIndex ? '□' : char).join('')
   const correct = selected === answer
 
@@ -500,8 +500,8 @@ function TextExercise({ item, type, onDone }) {
   const [value, setValue] = useState('')
   const [checked, setChecked] = useState(false)
   const [result, setResult] = useState({ correct: false, fast: false })
-  const [showPinyin, setShowPinyin] = useState(false)
-  const [showTranslation, setShowTranslation] = useState(false)
+  const [showPinyin, setShowPinyin] = useState(true)
+  const [showTranslation, setShowTranslation] = useState(true)
   const startedAt = useRef(0)
   let prompt = item.simpleSentence
   let sub = 'Замени простое выражение подходящим 成语. Напиши только 成语.'
@@ -557,8 +557,8 @@ function SpeechExercise({ item, type, onDone }) {
   const [listening, setListening] = useState(false)
   const [checked, setChecked] = useState(false)
   const [error, setError] = useState('')
-  const [showPinyin, setShowPinyin] = useState(false)
-  const [showTranslation, setShowTranslation] = useState(false)
+  const [showPinyin, setShowPinyin] = useState(true)
+  const [showTranslation, setShowTranslation] = useState(true)
   const recognitionRef = useRef(null)
   const Recognition = recognitionConstructor()
   const correct = normalizeChinese(transcript).includes(item.hanzi) && chineseCount(transcript) >= 10
