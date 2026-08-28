@@ -86,6 +86,7 @@ export function recordLearningError(entry) {
   const created = {
     key,
     lessonId: entry.lessonId || 'lesson-1',
+    day: entry.day || null,
     module: entry.module || 'general',
     type: entry.type || 'general',
     itemId: entry.itemId || key,

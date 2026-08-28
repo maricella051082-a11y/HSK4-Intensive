@@ -107,6 +107,7 @@ export function recordActivityAttempt(activity, {
   if (!correct && activity.errorType) {
     recordLearningError({
       lessonId: activity.lessonId || 'lesson-1',
+      day: activity.day || null,
       module: activity.skill || 'activity',
       type: activity.errorType,
       itemId: activity.id,

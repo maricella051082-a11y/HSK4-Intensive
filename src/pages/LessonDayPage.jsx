@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react'
-import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
+import { useEffect, useMemo, useState } from 'react'
+import { Link, Navigate, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import ChineseText from '../components/ChineseText.jsx'
 import ActivityRenderer from '../engine/ActivityRenderer.jsx'
 import { getLessonDay, getLessonPlan, getNextLessonPlan } from '../data/courseRegistry.js'
@@ -27,9 +27,21 @@ function minutes(seconds) {
 export default function LessonDayPage() {
   const { lessonId, dayNumber } = useParams()
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const lesson = getLessonPlan(lessonId)
   const day = getLessonDay(lessonId, dayNumber)
-  const [mode, setMode] = useState(() => getStudyMode())
+  const requestedActivityId = searchParams.get('activity') || ''
+  const [mode, setMode] = useState(() => {
+    if (!requestedActivityId || !day) return getStudyMode()
+
+    const target = getActivitiesForMode(day, 'intensive').find(
+      (activity) => activity.id === requestedActivityId,
+    )
+
+    if (target?.priority === 'intensive') return 'intensive'
+    if (target?.priority === 'standard') return 'standard'
+    return getStudyMode()
+  })
   const [refreshKey, forceRefresh] = useState(0)
   const recommendation = useMemo(() => getAdaptiveRecommendation(), [lessonId, dayNumber, refreshKey])
 
@@ -47,6 +59,18 @@ export default function LessonDayPage() {
     () => getLearningDashboardStats(),
     [refreshKey, day, mode],
   )
+
+  useEffect(() => {
+    if (!requestedActivityId) return
+
+    const frame = window.requestAnimationFrame(() => {
+      document
+        .getElementById(`activity-${requestedActivityId}`)
+        ?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    })
+
+    return () => window.cancelAnimationFrame(frame)
+  }, [requestedActivityId, activities])
 
   if (!lesson || !day) {
     return <Navigate to="/" replace />
@@ -219,7 +243,11 @@ export default function LessonDayPage() {
 
         <div className="lesson-engine-activities">
           {activities.map((activity, index) => (
-            <div className="lesson-engine-activity-wrap" key={activity.id}>
+            <div
+              className="lesson-engine-activity-wrap"
+              id={`activity-${activity.id}`}
+              key={activity.id}
+            >
               <div className="lesson-engine-number">
                 {String(index + 1).padStart(2, '0')}
               </div>

@@ -97,6 +97,16 @@ function reviewImage(item) {
   return ''
 }
 
+function reviewPracticeRoute(item) {
+  const exact = courseActivities.find((activity) => activity.id === item.itemId)
+
+  if (exact?.lessonId && exact?.day) {
+    return `/lesson/${exact.lessonId}/day/${exact.day}?activity=${encodeURIComponent(exact.id)}`
+  }
+
+  return item.route || (item.type === 'picture_no_structure' ? '/today' : '')
+}
+
 function WordByWordExample({ tokens = [], fallback, pinyin, translation }) {
   if (!tokens.length) {
     return (
@@ -379,7 +389,7 @@ function ErrorQueue({ items, onChanged }) {
 
   const answerValue = item.mode === 'choice' ? selected : inputValue
   const image = reviewImage(item)
-  const practiceRoute = item.route || (item.type === 'picture_no_structure' ? '/today' : '')
+  const practiceRoute = reviewPracticeRoute(item)
   const practiceOnly = !item.answer && Boolean(practiceRoute)
 
   function accepted(value) {
