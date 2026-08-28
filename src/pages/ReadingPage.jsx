@@ -7,6 +7,29 @@ import './ReadingPage.css'
 import { recordLearningError } from '../utils/learningStore.js'
 import { shuffleOptions } from '../utils/shuffleOptions.js'
 
+const READING_PUNCTUATION = /^[，。！？、；：“”‘’《》,.!?;:]$/
+
+function WordByWordReadingText({ tokens }) {
+  return (
+    <p className="reading-main-text">
+      {tokens.map(([hanzi, pinyin, translation], index) =>
+        READING_PUNCTUATION.test(hanzi) ? (
+          <span key={`${hanzi}-${index}`}>{hanzi}</span>
+        ) : (
+          <ChineseText
+            key={`${hanzi}-${index}`}
+            pinyin={pinyin}
+            translation={translation}
+            tooltipPosition="top"
+          >
+            {hanzi}
+          </ChineseText>
+        ),
+      )}
+    </p>
+  )
+}
+
 const STORAGE_KEY = 'hsk4-reading-lesson1-session'
 const RESULT_KEY = 'hsk4-reading-lesson1-result'
 const DATA_VERSION = 2
@@ -465,18 +488,11 @@ function ReadingPage() {
               </div>
             </div>
 
-            <ChineseText
-              as="p"
-              className="reading-main-text"
-              pinyin={readingLesson1.intensiveText.pinyin}
-              translation={readingLesson1.intensiveText.translation}
-            >
-              {readingLesson1.intensiveText.hanzi}
-            </ChineseText>
+            <WordByWordReadingText tokens={readingLesson1.intensiveText.tokens} />
 
             <p className="reading-hint">
-              Здесь подсказка разрешена: наведи на текст, чтобы увидеть pinyin и
-              перевод. В HSK 模式 подсказок уже не будет.
+              Здесь подсказка разрешена: наведи на отдельное слово, чтобы увидеть
+              pinyin и перевод. В HSK 模式 подсказок уже не будет.
             </p>
           </section>
         )}

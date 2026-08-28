@@ -435,7 +435,7 @@ function ErrorQueue({ items, onChanged }) {
           alt={item.imageAlt || 'Изображение для задания 看图说话'}
         />
       )}
-      <h3>{item.prompt || item.title}</h3>
+      <h3><ChineseTitle text={item.prompt || item.title} /></h3>
 
       {practiceOnly ? (
         <Link className="review-main-button review-link-button" to={practiceRoute}>
@@ -451,7 +451,7 @@ function ErrorQueue({ items, onChanged }) {
               className={selected === option ? 'selected' : ''}
               onClick={() => setSelected(option)}
             >
-              {option}
+              <ChineseTitle text={option} />
             </button>
           ))}
         </div>
