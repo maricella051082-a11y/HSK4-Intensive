@@ -97,6 +97,53 @@ function findWord(id) {
   return vocabularyLesson1All.find((word) => word.id === id)
 }
 
+const vocabularyHintEntries = (() => {
+  const hints = new Map()
+
+  vocabularyLesson1All.forEach((word) => {
+    hints.set(word.hanzi, {
+      pinyin: word.pinyin,
+      translation: word.translation,
+    })
+    word.sourceTokens?.forEach((token) => {
+      if (!hints.has(token.hanzi)) hints.set(token.hanzi, token)
+    })
+  })
+
+  return [...hints.entries()].sort(([left], [right]) => right.length - left.length)
+})()
+
+function VocabularyTextWithHints({ text }) {
+  const remainingParts = []
+  let remaining = String(text ?? '')
+
+  while (remaining) {
+    const match = vocabularyHintEntries.find(([hanzi]) => remaining.startsWith(hanzi))
+
+    if (match) {
+      const [hanzi, hint] = match
+      remainingParts.push({ hanzi, hint })
+      remaining = remaining.slice(hanzi.length)
+    } else {
+      remainingParts.push({ hanzi: remaining[0], hint: null })
+      remaining = remaining.slice(1)
+    }
+  }
+
+  return remainingParts.map(({ hanzi, hint }, index) => (
+    hint ? (
+      <ChineseText
+        key={`${hanzi}-${index}`}
+        pinyin={hint.pinyin}
+        translation={hint.translation}
+        tooltipPosition="bottom"
+      >
+        {hanzi}
+      </ChineseText>
+    ) : <span key={`${hanzi}-${index}`}>{hanzi}</span>
+  ))
+}
+
 function makeWordOptions(word, count = 4) {
   const distractors = shuffle(
     coreWords.filter((item) => item.id !== word.id),
@@ -1033,6 +1080,9 @@ function GenericChoiceTask({
     stage === 'context' || stage === 'recognition'
       ? task.sentence ?? task.prompt
       : task.prompt
+  const [explanationChinese = '', ...explanationTranslationParts] =
+    String(task.explanation ?? '').split(/\s+—\s+/)
+  const explanationTranslation = explanationTranslationParts.join(' — ')
 
   return (
     <section className="vocab-card">
@@ -1109,11 +1159,17 @@ function GenericChoiceTask({
 
           {!correct && (
             <p>
-              Правильный ответ: <b>{task.answer}</b>
+              Правильный ответ:{' '}
+              <b><VocabularyTextWithHints text={task.answer} /></b>
             </p>
           )}
 
-          {task.explanation && <p>{task.explanation}</p>}
+          {task.explanation && (
+            <p className="vocab-answer-explanation">
+              <VocabularyTextWithHints text={explanationChinese} />
+              {explanationTranslation ? ` — ${explanationTranslation}` : null}
+            </p>
+          )}
 
           <button
             type="button"
