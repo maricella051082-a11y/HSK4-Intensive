@@ -1,34 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import ChineseText from '../components/ChineseText.jsx'
+import ChineseWordText from '../components/ChineseWordText.jsx'
 import MoyuCompanion from '../components/MoyuCompanion.jsx'
 import readingLesson1 from '../data/readingLesson1.js'
 import './ReadingPage.css'
 import { recordLearningError } from '../utils/learningStore.js'
 import { shuffleOptions } from '../utils/shuffleOptions.js'
-
-const READING_PUNCTUATION = /^[，。！？、；：“”‘’《》,.!?;:]$/
-
-function WordByWordReadingText({ tokens }) {
-  return (
-    <p className="reading-main-text">
-      {tokens.map(([hanzi, pinyin, translation], index) =>
-        READING_PUNCTUATION.test(hanzi) ? (
-          <span key={`${hanzi}-${index}`}>{hanzi}</span>
-        ) : (
-          <ChineseText
-            key={`${hanzi}-${index}`}
-            pinyin={pinyin}
-            translation={translation}
-            tooltipPosition="top"
-          >
-            {hanzi}
-          </ChineseText>
-        ),
-      )}
-    </p>
-  )
-}
 
 const STORAGE_KEY = 'hsk4-reading-lesson1-session'
 const RESULT_KEY = 'hsk4-reading-lesson1-result'
@@ -488,7 +466,11 @@ function ReadingPage() {
               </div>
             </div>
 
-            <WordByWordReadingText tokens={readingLesson1.intensiveText.tokens} />
+            <ChineseWordText
+              as="p"
+              className="reading-main-text"
+              tokens={readingLesson1.intensiveText.tokens}
+            />
 
             <p className="reading-hint">
               Здесь подсказка разрешена: наведи на отдельное слово, чтобы увидеть

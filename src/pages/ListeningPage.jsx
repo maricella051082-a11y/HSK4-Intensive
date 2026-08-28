@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import ChineseText from '../components/ChineseText.jsx'
+import ChineseWordText from '../components/ChineseWordText.jsx'
 import MoyuCompanion from '../components/MoyuCompanion.jsx'
 import listeningLesson1, {
   listeningLesson1Meta,
@@ -1036,14 +1037,11 @@ function TransferStage({
           Первое прослушивание: <strong>{firstCorrect ?? 0} / 2</strong>
         </div>
 
-        <ChineseText
+        <ChineseWordText
           as="p"
           className="transfer-transcript"
-          pinyin={transfer.transcriptPinyin}
-          translation={transfer.transcriptTranslation}
-        >
-          {transfer.transcript}
-        </ChineseText>
+          tokens={transfer.transcriptTokens}
+        />
 
         <div className="transfer-answer-grid">
           {transfer.questions.map((item) => (
