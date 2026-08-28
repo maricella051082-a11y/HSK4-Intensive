@@ -28,6 +28,20 @@
 .chengyu-story-line p,.chengyu-story-examples p,.chengyu-story-modern-zh{margin:0;line-height:1.7}
 .chengyu-story-pinyin,.chengyu-story-ru{display:block;margin-top:5px;line-height:1.6}
 .chengyu-story-pinyin{color:#9b6b3e}.chengyu-story-ru{color:#6d6257}
+
+.chengyu-big-pinyin,
+.chengyu-detail-pinyin,
+.chengyu-story-pinyin,
+.chengyu-feedback-answer > span {
+  font-family: "Segoe UI", Arial, "Microsoft YaHei", sans-serif !important;
+  font-style: normal !important;
+  letter-spacing: normal !important;
+  font-synthesis: none;
+  font-variant-ligatures: none;
+  unicode-bidi: isolate;
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
 .chengyu-memory-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .chengyu-memory-grid>div{padding:10px;border-radius:12px;background:#fffaf2}
 .chengyu-memory-grid strong{display:block;color:#6b5b49}.chengyu-memory-grid p{margin:6px 0}.chengyu-memory-grid small{color:#756a60;line-height:1.5}
