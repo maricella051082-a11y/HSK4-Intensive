@@ -392,7 +392,7 @@ function ChoiceExercise({ item, type, onDone }) {
         onToggleTranslation={() => setShowTranslation((value) => !value)}
       />
       {audioOnly && (
-        <button type="button" className="chengyu-audio" onClick={() => speakChinese(item.hanzi)}>🔊 Прослушать ещё раз</button>
+        <button type="button" className="chengyu-audio" onClick={() => speakChinese(item.hanzi)}>🔊 Прослушать</button>
       )}
       <div className="chengyu-options">
         {shown.map((option) => (
@@ -418,7 +418,11 @@ function ChoiceExercise({ item, type, onDone }) {
 
 function UnscrambleExercise({ item, type, onDone }) {
   const targetChars = [...item.hanzi]
-  const shuffled = stableShuffle(targetChars.map((char, index) => ({ char, key: `${char}-${index}` })), `${item.id}:chars`)
+  const sourceTokens = targetChars.map((char, index) => ({ char, key: `${char}-${index}` }))
+  const shuffledCandidate = stableShuffle(sourceTokens, `${item.id}:chars`)
+  const shuffled = shuffledCandidate.map((token) => token.char).join('') === item.hanzi
+    ? [...shuffledCandidate.slice(1), shuffledCandidate[0]]
+    : shuffledCandidate
   const [picked, setPicked] = useState([])
   const [checked, setChecked] = useState(false)
   const [showPinyin, setShowPinyin] = useState(false)
