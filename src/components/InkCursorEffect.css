@@ -1,0 +1,6 @@
+.brush-cursor-active body,.brush-cursor-active body *{cursor:none!important}
+.brush-follow-cursor{display:block;position:fixed;left:0;top:0;z-index:1000000;width:64px;height:64px;object-fit:contain;pointer-events:none;opacity:0;transform:translate(-7px,-7px);transition:opacity .06s linear;filter:drop-shadow(0 2px 2px rgba(45,29,16,.18));will-change:left,top}
+.brush-follow-cursor.is-visible{opacity:1}
+.ink-click-splash{position:fixed;z-index:999999;width:28px;height:28px;object-fit:contain;pointer-events:none;transform:translate(-50%,-50%) scale(.35) rotate(-8deg);opacity:.78;animation:inkSplash .42s ease-out forwards}
+@keyframes inkSplash{40%{opacity:.68;transform:translate(-50%,-50%) scale(.9) rotate(2deg)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.05) rotate(5deg)}}
+@media(prefers-reduced-motion:reduce){.ink-click-splash{animation-duration:.01ms}}

@@ -1,0 +1,166 @@
+export const diagnosticData = {
+  id: 'hsk4-quick-diagnostic-v1',
+  version: 1,
+  title: '起点诊断',
+  translation: 'Стартовая диагностика',
+  estimatedMinutes: '35–40',
+
+  vocabulary: [
+    { id: 'v01', type: 'meaning', prompt: '申请', options: ['заявление; подавать заявку', 'поддерживать', 'обсуждать', 'отказываться'], answer: 'заявление; подавать заявку', word: { id: 'diag-shenqing', hanzi: '申请', pinyin: 'shēnqǐng', translation: 'подавать заявку; заявление', priority: 'A' } },
+    { id: 'v02', type: 'meaning', prompt: '责任', options: ['ответственность', 'опыт', 'причина', 'отношение'], answer: 'ответственность', word: { id: 'diag-zeren', hanzi: '责任', pinyin: 'zérèn', translation: 'ответственность', priority: 'A' } },
+    { id: 'v03', type: 'meaning', prompt: '熟悉', options: ['быть знакомым; хорошо знать', 'сомневаться', 'привыкать', 'отказываться'], answer: 'быть знакомым; хорошо знать', word: { id: 'diag-shuxi', hanzi: '熟悉', pinyin: 'shúxī', translation: 'быть знакомым; хорошо знать', priority: 'A' } },
+    { id: 'v04', type: 'meaning', prompt: '支持', options: ['поддерживать', 'разрешать', 'объяснять', 'уважать'], answer: 'поддерживать', word: { id: 'diag-zhichi', hanzi: '支持', pinyin: 'zhīchí', translation: 'поддерживать', priority: 'A' } },
+    { id: 'v05', type: 'meaning', prompt: '质量', options: ['качество', 'количество', 'скорость', 'результат'], answer: 'качество', word: { id: 'diag-zhiliang', hanzi: '质量', pinyin: 'zhìliàng', translation: 'качество', priority: 'A' } },
+    { id: 'v06', type: 'meaning', prompt: '竞争', options: ['конкуренция; соревноваться', 'решение', 'расстояние', 'впечатление'], answer: 'конкуренция; соревноваться', word: { id: 'diag-jingzheng', hanzi: '竞争', pinyin: 'jìngzhēng', translation: 'конкуренция; соревноваться', priority: 'A' } },
+    { id: 'v07', type: 'meaning', prompt: '准确', options: ['точный', 'обычный', 'сложный', 'подходящий'], answer: 'точный', word: { id: 'diag-zhunque', hanzi: '准确', pinyin: 'zhǔnquè', translation: 'точный', priority: 'A' } },
+    { id: 'v08', type: 'meaning', prompt: '提醒', options: ['напоминать', 'предлагать', 'доказывать', 'сравнивать'], answer: 'напоминать', word: { id: 'diag-tixing', hanzi: '提醒', pinyin: 'tíxǐng', translation: 'напоминать', priority: 'A' } },
+
+    { id: 'v09', type: 'reverse', prompt: 'влияние; влиять', options: ['影响', '结果', '效果', '经验'], answer: '影响', word: { id: 'diag-yingxiang', hanzi: '影响', pinyin: 'yǐngxiǎng', translation: 'влияние; влиять', priority: 'A' } },
+    { id: 'v10', type: 'reverse', prompt: 'окружающая среда', options: ['环境', '情况', '条件', '地点'], answer: '环境', word: { id: 'diag-huanjing', hanzi: '环境', pinyin: 'huánjìng', translation: 'окружающая среда; обстановка', priority: 'A' } },
+    { id: 'v11', type: 'reverse', prompt: 'подходить; соответствовать', options: ['适合', '符合', '同意', '接受'], answer: '适合', word: { id: 'diag-shihe', hanzi: '适合', pinyin: 'shìhé', translation: 'подходить; соответствовать', priority: 'A' } },
+    { id: 'v12', type: 'reverse', prompt: 'организовывать; планировать', options: ['安排', '整理', '决定', '准备'], answer: '安排', word: { id: 'diag-anpai', hanzi: '安排', pinyin: 'ānpái', translation: 'организовывать; планировать', priority: 'A' } },
+    { id: 'v13', type: 'reverse', prompt: 'материалы; документ', options: ['材料', '内容', '文章', '文件'], answer: '材料', word: { id: 'diag-cailiao', hanzi: '材料', pinyin: 'cáiliào', translation: 'материал; документы', priority: 'A' } },
+    { id: 'v14', type: 'reverse', prompt: 'опыт', options: ['经验', '经历', '印象', '历史'], answer: '经验', word: { id: 'diag-jingyan', hanzi: '经验', pinyin: 'jīngyàn', translation: 'опыт', priority: 'A' } },
+    { id: 'v15', type: 'reverse', prompt: 'цель', options: ['目的', '原因', '结果', '重点'], answer: '目的', word: { id: 'diag-mudi', hanzi: '目的', pinyin: 'mùdì', translation: 'цель', priority: 'A' } },
+    { id: 'v16', type: 'reverse', prompt: 'объяснять', options: ['解释', '介绍', '说明', '证明'], answer: '解释', word: { id: 'diag-jieshi', hanzi: '解释', pinyin: 'jiěshì', translation: 'объяснять', priority: 'A' } },
+
+    { id: 'v17', type: 'pinyin', prompt: '印象', options: ['yìnxiàng', 'yǐnxiàng', 'yìnxiǎng', 'yīngxiàng'], answer: 'yìnxiàng', word: { id: 'diag-yinxiang', hanzi: '印象', pinyin: 'yìnxiàng', translation: 'впечатление', priority: 'B' } },
+    { id: 'v18', type: 'pinyin', prompt: '估计', options: ['gūjì', 'gǔjì', 'gūjī', 'kūjì'], answer: 'gūjì', word: { id: 'diag-guji', hanzi: '估计', pinyin: 'gūjì', translation: 'предполагать; оценивать', priority: 'B' } },
+    { id: 'v19', type: 'pinyin', prompt: '仍然', options: ['réngrán', 'rēngrán', 'réngránɡ', 'rěngrán'], answer: 'réngrán', word: { id: 'diag-rengran', hanzi: '仍然', pinyin: 'réngrán', translation: 'по-прежнему; всё ещё', priority: 'B' } },
+    { id: 'v20', type: 'pinyin', prompt: '及时', options: ['jíshí', 'jǐshí', 'jíshì', 'jīshí'], answer: 'jíshí', word: { id: 'diag-jishi', hanzi: '及时', pinyin: 'jíshí', translation: 'своевременно', priority: 'B' } },
+    { id: 'v21', type: 'pinyin', prompt: '丰富', options: ['fēngfù', 'fěngfù', 'fēngfú', 'fèngfù'], answer: 'fēngfù', word: { id: 'diag-fengfu', hanzi: '丰富', pinyin: 'fēngfù', translation: 'богатый; разнообразный', priority: 'B' } },
+    { id: 'v22', type: 'pinyin', prompt: '复杂', options: ['fùzá', 'fǔzá', 'fùzǎ', 'fúzá'], answer: 'fùzá', word: { id: 'diag-fuza', hanzi: '复杂', pinyin: 'fùzá', translation: 'сложный', priority: 'B' } },
+    { id: 'v23', type: 'pinyin', prompt: '法律', options: ['fǎlǜ', 'fālǜ', 'fǎlù', 'fálǜ'], answer: 'fǎlǜ', word: { id: 'diag-falu', hanzi: '法律', pinyin: 'fǎlǜ', translation: 'закон; право', priority: 'B' } },
+
+    { id: 'v24', type: 'context', prompt: '大家都同意把会议___到下周。', options: ['推迟', '提前', '提高', '推断'], answer: '推迟', word: { id: 'diag-tuichi', hanzi: '推迟', pinyin: 'tuīchí', translation: 'откладывать; переносить на позже', priority: 'B' } },
+    { id: 'v25', type: 'context', prompt: '两个人应该互相支持，互相___。', options: ['信任', '怀疑', '竞争', '批评'], answer: '信任', word: { id: 'diag-xinren', hanzi: '信任', pinyin: 'xìnrèn', translation: 'доверять', priority: 'B' } },
+    { id: 'v26', type: 'context', prompt: '只有学会___的人，才能更好地安排生活。', options: ['选择', '后悔', '坚持', '保护'], answer: '选择', word: { id: 'diag-xuanze', hanzi: '选择', pinyin: 'xuǎnzé', translation: 'выбирать; выбор', priority: 'B' } },
+    { id: 'v27', type: 'context', prompt: '新闻里的数字应该准确，这才是对读者___。', options: ['负责', '满意', '熟悉', '适应'], answer: '负责', word: { id: 'diag-fuze', hanzi: '负责', pinyin: 'fùzé', translation: 'нести ответственность; отвечать за', priority: 'B' } },
+    { id: 'v28', type: 'context', prompt: '要想减肥成功，一定要坚持，否则很难有___。', options: ['效果', '结果', '作用', '条件'], answer: '效果', word: { id: 'diag-xiaoguo', hanzi: '效果', pinyin: 'xiàoguǒ', translation: 'эффект; результат действия', priority: 'B' } },
+    { id: 'v29', type: 'context', prompt: '他常常帮助有困难的人，所以获得了大家的___。', options: ['尊重', '羡慕', '关心', '理解'], answer: '尊重', word: { id: 'diag-zunzhong', hanzi: '尊重', pinyin: 'zūnzhòng', translation: 'уважать; уважение', priority: 'B' } },
+    { id: 'v30', type: 'context', prompt: '刚到高原时身体不舒服，过一段时间就会逐渐___。', options: ['适应', '适合', '接受', '了解'], answer: '适应', word: { id: 'diag-shiying', hanzi: '适应', pinyin: 'shìyìng', translation: 'приспосабливаться; адаптироваться', priority: 'B' } },
+  ],
+
+  grammar: [
+    { id: 'g01', prompt: '他___会说汉语，而且会说法语。', options: ['不仅', '即使', '只有', '除了'], answer: '不仅', topic: '不仅……而且……' },
+    { id: 'g02', prompt: '___明天下雨，我们也要按计划出发。', options: ['即使', '虽然', '只要', '因为'], answer: '即使', topic: '即使……也……' },
+    { id: 'g03', prompt: '___认真复习，___能真正发现自己的问题。', options: ['只有……才', '只要……就', '虽然……但是', '因为……所以'], answer: '只有……才', topic: '只有……才……' },
+    { id: 'g04', prompt: '___每天坚持听十分钟，听力___会慢慢提高。', options: ['只要……就', '只有……才', '即使……也', '除了……以外'], answer: '只要……就', topic: '只要……就……' },
+    { id: 'g05', prompt: '___今天很忙，___他还是来参加会议了。', options: ['虽然……但是', '因为……所以', '既然……就', '无论……都'], answer: '虽然……但是', topic: '虽然……但是……' },
+    { id: 'g06', prompt: '请___窗户关上，外面太冷了。', options: ['把', '被', '给', '让'], answer: '把', topic: '把字句' },
+    { id: 'g07', prompt: '我的自行车___朋友借走了。', options: ['被', '把', '向', '让给'], answer: '被', topic: '被字句' },
+    { id: 'g08', prompt: '天气___冷了，出门要多穿一点儿。', options: ['越来越', '越', '更更', '一直比'], answer: '越来越', topic: '越来越……' },
+    { id: 'g09', prompt: '她___听音乐，___整理房间。', options: ['一边……一边', '一……就', '又……又', '越……越'], answer: '一边……一边', topic: '一边……一边……' },
+    { id: 'g10', prompt: '___你已经决定了，___认真准备吧。', options: ['既然……就', '虽然……但是', '只要……就', '无论……都'], answer: '既然……就', topic: '既然……就……' },
+    { id: 'g11', prompt: '___遇到什么问题，他___会先想办法解决。', options: ['无论……都', '即使……也', '只有……才', '不仅……而且'], answer: '无论……都', topic: '无论……都……' },
+    { id: 'g12', prompt: '___汉语___，她还会说英语和日语。', options: ['除了……以外', '虽然……但是', '既然……就', '连……也'], answer: '除了……以外', topic: '除了……以外……' },
+    { id: 'g13', prompt: '___这个问题，我还需要再考虑一下。', options: ['对于', '由于', '为了', '关于在'], answer: '对于', topic: '对于……' },
+    { id: 'g14', prompt: '___路上堵车，___他迟到了二十分钟。', options: ['由于……所以', '虽然……但是', '只要……就', '既然……就'], answer: '由于……所以', topic: '由于……所以……' },
+    { id: 'g15', prompt: '他太忙了，___午饭___没时间吃。', options: ['连……也', '不仅……而且', '一边……一边', '越……越'], answer: '连……也', topic: '连……也……' },
+  ],
+
+  listeningBlocks: [
+    {
+      id: 'lblock1',
+      title: 'HSK 听力 · 第1–5题',
+      instruction: 'Прослушай блок один раз и отметь, верно ли утверждение.',
+      audio: '/audio/diagnostic/h41005-q01-05.mp3',
+      items: [
+        { id: 'l01', number: 1, prompt: '很多学生希望出国留学。', options: ['对', '错'], answer: '对', audio: '/audio/diagnostic/h41005-q01.mp3', category: '主要意思' },
+        { id: 'l02', number: 2, prompt: '他想参加网球比赛。', options: ['对', '错'], answer: '错', audio: '/audio/diagnostic/h41005-q02.mp3', category: '信息判断' },
+        { id: 'l03', number: 3, prompt: '年轻人应该相信自己。', options: ['对', '错'], answer: '对', audio: '/audio/diagnostic/h41005-q03.mp3', category: '主要意思' },
+        { id: 'l04', number: 4, prompt: '他们要坐地铁。', options: ['对', '错'], answer: '错', audio: '/audio/diagnostic/h41005-q04.mp3', category: '交通 / 地点' },
+        { id: 'l05', number: 5, prompt: '阳光的作用很大。', options: ['对', '错'], answer: '对', audio: '/audio/diagnostic/h41005-q05.mp3', category: '主要意思' },
+      ],
+    },
+    {
+      id: 'lblock2',
+      title: 'HSK 听力 · 第11–15题',
+      instruction: 'Прослушай пять коротких диалогов один раз и выбери ответы.',
+      audio: '/audio/diagnostic/h41005-q11-15.mp3',
+      items: [
+        { id: 'l11', number: 11, prompt: '女的原来的职业是什么？', options: ['医生', '护士', '老师', '售货员'], answer: '老师', audio: '/audio/diagnostic/h41005-q11.mp3', category: '职业' },
+        { id: 'l12', number: 12, prompt: '男的觉得哪种女孩子比较好？', options: ['聪明', '勇敢', '活泼可爱', '个子矮的'], answer: '活泼可爱', audio: '/audio/diagnostic/h41005-q12.mp3', category: '人物特点' },
+        { id: 'l13', number: 13, prompt: '女的明天几点到北京？', options: ['早上7：40', '上午8点半', '14：20', '19：35'], answer: '早上7：40', audio: '/audio/diagnostic/h41005-q13.mp3', category: '时间' },
+        { id: 'l14', number: 14, prompt: '那辆车的司机怎么了？', options: ['喝酒了', '发烧了', '不敢开车', '车开得不好'], answer: '车开得不好', audio: '/audio/diagnostic/h41005-q14.mp3', category: '推断' },
+        { id: 'l15', number: 15, prompt: '女的准备给谁打电话？', options: ['父亲', '母亲', '丈夫', '孩子'], answer: '母亲', audio: '/audio/diagnostic/h41005-q15.mp3', category: '人物关系' },
+      ],
+    },
+    {
+      id: 'lblock3',
+      title: 'HSK 听力 · 第26–30题',
+      instruction: 'Прослушай более длинные диалоги один раз и выбери ответы.',
+      audio: '/audio/diagnostic/h41005-q26-30.mp3',
+      items: [
+        { id: 'l26', number: 26, prompt: '经理让男的做什么？', options: ['道歉', '写总结', '翻译文章', '感谢女的'], answer: '写总结', audio: '/audio/diagnostic/h41005-q26.mp3', category: '目的 / 任务' },
+        { id: 'l27', number: 27, prompt: '那个塑料袋是什么颜色的？', options: ['白', '黑', '黄', '红'], answer: '红', audio: '/audio/diagnostic/h41005-q27.mp3', category: '细节' },
+        { id: 'l28', number: 28, prompt: '女的是什么看法？', options: ['学中文', '别有压力', '别打扰孩子', '让孩子决定'], answer: '让孩子决定', audio: '/audio/diagnostic/h41005-q28.mp3', category: '态度' },
+        { id: 'l29', number: 29, prompt: '他们在谈什么？', options: ['考试场地', '周围环境', '银行地址', '参观人数'], answer: '考试场地', audio: '/audio/diagnostic/h41005-q29.mp3', category: '主要意思' },
+        { id: 'l30', number: 30, prompt: '他们最可能在哪儿？', options: ['超市', '商店', '饭馆儿', '大使馆'], answer: '饭馆儿', audio: '/audio/diagnostic/h41005-q30.mp3', category: '地点 / 推断' },
+      ],
+    },
+  ],
+
+  reading: [
+    { id: 'r66', number: 66, passage: '首都体育馆今天晚上有活动，等活动结束的时候人肯定很多，你和女儿还是提前一点儿出发吧，我怕会堵车。', prompt: '提前出发是为了：', options: ['参加活动', '观看表演', '错开堵车', '去接儿子'], answer: '错开堵车', category: '目的' },
+    { id: 'r67', number: 67, passage: '在教育孩子时，我们应该少批评、多鼓励。孩子在受到表扬时，往往会对自己更有信心，对学习的兴趣也会更大，成绩当然会提高。', prompt: '应该怎样教育孩子？', options: ['不能批评', '要多鼓励', '重视成绩', '信任孩子'], answer: '要多鼓励', category: '主要意思' },
+    { id: 'r68', number: 68, passage: '大家都说：便宜没好货，好货不便宜。其实不一定都是这样的。有的时候，质量很好的东西也会很便宜。例如，春天来了，冬天的衣服就会打折，质量很好，也很便宜，花很少的钱就可以买到。', prompt: '根据这段话，质量很好的东西：', options: ['当然很贵', '不会打折', '不受顾客欢迎', '有时候也便宜'], answer: '有时候也便宜', category: '细节 / 转折' },
+    { id: 'r69', number: 69, passage: '一群性格各不相同的年轻人，几个酸甜苦辣的爱情故事，一段经历了半个世纪的美好回忆。由孙俪等著名演员主演，电视剧《血色浪漫》，星期日晚上8点，欢迎您继续收看。', prompt: '这段话最可能是：', options: ['广告', '京剧', '小说', '日记'], answer: '广告', category: '体裁判断' },
+    { id: 'r70', number: 70, passage: '昨天的放弃决定了今天的选择，今天的选择决定了明天的生活。只有懂得放弃和学会选择的人，才能赢得精彩的生活。', prompt: '这段话告诉我们，学会放弃：', options: ['值得原谅', '是个缺点', '能减少竞争', '会有更多选择'], answer: '会有更多选择', category: '推断' },
+    { id: 'r71', number: 71, passage: '小刘，这方面的问题我也不太懂，不过我有一个亲戚是律师，我给你他的电话号码，有什么问题，你可以直接问他。', prompt: '小刘想了解哪方面的情况？', options: ['艺术', '汉语', '法律', '语言'], answer: '法律', category: '关键词' },
+    { id: 'r72', number: 72, passage: '森林里有一种植物，它开的花比普通的花大很多，并且特别香。这种植物会用它的香味吸引来一些小动物，然后把它们吃掉。', prompt: '这种植物：', options: ['花很香', '花很漂亮', '夏天才开', '没有叶子'], answer: '花很香', category: '细节' },
+    { id: 'r73', number: 73, passage: '你有一个苹果，我有一个香蕉，把我的给你，把你的给我，每个人仍仅有一个水果；你有一个想法，我有一个想法，把我的告诉你，把你的告诉我，每个人就有了两个想法。', prompt: '这段话的主要意思是：', options: ['要关心别人', '要多吃水果', '交流很重要', '做事情要耐心'], answer: '交流很重要', category: '主要意思' },
+    { id: 'r74', number: 74, passage: '他这些年做生意赚了不少钱，还拿出很大一部分去帮助那些经济有困难的人，所以获得了大家的尊重。', prompt: '他为什么获得了尊重？', options: ['年龄大', '脾气好', '他是富人', '帮助穷人'], answer: '帮助穷人', category: '原因' },
+    { id: 'r75', number: 75, passage: '当我们与别人见面握手时，注意要按顺序一个一个来。如果你与一个人握手的时候，用另外一只手去和其他人握手，那是极其不礼貌的。', prompt: '握手时要注意：', options: ['力气要大', '动作要慢', '按顺序来', '不要戴帽子'], answer: '按顺序来', category: '细节 / 规则' },
+  ],
+
+  writingOrder: [
+    { id: 'w86', number: 86, tokens: ['你', '关了', '把窗户', '吗'], answer: '你把窗户关了吗？' },
+    { id: 'w87', number: 87, tokens: ['拉近', '了', '人与人之间的', '手机', '距离'], answer: '手机拉近了人与人之间的距离。' },
+    { id: 'w88', number: 88, tokens: ['去年秋天', '我孙子', '出生', '是', '的'], answer: '我孙子是去年秋天出生的。' },
+    { id: 'w89', number: 89, tokens: ['打针', '好', '比吃药', '效果'], answer: '打针比吃药效果好。' },
+    { id: 'w90', number: 90, tokens: ['这个城市', '出租车的数量', '决定', '增加'], answer: '这个城市决定增加出租车的数量。' },
+  ],
+
+  writingPictures: [
+    { id: 'w96', number: 96, image: '/assets/diagnostic/h41005-writing-96.png', keyword: '消息', reference: '这个消息让他非常高兴。' },
+    { id: 'w97', number: 97, image: '/assets/diagnostic/h41005-writing-97.png', keyword: '猜', reference: '你猜我给你带什么了。' },
+  ],
+
+  speaking: {
+    repeat: [
+      { id: 'srep1', source: 'H81002 · 第1题', audio: '/audio/diagnostic/h81002-repeat-01.mp3', target: '上周五的会议我参加了。' },
+      { id: 'srep2', source: 'H81002 · 第2题', audio: '/audio/diagnostic/h81002-repeat-02.mp3', target: '他们学校有三百年的历史。' },
+      { id: 'srep3', source: 'H81002 · 第3题', audio: '/audio/diagnostic/h81002-repeat-03.mp3', target: '春节是中国最重要的节日。' },
+    ],
+    picture: {
+      id: 'spicture',
+      source: 'H81002 · 第11题',
+      image: '/assets/diagnostic/h81002-picture-11.png',
+      minSeconds: 15,
+      minCharacters: 20,
+      categories: [
+        { id: 'person', label: 'назван человек', keywords: ['男的', '男人', '男生', '他', '一个人', '年轻人'] },
+        { id: 'action', label: 'описано действие', keywords: ['打电话', '电话', '手机', '聊天', '说话', '接电话'] },
+        { id: 'place', label: 'есть место или положение', keywords: ['坐', '椅子', '沙发', '房间', '家里', '室内'] },
+        { id: 'feeling', label: 'есть оценка или предположение', keywords: ['笑', '高兴', '开心', '可能', '好像', '看起来', '觉得'] },
+      ],
+    },
+    question: {
+      id: 'squestion',
+      source: 'H81002 · 第13题',
+      prompt: '请介绍你的一次旅游经历。',
+      pinyin: 'Qǐng jièshào nǐ de yí cì lǚyóu jīnglì.',
+      minSeconds: 20,
+      minCharacters: 25,
+      categories: [
+        { id: 'trip', label: 'есть тема поездки', keywords: ['旅游', '旅行', '出去', '去了', '去过'] },
+        { id: 'time', label: 'есть время', keywords: ['去年', '今年', '上次', '以前', '时候', '有一次', '暑假', '寒假'] },
+        { id: 'activity', label: 'есть действие или событие', keywords: ['参观', '玩', '吃', '看', '爬山', '拍照', '游泳', '买', '坐', '住'] },
+        { id: 'feeling', label: 'есть личная оценка', keywords: ['高兴', '开心', '喜欢', '有意思', '难忘', '累', '觉得', '很好', '漂亮'] },
+      ],
+    },
+  },
+}
+
+export default diagnosticData

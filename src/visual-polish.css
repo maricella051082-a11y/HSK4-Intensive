@@ -1,0 +1,1083 @@
+/* HSK4 Intensive · Phase 5 visual polish
+   CSS-only presentation layer. No learning logic or Firebase behavior lives here. */
+
+:root {
+  color-scheme: light;
+  --text: #6b6375;
+  --text-h: #08060d;
+  --bg: #fff;
+  --border: #e5e4e7;
+  --code-bg: #f4f3ec;
+  --accent: #6f8563;
+  --accent-bg: rgba(111, 133, 99, 0.11);
+  --accent-border: rgba(111, 133, 99, 0.38);
+  --social-bg: rgba(244, 243, 236, 0.5);
+  --shadow: rgba(57, 47, 37, 0.10) 0 10px 28px -10px;
+}
+
+html { background: #f4ead8; }
+body { -webkit-tap-highlight-color: transparent; }
+img, audio, video { max-width: 100%; }
+button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
+  outline: 3px solid rgba(91, 120, 99, .26);
+  outline-offset: 2px;
+}
+
+/* ---------- Admin: readable working surface ---------- */
+.admin-shell { max-width: 1240px; }
+.admin-header,
+.admin-content-nav,
+.admin-editor,
+.admin-user-list,
+.admin-student-main,
+.admin-metric,
+.admin-info-card,
+.admin-diagnostic-card {
+  box-shadow: 0 10px 28px rgba(67, 55, 41, .045);
+}
+
+.admin-student-layout {
+  grid-template-columns: minmax(210px, 250px) minmax(0, 1fr);
+  gap: 18px;
+}
+.admin-student-main,
+.admin-attempt-meta,
+.admin-hskk-feedback > div:last-child { min-width: 0; }
+.admin-student-head { align-items: center; }
+.admin-student-head span { text-align: right; }
+
+/* HSKK recordings contain too much information for two narrow cards.
+   Keep each attempt as one clear horizontal row and place feedback below it. */
+.admin-attempt-list {
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+.admin-attempt-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "meta player"
+    "feedback feedback";
+  align-items: start;
+  gap: 14px 20px;
+  padding: 18px 19px;
+  background: #fffefa;
+  border-radius: 18px;
+}
+.admin-attempt-meta { grid-area: meta; }
+.admin-attempt-meta strong {
+  font-size: 16px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.admin-attempt-meta span,
+.admin-attempt-meta small {
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+.admin-audio-player {
+  grid-area: player;
+  min-width: 150px;
+  justify-self: end;
+  align-self: center;
+}
+.admin-audio-player button {
+  min-height: 44px;
+  white-space: nowrap;
+  background: #f8f4ec;
+  border-color: #d9d0c2;
+}
+.admin-audio-player audio { width: min(300px, 34vw); }
+.admin-hskk-feedback {
+  grid-area: feedback;
+  width: 100%;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 15px;
+  margin: 0;
+  padding: 14px;
+  border: 1px solid #e8dfd3;
+  background: #f8f4ec;
+}
+.admin-feedback-score {
+  min-height: 88px;
+  background: #e8ede1;
+}
+.admin-feedback-score b { font-size: 1.55rem; color: #3e5544; }
+.admin-hskk-feedback p {
+  margin: 0 0 7px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+.admin-hskk-feedback small {
+  display: block;
+  color: #81776e;
+  line-height: 1.45;
+}
+.admin-feedback-tags { gap: 6px; }
+.admin-feedback-tags span { line-height: 1.3; }
+
+.admin-progress-grid { gap: 12px; }
+.admin-progress-grid > div { min-width: 0; }
+.admin-progress-grid strong,
+.admin-progress-grid small { overflow-wrap: anywhere; }
+.admin-user-list button { min-height: 58px; }
+.admin-editor input,
+.admin-editor textarea,
+.admin-editor select,
+.admin-select-row select,
+.admin-search { min-height: 44px; }
+.admin-editor textarea { line-height: 1.5; }
+
+/* ---------- Dashboard ---------- */
+.dashboard-shell { width: min(1100px, 100%); }
+.dashboard-hero,
+.dashboard-action-card,
+.dashboard-panel,
+.dashboard-skill-card,
+.dashboard-listening-category-grid article,
+.dashboard-exam-card {
+  box-shadow: 0 8px 24px rgba(74, 60, 44, .035);
+}
+.dashboard-skill-card,
+.dashboard-listening-category-grid article,
+.dashboard-panel,
+.dashboard-exam-card {
+  transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+}
+@media (hover:hover) {
+  .dashboard-skill-card:hover,
+  .dashboard-listening-category-grid article:hover,
+  .dashboard-exam-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(74, 60, 44, .07);
+  }
+}
+.dashboard-section-title h2 { line-height: 1.25; }
+.dashboard-section-title p { line-height: 1.5; }
+.dashboard-listening-category-grid article { min-width: 0; }
+.dashboard-listening-category-grid article span,
+.dashboard-listening-category-grid article small { overflow-wrap: anywhere; }
+
+/* ---------- Lesson day + universal activities ---------- */
+.lesson-engine-shell { width: min(1020px, 100%); }
+.lesson-engine-hero,
+.lesson-mode-section,
+.lesson-adaptive-recommendation,
+.engine-activity {
+  box-shadow: 0 8px 26px rgba(74, 58, 40, .035);
+}
+.engine-activity {
+  overflow: hidden;
+  border-color: rgba(107, 91, 70, .16);
+}
+.engine-activity-title-row,
+.engine-prompt,
+.engine-description,
+.engine-passage,
+.engine-speaking-prompt,
+.engine-speaking-support,
+.engine-live-transcript,
+.engine-speech-analysis,
+.engine-reference-answer,
+.engine-shadowing-stage,
+.engine-speaking-history article {
+  overflow-wrap: anywhere;
+}
+.engine-activity-title-row h3 { line-height: 1.35; }
+.engine-description,
+.engine-passage,
+.engine-prompt { line-height: 1.65; }
+.engine-choice-grid button,
+.engine-order-answer button,
+.engine-order-bank button,
+.engine-recorder button,
+.engine-audio-play-button,
+.engine-check-button,
+.engine-retry-button,
+.engine-complete-button,
+.engine-primary-link {
+  min-height: 44px;
+}
+.engine-choice-grid button { line-height: 1.4; }
+.engine-speaking-image,
+.engine-writing-image { height: auto; }
+.engine-recorder button { max-width: 100%; }
+.engine-speech-analysis { border: 1px solid rgba(106, 121, 91, .10); }
+.engine-shadowing-stage-head { align-items: center; }
+
+/* ---------- Checkpoints / final exam week ---------- */
+.checkpoint-shell { max-width: 1160px; }
+.checkpoint-hero,
+.checkpoint-rules,
+.checkpoint-result-banner,
+.checkpoint-finish,
+.final-week-hero,
+.final-answer-sheet,
+.final-writing-sheet,
+.final-mock-result,
+.final-repair-day,
+.final-report,
+.hskk-prep-panel,
+.hskk-live-panel,
+.hskk-review-panel {
+  box-shadow: 0 9px 28px rgba(66, 54, 41, .035);
+}
+.checkpoint-section-heading { gap: 14px; }
+.checkpoint-section-heading > * { min-width: 0; }
+.final-week-shell { max-width: 1220px; }
+.final-tabs { overflow-x: auto; scrollbar-width: thin; padding-bottom: 2px; }
+.final-tabs button { min-height: 42px; white-space: nowrap; }
+.final-answer-item button,
+.final-self-buttons button,
+.repair-reading-list button,
+.repair-tf-grid button,
+.voice-recorder button,
+.final-primary,
+.final-audio-start,
+.final-day-finish button { min-height: 44px; }
+.final-writing-sheet textarea { width: 100%; min-width: 0; line-height: 1.5; }
+.final-listening-answer-panel { border-color: #d4cabc; }
+.final-listening-answer-panel .final-answer-item button { min-height: 32px; }
+
+/* ---------- Course catalog ---------- */
+.course-card,
+.course-final-week,
+.courses-hero {
+  box-shadow: 0 8px 24px rgba(67, 54, 40, .035);
+}
+.course-card { min-width: 0; }
+.course-card h2,
+.course-card p { overflow-wrap: anywhere; }
+.course-day-links a { min-height: 40px; display: inline-flex; align-items: center; }
+
+/* ---------- Firebase status ---------- */
+.firebase-cloud-badge {
+  border-color: rgba(87, 77, 66, .14);
+  box-shadow: 0 10px 28px rgba(49, 40, 31, .10);
+}
+.firebase-cloud-badge button { min-height: 32px; }
+
+/* ---------- Tablet ---------- */
+@media (max-width: 1050px) {
+  .admin-student-layout { grid-template-columns: 1fr; }
+  .admin-user-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .admin-user-list h2 { grid-column: 1 / -1; }
+  .admin-user-list button { margin: 0; }
+  .admin-student-head span { text-align: left; }
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 700px) {
+  .admin-page { padding-inline: 10px; }
+  .admin-header h1 { font-size: clamp(28px, 9vw, 36px); }
+  .admin-header span { line-height: 1.4; }
+  .admin-user-list { grid-template-columns: 1fr; }
+  .admin-student-main { padding: 15px; }
+  .admin-student-head { align-items: stretch; }
+  .admin-attempt-card {
+    grid-template-columns: 1fr;
+    grid-template-areas: "meta" "player" "feedback";
+    gap: 12px;
+    padding: 15px;
+  }
+  .admin-audio-player { justify-self: stretch; width: 100%; }
+  .admin-audio-player button,
+  .admin-audio-player audio { width: 100%; max-width: 100%; }
+  .admin-hskk-feedback { grid-template-columns: 1fr; padding: 12px; }
+  .admin-feedback-score {
+    min-height: 0;
+    padding: 10px 12px;
+    flex-direction: row;
+    gap: 8px;
+    justify-content: flex-start;
+  }
+  .admin-progress-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .admin-tabs { scrollbar-width: none; }
+  .admin-tabs::-webkit-scrollbar { display: none; }
+
+  .dashboard-page { padding-inline: 10px; }
+  .dashboard-hero,
+  .dashboard-action-card,
+  .dashboard-readiness,
+  .dashboard-panel-head,
+  .dashboard-exam-card { align-items: flex-start; }
+  .dashboard-skill-grid { grid-template-columns: 1fr; }
+  .dashboard-two-column { grid-template-columns: 1fr; }
+  .dashboard-listening-category-grid { grid-template-columns: 1fr; }
+
+  .lesson-engine-page { padding-inline: 10px; }
+  .lesson-engine-day-nav { align-items: stretch; }
+  .lesson-engine-day-nav a { flex: 1; text-align: center; min-height: 44px; display: grid; place-items: center; }
+  .engine-activity { padding: 17px 14px; border-radius: 17px; }
+  .engine-choice-grid { grid-template-columns: 1fr; }
+  .engine-check-button { min-width: 0; width: 100%; }
+  .engine-recorder button { width: 100%; min-width: 0; }
+  .engine-writing-textarea { font-size: 16px; }
+  .engine-speaking-prompt .chinese-text,
+  .engine-repeat-target .chinese-text { font-size: 19px; }
+
+  .checkpoint-page { padding-inline: 10px; }
+  .checkpoint-section-heading { align-items: flex-start; flex-direction: column; }
+
+  .final-week-shell { padding-inline: 10px; }
+  .final-week-topbar { height: auto; min-height: 52px; gap: 10px; flex-wrap: wrap; }
+  .final-week-topbar > div { gap: 12px; }
+  .final-week-focus { align-items: flex-start; flex-direction: column; gap: 7px; }
+  .final-score-grid,
+  .final-report-grid { grid-template-columns: 1fr; }
+  .final-week-map > div { grid-template-columns: 1fr 1fr; }
+  .final-answer-sheet,
+  .final-writing-sheet,
+  .final-mock-result,
+  .final-repair-day,
+  .final-report { padding: 17px 14px; border-radius: 18px; }
+  .final-writing-sheet label { grid-template-columns: 32px minmax(0,1fr); }
+
+  .courses-page { padding-inline: 10px; }
+  .course-card { grid-template-columns: 44px minmax(0,1fr); padding: 15px; }
+  .course-card-number { width: 40px; height: 40px; }
+  .course-final-week { grid-template-columns: 44px minmax(0,1fr); padding: 17px 15px; }
+
+  /* Keep cloud status visible without covering page headers. */
+  .firebase-cloud-badge {
+    top: auto !important;
+    right: 10px;
+    bottom: max(10px, env(safe-area-inset-bottom));
+    max-width: calc(100vw - 20px);
+    grid-template-columns: 9px minmax(0,1fr) auto auto;
+  }
+}
+
+@media (max-width: 430px) {
+  .admin-progress-grid { grid-template-columns: 1fr; }
+  .admin-header-actions { width: 100%; }
+  .admin-header-actions a { width: 100%; text-align: center; }
+  .dashboard-lesson-progress { width: 100%; }
+  .final-week-map > div { grid-template-columns: 1fr; }
+  .firebase-cloud-badge small { max-width: 105px; }
+  .firebase-cloud-badge button { padding-inline: 7px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation-duration: .001ms !important; animation-iteration-count: 1 !important; }
+}
+
+
+/* HSK4 Intensive · Phase 6 Chinese visual identity
+   Presentation-only overlay: 宣纸 paper, ink, jade and restrained cinnabar accents.
+   No learning, scoring, routing or Firebase logic lives here. */
+
+:root {
+  --cn-paper: #f7f1e5;
+  --cn-paper-soft: #fbf8f1;
+  --cn-paper-deep: #eee4d1;
+  --cn-ink: #27231f;
+  --cn-ink-soft: #5f574f;
+  --cn-jade: #536c5c;
+  --cn-jade-dark: #344c40;
+  --cn-jade-pale: #e6ece4;
+  --cn-cinnabar: #a94b3b;
+  --cn-cinnabar-dark: #85362c;
+  --cn-cinnabar-pale: #f4e6e0;
+  --cn-gold: #b08b50;
+  --cn-gold-soft: #d9c49f;
+  --cn-line: rgba(118, 93, 62, .20);
+  --cn-shadow: 0 15px 40px rgba(66, 48, 30, .07);
+  --cn-shadow-soft: 0 8px 24px rgba(66, 48, 30, .045);
+}
+
+html { background: var(--cn-paper); }
+
+body {
+  color: var(--cn-ink);
+  background:
+    linear-gradient(rgba(249, 245, 236, .89), rgba(249, 245, 236, .94)),
+    radial-gradient(circle at 13% 12%, rgba(169, 75, 59, .075), transparent 20%),
+    radial-gradient(circle at 86% 16%, rgba(83, 108, 92, .10), transparent 25%),
+    radial-gradient(circle at 58% 82%, rgba(176, 139, 80, .065), transparent 24%),
+    repeating-linear-gradient(0deg, rgba(84, 66, 45, .016) 0 1px, transparent 1px 5px),
+    var(--cn-paper);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: .34;
+  background:
+    radial-gradient(ellipse at 8% 28%, transparent 0 18px, rgba(83,108,92,.08) 19px 20px, transparent 21px 32px),
+    radial-gradient(ellipse at 93% 68%, transparent 0 22px, rgba(169,75,59,.055) 23px 24px, transparent 25px 38px);
+  background-size: 240px 180px, 280px 220px;
+}
+
+/* ---------- Header / identity ---------- */
+.brand-mark {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  background: linear-gradient(145deg, var(--cn-cinnabar) 0%, var(--cn-cinnabar-dark) 100%);
+  border: 1px solid rgba(121, 47, 38, .34);
+  box-shadow: 0 8px 22px rgba(112, 49, 37, .18), inset 0 0 0 4px rgba(255, 245, 226, .16);
+}
+.brand-mark::after {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgba(255, 239, 209, .60);
+  border-radius: 5px;
+  pointer-events: none;
+}
+.brand-mark .chinese-text,
+.brand-mark .chinese-text-main { color: #fffaf0 !important; }
+.brand h1 { font-family: Georgia, "Songti SC", "STSong", serif; letter-spacing: .01em; }
+.brand p { color: var(--cn-ink-soft); }
+
+.topbar {
+  position: relative;
+  padding-bottom: 17px;
+}
+.topbar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cn-gold-soft) 14%, var(--cn-cinnabar) 50%, var(--cn-gold-soft) 86%, transparent);
+  opacity: .55;
+}
+
+/* ---------- Shared Chinese card language ---------- */
+.daily-card,
+.focus-card,
+.dashboard-hero,
+.dashboard-action-card,
+.dashboard-readiness,
+.dashboard-panel,
+.dashboard-skill-card,
+.dashboard-listening-category-grid article,
+.dashboard-exam-card,
+.dashboard-diagnostic-profile,
+.lesson-engine-hero,
+.lesson-engine-progress-card,
+.lesson-mode-section,
+.lesson-adaptive-recommendation,
+.engine-activity,
+.courses-hero,
+.course-card,
+.course-final-week,
+.today-boundary-card,
+.checkpoint-hero,
+.checkpoint-rules,
+.checkpoint-result-banner,
+.final-week-hero,
+.final-answer-sheet,
+.final-writing-sheet,
+.final-mock-result,
+.final-repair-day,
+.final-report,
+.admin-header,
+.admin-metric,
+.admin-info-card,
+.admin-student-main,
+.admin-content-nav,
+.admin-editor,
+.admin-user-list,
+.admin-attempt-card,
+.admin-diagnostic-card {
+  border-color: var(--cn-line) !important;
+}
+
+.dashboard-hero,
+.lesson-engine-hero,
+.courses-hero,
+.admin-header,
+.today-boundary-card,
+.checkpoint-hero,
+.final-week-hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(255,253,247,.96), rgba(247,241,229,.92)),
+    var(--cn-paper-soft) !important;
+  box-shadow: var(--cn-shadow);
+}
+
+.dashboard-hero::before,
+.lesson-engine-hero::before,
+.courses-hero::before,
+.admin-header::before,
+.today-boundary-card::before,
+.checkpoint-hero::before,
+.final-week-hero::before {
+  content: "";
+  position: absolute;
+  width: 128px;
+  height: 128px;
+  right: -42px;
+  top: -46px;
+  border: 1px solid rgba(83,108,92,.12);
+  border-radius: 50%;
+  box-shadow:
+    -26px 28px 0 -24px rgba(83,108,92,.16),
+    -54px 52px 0 -50px rgba(169,75,59,.16);
+  pointer-events: none;
+}
+
+.dashboard-hero::after,
+.lesson-engine-hero::after,
+.courses-hero::after,
+.admin-header::after,
+.today-boundary-card::after,
+.checkpoint-hero::after,
+.final-week-hero::after {
+  content: "";
+  position: absolute;
+  left: 22px;
+  bottom: 0;
+  width: 74px;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--cn-cinnabar), var(--cn-gold));
+  opacity: .82;
+}
+
+/* ---------- Section titles ---------- */
+.dashboard-section-title h2,
+.admin-section-title h2,
+.lesson-mode-heading h2,
+.checkpoint-section-heading h2,
+.final-week-page h2,
+.courses-page h2,
+.admin-info-card h2,
+.admin-editor-head h2 {
+  color: var(--cn-ink);
+  font-family: Georgia, "Songti SC", "STSong", serif;
+}
+
+.dashboard-section-title > div:first-child,
+.admin-section-title > div:first-child,
+.lesson-mode-heading {
+  position: relative;
+}
+.dashboard-section-title > div:first-child::before,
+.admin-section-title > div:first-child::before,
+.lesson-mode-heading::before {
+  content: "";
+  position: absolute;
+  left: -13px;
+  top: .25em;
+  width: 4px;
+  height: 1.35em;
+  border-radius: 999px;
+  background: var(--cn-cinnabar);
+  opacity: .78;
+}
+
+.dashboard-kicker,
+.lesson-engine-kicker,
+.courses-hero > p:first-child,
+.admin-header > div:first-child > p,
+.eyebrow {
+  color: var(--cn-cinnabar-dark) !important;
+  letter-spacing: .12em;
+  font-weight: 700;
+}
+
+/* ---------- Buttons / active states ---------- */
+.dashboard-today-link,
+.today-boundary-primary,
+.lesson-finish-day button,
+.final-primary,
+.final-day-finish button,
+.engine-primary-link,
+.engine-complete-button,
+.admin-header-actions a,
+.admin-editor-actions button[type="submit"] {
+  background: linear-gradient(135deg, var(--cn-jade), var(--cn-jade-dark)) !important;
+  color: #fffdf7 !important;
+  border-color: var(--cn-jade-dark) !important;
+  box-shadow: 0 8px 18px rgba(52, 76, 64, .14);
+}
+
+.lesson-finish-day {
+  max-width: 860px;
+  margin-inline: auto;
+  background: rgba(255,253,247,.96) !important;
+  color: #26362e !important;
+  border-color: rgba(83,108,92,.28) !important;
+  box-shadow: 0 8px 20px rgba(52,76,64,.08) !important;
+}
+.lesson-finish-day p { color: #5e625d !important; }
+.lesson-finish-day button:disabled {
+  background: #d7ddd3 !important;
+  color: #69736c !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+}
+
+.dashboard-action-seal,
+.today-boundary-seal,
+.admin-seal {
+  background: linear-gradient(145deg, var(--cn-cinnabar), var(--cn-cinnabar-dark)) !important;
+  color: #fff8eb !important;
+  border-color: rgba(117, 45, 36, .30) !important;
+  box-shadow: inset 0 0 0 3px rgba(255,244,224,.14), 0 7px 18px rgba(112,49,37,.12);
+}
+
+.admin-tabs button.active,
+.course-day-links a:hover,
+.lesson-engine-day-nav a:hover,
+.dashboard-back:hover,
+.dashboard-panel > a:hover {
+  color: var(--cn-cinnabar-dark) !important;
+}
+
+.admin-tabs button.active {
+  border-bottom-color: var(--cn-cinnabar) !important;
+}
+
+/* ---------- Dashboard ---------- */
+.dashboard-page { color: var(--cn-ink); }
+.dashboard-lesson-progress,
+.lesson-engine-progress-card {
+  background: rgba(230,236,228,.72) !important;
+  border-color: rgba(83,108,92,.22) !important;
+}
+.dashboard-lesson-progress strong,
+.lesson-engine-progress-card strong,
+.dashboard-panel-head strong,
+.admin-progress-grid strong,
+.admin-metric strong { color: var(--cn-jade-dark) !important; }
+
+.dashboard-action-card {
+  background: linear-gradient(90deg, rgba(255,252,246,.97), rgba(244,238,224,.88)) !important;
+  border-left: 3px solid rgba(169,75,59,.66) !important;
+}
+
+.dashboard-skill-card,
+.dashboard-panel,
+.dashboard-listening-category-grid article,
+.dashboard-exam-card,
+.dashboard-diagnostic-profile {
+  background: rgba(255,253,248,.91) !important;
+  box-shadow: var(--cn-shadow-soft);
+}
+.dashboard-skill-card.strong { border-top-color: rgba(83,108,92,.70) !important; }
+.dashboard-skill-card.weak { border-top-color: rgba(169,75,59,.62) !important; }
+.dashboard-skill-track { background: #e7e0d3 !important; }
+.dashboard-skill-track span { background: linear-gradient(90deg, var(--cn-jade), #78907c) !important; }
+
+.dashboard-readiness {
+  background:
+    linear-gradient(115deg, rgba(52,76,64,.96), rgba(73,94,78,.93)) !important;
+  border-color: rgba(176,139,80,.42) !important;
+  color: #fffaf0 !important;
+}
+.dashboard-readiness strong,
+.dashboard-readiness .chinese-text,
+.dashboard-readiness span,
+.dashboard-readiness p { color: #fffaf0 !important; }
+
+/* ---------- Course catalogue ---------- */
+.course-card,
+.course-final-week {
+  background: rgba(255,253,248,.92) !important;
+  box-shadow: var(--cn-shadow-soft);
+}
+.course-card-number {
+  color: var(--cn-cinnabar-dark) !important;
+  border-color: rgba(169,75,59,.28) !important;
+  background: var(--cn-cinnabar-pale) !important;
+  font-family: Georgia, "Songti SC", serif;
+}
+.course-card-week { color: var(--cn-jade) !important; }
+.course-day-links a {
+  border-color: rgba(83,108,92,.22) !important;
+  background: rgba(230,236,228,.48) !important;
+  color: var(--cn-jade-dark) !important;
+}
+
+/* ---------- Lesson / activities ---------- */
+.lesson-engine-page { color: var(--cn-ink); }
+.lesson-engine-number {
+  color: var(--cn-cinnabar-dark) !important;
+  background: var(--cn-cinnabar-pale) !important;
+  border-color: rgba(169,75,59,.24) !important;
+}
+.lesson-mode-section,
+.lesson-adaptive-recommendation,
+.engine-activity {
+  background: rgba(255,253,248,.94) !important;
+}
+.lesson-mode-current,
+.lesson-mode-grid button.active {
+  border-color: rgba(83,108,92,.48) !important;
+  background: var(--cn-jade-pale) !important;
+}
+.lesson-engine-progress-fill,
+.engine-progress-fill,
+.checkpoint-progress-fill {
+  background: linear-gradient(90deg, var(--cn-jade), #7b927e) !important;
+}
+.engine-activity::before {
+  content: "";
+  display: block;
+  width: 42px;
+  height: 2px;
+  margin: -3px 0 13px;
+  background: linear-gradient(90deg, var(--cn-cinnabar), var(--cn-gold));
+  opacity: .58;
+}
+.engine-activity-title-row h3 { color: var(--cn-ink) !important; }
+.engine-choice-grid button,
+.engine-order-answer button,
+.engine-order-bank button,
+.engine-recorder button,
+.engine-audio-play-button,
+.engine-check-button,
+.engine-retry-button {
+  border-color: rgba(105,84,60,.22) !important;
+}
+
+/* ---------- Checkpoints / Week 12 ---------- */
+.checkpoint-page,
+.final-week-page { color: var(--cn-ink); }
+.checkpoint-rules,
+.checkpoint-result-banner,
+.checkpoint-finish,
+.final-answer-sheet,
+.final-writing-sheet,
+.final-mock-result,
+.final-repair-day,
+.final-report,
+.hskk-prep-panel,
+.hskk-live-panel,
+.hskk-review-panel {
+  background: rgba(255,253,248,.94) !important;
+}
+.checkpoint-section-heading span,
+.final-week-focus span { color: var(--cn-jade) !important; }
+.final-tabs button.active {
+  background: var(--cn-jade-pale) !important;
+  color: var(--cn-jade-dark) !important;
+  border-color: rgba(83,108,92,.30) !important;
+}
+.final-listening-answer-panel {
+  background: rgba(250,246,237,.98) !important;
+  box-shadow: -10px 0 30px rgba(66,48,30,.055);
+}
+
+/* ---------- Admin ---------- */
+.admin-page { color: var(--cn-ink); }
+.admin-header {
+  border-top: 3px solid rgba(169,75,59,.60) !important;
+}
+.admin-metric,
+.admin-info-card,
+.admin-student-main,
+.admin-content-nav,
+.admin-editor,
+.admin-user-list,
+.admin-attempt-card,
+.admin-diagnostic-card {
+  background: rgba(255,253,248,.94) !important;
+  box-shadow: var(--cn-shadow-soft);
+}
+.admin-progress-grid > div {
+  background: linear-gradient(145deg, rgba(247,244,235,.98), rgba(236,232,220,.72)) !important;
+  border-color: rgba(118,93,62,.15) !important;
+  position: relative;
+  overflow: hidden;
+}
+.admin-progress-grid > div::after {
+  content: "";
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  right: -13px;
+  bottom: -13px;
+  border: 1px solid rgba(169,75,59,.13);
+  border-radius: 50%;
+}
+.admin-user-list button.active,
+.admin-activity-list button.active {
+  background: var(--cn-jade-pale) !important;
+  border-color: rgba(83,108,92,.35) !important;
+}
+.admin-hskk-feedback {
+  background: linear-gradient(135deg, #f8f3e8, #f4eee1) !important;
+  border-color: rgba(176,139,80,.20) !important;
+}
+.admin-feedback-score {
+  background: var(--cn-jade-pale) !important;
+  border: 1px solid rgba(83,108,92,.16);
+}
+.admin-feedback-score.low,
+.admin-feedback-score.weak { background: var(--cn-cinnabar-pale) !important; }
+.admin-feedback-tags span.ok {
+  background: var(--cn-jade-pale) !important;
+  color: var(--cn-jade-dark) !important;
+}
+
+/* ---------- Inputs ---------- */
+input, select, textarea {
+  background: rgba(255,254,250,.96);
+  border-color: rgba(105,84,60,.22) !important;
+  color: var(--cn-ink);
+}
+input:focus, select:focus, textarea:focus {
+  border-color: rgba(83,108,92,.54) !important;
+  box-shadow: 0 0 0 3px rgba(83,108,92,.10) !important;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 700px) {
+  body {
+    background:
+      linear-gradient(rgba(249,245,236,.95), rgba(249,245,236,.97)),
+      radial-gradient(circle at 88% 10%, rgba(83,108,92,.08), transparent 24%),
+      var(--cn-paper);
+  }
+  body::before { opacity: .18; background-size: 190px 150px, 210px 170px; }
+  .topbar { padding-bottom: 12px; }
+  .brand-mark { width: 52px; height: 52px; font-size: 31px; }
+  .dashboard-hero::before,
+  .lesson-engine-hero::before,
+  .courses-hero::before,
+  .admin-header::before,
+  .today-boundary-card::before,
+  .checkpoint-hero::before,
+  .final-week-hero::before { width: 92px; height: 92px; opacity: .7; }
+  .dashboard-section-title > div:first-child::before,
+  .admin-section-title > div:first-child::before,
+  .lesson-mode-heading::before { left: -9px; width: 3px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-skill-card,
+  .course-card,
+  .engine-activity { transform: none !important; }
+}
+
+/* =========================================================
+   Phase 6.1 · Layout stability guard
+   Visual-only safety layer. Keeps existing content/tooltips/logic intact.
+   ========================================================= */
+
+/* Neutralize the old Vite starter shell that was still influencing every page. */
+html,
+body,
+#root {
+  width: 100%;
+  max-width: none;
+}
+
+#root {
+  margin: 0;
+  border: 0;
+  text-align: left;
+  display: block;
+  overflow-x: clip;
+}
+
+/* Stable typography: no overlapping lines at intermediate desktop widths. */
+h1,
+h2,
+h3,
+h4 {
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-break: normal;
+  text-wrap: balance;
+}
+
+h1 { line-height: 1.12 !important; }
+h2 { line-height: 1.20 !important; }
+h3 { line-height: 1.28 !important; }
+h4 { line-height: 1.32 !important; }
+
+p,
+li,
+label,
+button,
+a,
+span,
+small,
+strong {
+  overflow-wrap: break-word;
+}
+
+/* Diagnostic intro is the screen where the conflict was most visible. */
+.diagnostic-intro {
+  text-align: center;
+}
+
+.diagnostic-intro .diagnostic-kicker {
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.diagnostic-intro h1,
+.diagnostic-card h1 {
+  width: min(860px, 100%);
+  margin-inline: auto;
+  font-size: clamp(30px, 4vw, 44px) !important;
+  line-height: 1.13 !important;
+  letter-spacing: -0.025em !important;
+}
+
+.diagnostic-intro .diagnostic-lead {
+  width: min(780px, 100%);
+  margin: 12px auto 0;
+  font-size: clamp(15px, 1.7vw, 17px);
+  line-height: 1.62;
+}
+
+.diagnostic-overview {
+  align-items: stretch;
+  gap: 12px;
+}
+
+.diagnostic-overview article {
+  min-width: 0;
+  min-height: 92px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 15px 14px;
+}
+
+.diagnostic-overview strong {
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.diagnostic-overview span {
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.diagnostic-rules {
+  gap: 7px;
+  padding: 16px 18px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.diagnostic-rules strong {
+  font-size: 17px;
+  line-height: 1.35;
+}
+
+.diagnostic-main-button {
+  min-height: 48px;
+  padding: 13px 22px;
+  font-size: 15px;
+  line-height: 1.25;
+}
+
+/* Guard all major hero titles against inherited starter styles. */
+.brand h1,
+.dashboard-hero h1,
+.lesson-engine-hero h1,
+.courses-hero h1,
+.today-boundary-card h1,
+.checkpoint-hero h1,
+.final-week-hero h1,
+.exam-strategies-hero h1,
+.chengyu-header h1,
+.admin-header h1 {
+  line-height: 1.12 !important;
+  text-wrap: balance;
+}
+
+/* Cards must never force their siblings outside the grid. */
+.training-card,
+.extra-item,
+.home-dash-card,
+.dashboard-skill-card,
+.course-card,
+.engine-activity,
+.admin-attempt-card,
+.chengyu-mini-card,
+.chengyu-library-card,
+.chengyu-week-card,
+.chengyu-task-card {
+  min-width: 0;
+}
+
+/* Tablet widths were the danger zone: switch before content gets squeezed. */
+@media (max-width: 940px) {
+  .diagnostic-shell {
+    width: min(820px, 100%);
+  }
+
+  .diagnostic-card {
+    padding: 22px 20px;
+  }
+
+  .diagnostic-intro h1,
+  .diagnostic-card h1 {
+    font-size: clamp(28px, 5vw, 38px) !important;
+    line-height: 1.14 !important;
+  }
+
+  .diagnostic-overview {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  #root { overflow-x: hidden; }
+
+  .diagnostic-card {
+    padding: 18px 14px;
+  }
+
+  .diagnostic-intro h1,
+  .diagnostic-card h1 {
+    font-size: clamp(27px, 8.2vw, 34px) !important;
+    line-height: 1.16 !important;
+    letter-spacing: -0.018em !important;
+  }
+
+  .diagnostic-intro .diagnostic-lead {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .diagnostic-overview {
+    grid-template-columns: 1fr;
+    gap: 9px;
+  }
+
+  .diagnostic-overview article {
+    min-height: 0;
+    padding: 13px 14px;
+  }
+
+  .diagnostic-rules {
+    font-size: 12.5px;
+  }
+}
+
+@media (max-width: 430px) {
+  .diagnostic-page {
+    padding-inline: 8px;
+  }
+
+  .diagnostic-intro h1,
+  .diagnostic-card h1 {
+    font-size: clamp(25px, 8.5vw, 31px) !important;
+  }
+}

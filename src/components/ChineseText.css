@@ -1,0 +1,191 @@
+/* =========================================================
+   CHINESE TEXT
+   Единая система подсказок: pinyin + русский перевод.
+   Восстановлена по принятой ранее версии проекта.
+   ========================================================= */
+.chinese-text {
+  position: relative;
+  display: inline-block;
+  cursor: help;
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+  text-decoration-color: rgba(94, 79, 59, 0.28);
+  outline: none;
+}
+
+/* =========================================================
+   TOOLTIP — ОБЩИЙ ВИД
+   ========================================================= */
+.chinese-tooltip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 11px);
+  z-index: 9999;
+  width: max-content;
+  min-width: 145px;
+  max-width: min(250px, 78vw);
+  box-sizing: border-box;
+  padding: 9px 13px 10px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+
+  text-align: center;
+  color: #332d27;
+  background: rgba(255, 250, 241, 0.98);
+  border: 1px solid rgba(134, 104, 69, 0.23);
+  border-radius: 10px;
+  box-shadow:
+    0 8px 24px rgba(70, 54, 38, 0.14),
+    0 2px 5px rgba(70, 54, 38, 0.06);
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate(calc(-50% + var(--tooltip-shift-x, 0px)), 5px);
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease,
+    visibility 0.15s ease;
+}
+
+/* Стрелочка — подсказка сверху */
+.chinese-tooltip::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 250, 241, 0.98);
+  border-right: 1px solid rgba(134, 104, 69, 0.23);
+  border-bottom: 1px solid rgba(134, 104, 69, 0.23);
+  transform: translate(-50%, -4px) rotate(45deg);
+}
+
+/* Показ */
+.chinese-text:hover > .chinese-tooltip,
+.chinese-text:focus > .chinese-tooltip,
+.chinese-text > .chinese-tooltip.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(calc(-50% + var(--tooltip-shift-x, 0px)), 0);
+}
+
+/* =========================================================
+   PINYIN
+   ВАЖНО: не наследуем декоративный serif/Georgia от заголовка.
+   NFC делается в ChineseText.jsx; здесь — безопасный sans-serif.
+   Это фикс старой проблемы с «уезжающим» 3-м тоном.
+   ========================================================= */
+.tooltip-pinyin {
+  display: block;
+  color: #a96436;
+  font-family:
+    "Segoe UI",
+    Arial,
+    "Microsoft YaHei",
+    sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0;
+  white-space: normal;
+  font-synthesis: none;
+  unicode-bidi: isolate;
+}
+
+.tooltip-translation {
+  display: block;
+  color: #554d45;
+  font-family:
+    "Segoe UI",
+    Arial,
+    sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: 0;
+  white-space: normal;
+}
+
+/* =========================================================
+   TOOLTIP СНИЗУ
+   Используем в верхних/тесных блоках, чтобы подсказка не
+   вылезала за край экрана и не перекрывалась соседями.
+   ========================================================= */
+.chinese-text.tooltip-bottom > .chinese-tooltip {
+  top: calc(100% + 11px);
+  bottom: auto;
+  transform: translate(calc(-50% + var(--tooltip-shift-x, 0px)), -5px);
+}
+
+.chinese-text.tooltip-bottom > .chinese-tooltip::after {
+  top: auto;
+  bottom: 100%;
+  border-right: 0;
+  border-bottom: 0;
+  border-left: 1px solid rgba(134, 104, 69, 0.23);
+  border-top: 1px solid rgba(134, 104, 69, 0.23);
+  transform: translate(-50%, 4px) rotate(45deg);
+}
+
+.chinese-text.tooltip-bottom:hover > .chinese-tooltip,
+.chinese-text.tooltip-bottom:focus > .chinese-tooltip,
+.chinese-text.tooltip-bottom > .chinese-tooltip.is-open {
+  transform: translate(calc(-50% + var(--tooltip-shift-x, 0px)), 0);
+}
+
+/* =========================================================
+   LEFT / RIGHT — оставляем поддержку старой системы
+   ========================================================= */
+.chinese-text.tooltip-right > .chinese-tooltip {
+  left: 0;
+  right: auto;
+  transform: translate(0, 5px);
+}
+
+.chinese-text.tooltip-right:hover > .chinese-tooltip,
+.chinese-text.tooltip-right:focus > .chinese-tooltip,
+.chinese-text.tooltip-right > .chinese-tooltip.is-open {
+  transform: translate(0, 0);
+}
+
+.chinese-text.tooltip-left > .chinese-tooltip {
+  left: auto;
+  right: 0;
+  transform: translate(0, 5px);
+}
+
+.chinese-text.tooltip-left:hover > .chinese-tooltip,
+.chinese-text.tooltip-left:focus > .chinese-tooltip,
+.chinese-text.tooltip-left > .chinese-tooltip.is-open {
+  transform: translate(0, 0);
+}
+
+/* В цветных кнопках/кругах подчёркивание мягче */
+button .chinese-text,
+.circle .chinese-text,
+.brand-mark .chinese-text {
+  text-decoration-color: rgba(255, 255, 255, 0.38);
+}
+
+@media (max-width: 600px) {
+  .chinese-tooltip {
+    min-width: 130px;
+    max-width: min(210px, 72vw);
+    padding: 8px 11px;
+  }
+
+  .tooltip-pinyin {
+    font-size: 13px;
+  }
+
+  .tooltip-translation {
+    font-size: 12px;
+  }
+}

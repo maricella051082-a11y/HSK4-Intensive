@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 1200" preserveAspectRatio="xMidYMin slice">
+  <defs>
+    <filter id="paper"><feTurbulence type="fractalNoise" baseFrequency=".55" numOctaves="4" seed="23"/><feColorMatrix values="1 0 0 0 .14 0 1 0 0 .11 0 0 1 0 .07 0 0 0 .06 0"/></filter>
+    <filter id="blur"><feGaussianBlur stdDeviation="8"/></filter>
+    <linearGradient id="m1" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#607a6b" stop-opacity=".36"/><stop offset="1" stop-color="#607a6b" stop-opacity=".02"/></linearGradient>
+    <linearGradient id="m2" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#576d79" stop-opacity=".28"/><stop offset="1" stop-color="#576d79" stop-opacity=".01"/></linearGradient>
+  </defs>
+  <rect width="1800" height="1200" fill="#faf2e5"/>
+  <rect width="1800" height="1200" filter="url(#paper)" opacity=".95"/>
+  <circle cx="210" cy="220" r="95" fill="#d79d65" opacity=".09"/>
+  <g filter="url(#blur)">
+    <path d="M-70 620L95 420l112 105 120-205 122 180 118-90 120 148 128-95 120 160v210H-70Z" fill="url(#m1)"/>
+    <path d="M730 610l145-110 86 76 118-205 115 164 130-118 105 145 120-94 190 185v180H730Z" fill="url(#m2)"/>
+  </g>
+  <g fill="none" stroke="#526b5d" stroke-linecap="round" opacity=".16">
+    <path d="M1640 30Q1580 260 1570 720Q1562 930 1510 1180" stroke-width="11"/>
+    <path d="M1598 180l-145-78M1590 246l150-90M1580 330l-160-24M1568 412l160-26M1544 552l-130 55M1530 650l145-68" stroke-width="7"/>
+    <path d="M105 730Q84 880 60 1160" stroke-width="9"/>
+    <path d="M88 790l-92-52M82 860l106-48M75 935l-95-15" stroke-width="6"/>
+  </g>
+  <g opacity=".18" fill="#b05248" transform="translate(112 980)">
+    <ellipse cx="0" cy="18" rx="74" ry="21" fill="#637868" opacity=".55"/>
+    <path d="M0 0C-48-25-54-74-10-87C6-58 11-31 0 0Z"/><path d="M0 0C34-40 78-48 88-9C62 9 36 12 0 0Z"/><path d="M0 0C38 21 42 67 7 80C-10 52-14 28 0 0Z"/><path d="M0 0C-34 31-75 28-82-11C-56-20-30-14 0 0Z"/>
+  </g>
+  <g fill="none" stroke="#bc8b3f" stroke-linecap="round" opacity=".22">
+    <path d="M850 810c210-120 430-40 805-190" stroke-width="5"/><path d="M895 838c170-74 320-20 584-118" stroke-width="2.5"/><path d="M40 315c170-88 302 33 485-61" stroke-width="3"/>
+  </g>
+  <g fill="none" stroke="#b98a40" opacity=".16" stroke-width="4"><path d="M1330 1030c25-30 63-26 68 3 16-22 51-19 58 10 30-12 59 4 63 29"/></g>
+</svg>

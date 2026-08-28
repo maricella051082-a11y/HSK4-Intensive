@@ -1,0 +1,758 @@
+/* =========================================================
+   HSK4 · Design Phase 7
+   Visual-only overlay. No learning logic is changed here.
+   ========================================================= */
+
+:root {
+  --p7-paper: #fbf6ec;
+  --p7-paper-2: #f4eddf;
+  --p7-ink: #2d302a;
+  --p7-ink-soft: #625c52;
+  --p7-jade: #657a6d;
+  --p7-jade-dark: #4f665a;
+  --p7-gold: #b88636;
+  --p7-gold-soft: #d8bc83;
+  --p7-cinnabar: #9f4935;
+  --p7-blue: #667f91;
+  --p7-lavender: #817293;
+  --p7-terracotta: #a86d4c;
+  --p7-line: rgba(151, 116, 68, .22);
+  --p7-shadow: 0 16px 44px rgba(76, 59, 39, .08);
+}
+
+body {
+  color: var(--p7-ink);
+  background: var(--p7-paper);
+}
+
+.page-shell,
+.diagnostic-page,
+.dashboard-page,
+.today-plan-page,
+.courses-page,
+.checkpoint-page,
+.final-week-page,
+.review-page,
+.chengyu-page,
+.exam-strategies-page {
+  position: relative;
+  isolation: isolate;
+}
+
+.page-shell::before,
+.diagnostic-page::before,
+.dashboard-page::before,
+.today-plan-page::before,
+.courses-page::before,
+.checkpoint-page::before,
+.final-week-page::before,
+.review-page::before,
+.chengyu-page::before,
+.exam-strategies-page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(250, 247, 239, .83), rgba(250, 247, 239, .83)),
+    url('./assets/design/watercolor-wash.svg') center top / cover no-repeat;
+}
+
+.page-shell::after,
+.diagnostic-page::after,
+.dashboard-page::after,
+.today-plan-page::after,
+.courses-page::after,
+.checkpoint-page::after,
+.final-week-page::after,
+.review-page::after,
+.chengyu-page::after,
+.exam-strategies-page::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 9% 22%, rgba(188, 142, 63, .08), transparent 22%),
+    radial-gradient(circle at 84% 14%, rgba(86, 112, 98, .08), transparent 23%),
+    radial-gradient(circle at 72% 82%, rgba(165, 103, 77, .05), transparent 22%);
+}
+
+/* ---------- Global typography rhythm ---------- */
+.page-shell h1,
+.page-shell h2,
+.page-shell h3,
+.diagnostic-page h1,
+.diagnostic-page h2,
+.dashboard-page h1,
+.dashboard-page h2,
+.today-plan-page h1,
+.courses-page h1,
+.checkpoint-page h1,
+.final-week-page h1,
+.review-page h1,
+.chengyu-page h1 {
+  text-wrap: balance;
+}
+
+.page-shell p,
+.diagnostic-page p,
+.review-page p,
+.chengyu-page p {
+  line-height: 1.62;
+}
+
+/* ---------- Top bar ---------- */
+.topbar {
+  position: relative;
+  z-index: 10;
+  padding: 12px 16px;
+  margin-bottom: 28px;
+  border: 1px solid var(--p7-line);
+  border-radius: 22px;
+  background: rgba(255, 252, 245, .72);
+  box-shadow: 0 8px 30px rgba(78, 61, 40, .045);
+  backdrop-filter: blur(9px);
+}
+
+.brand { gap: 13px; }
+
+.brand-mark {
+  width: 54px;
+  height: 62px;
+  border-radius: 22px 22px 18px 18px / 12px 12px 18px 18px;
+  background: linear-gradient(180deg, #ad563e, #8d3f30);
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 238, 209, .3),
+    0 7px 18px rgba(116, 55, 42, .14);
+  font-size: 31px;
+}
+
+.brand-mark::before,
+.brand-mark::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.brand-mark { position: relative; }
+.brand-mark::before {
+  inset: 5px;
+  border: 1px solid rgba(255, 239, 211, .45);
+  border-radius: inherit;
+}
+.brand-mark::after {
+  width: 20px;
+  height: 1px;
+  bottom: 8px;
+  left: 17px;
+  background: rgba(255, 239, 211, .5);
+}
+
+.brand h1 {
+  font-size: clamp(24px, 2.2vw, 35px);
+  line-height: 1.12;
+  letter-spacing: .01em;
+}
+
+.brand p {
+  margin-top: 4px;
+  font-size: 13px;
+  color: #72685d;
+}
+
+.course-catalog-link,
+.days-left,
+.icon-button,
+.profile-button {
+  border-color: rgba(140, 105, 63, .22) !important;
+}
+
+.course-catalog-link,
+.days-left {
+  padding: 8px 11px;
+  border: 1px solid rgba(140, 105, 63, .18);
+  border-radius: 999px;
+  background: rgba(255, 251, 242, .72);
+}
+
+.icon-button,
+.profile-button {
+  display: inline-grid;
+  place-items: center;
+  min-width: 38px;
+  min-height: 38px;
+  border: 1px solid rgba(140, 105, 63, .18);
+  border-radius: 50%;
+  background: rgba(255, 251, 242, .72);
+}
+
+/* ---------- Hero + mascot ---------- */
+.hero-area {
+  min-height: 535px;
+  grid-template-columns: minmax(0, 1.08fr) minmax(310px, .92fr);
+  gap: 34px;
+  padding: 18px 28px 24px;
+}
+
+.hero-area::before {
+  inset: -22px -18px 6px;
+  border: 1px solid rgba(174, 137, 78, .13);
+  border-radius: 34px;
+  background:
+    radial-gradient(circle at 78% 18%, rgba(191, 151, 74, .12), transparent 22%),
+    radial-gradient(circle at 70% 40%, rgba(86, 113, 98, .12), transparent 28%),
+    linear-gradient(110deg, rgba(255, 252, 246, .62), rgba(248, 242, 231, .26));
+  box-shadow: inset 0 0 70px rgba(191, 151, 74, .04);
+}
+
+.daily-card,
+.focus-card {
+  border-color: rgba(164, 126, 70, .25);
+  background: rgba(255, 253, 248, .82);
+  box-shadow: var(--p7-shadow);
+  backdrop-filter: blur(8px);
+}
+
+.daily-card {
+  padding: 31px 34px;
+  border-radius: 24px;
+}
+
+.daily-card h2 {
+  font-size: clamp(28px, 3.1vw, 43px);
+  line-height: 1.12;
+  letter-spacing: .02em;
+}
+
+.translation { font-size: 15px; color: #756a5e; }
+
+.progress-fill { background: linear-gradient(90deg, var(--p7-jade-dark), #839287); }
+
+.daily-card h3 {
+  font-size: clamp(29px, 3.2vw, 43px);
+  line-height: 1.14;
+}
+
+.daily-card > a {
+  border: 1px solid #b88c4a !important;
+  background: linear-gradient(180deg, #60776a, #4f665a) !important;
+  box-shadow: 0 8px 18px rgba(72, 91, 80, .18);
+}
+
+.focus-card {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 350px);
+  margin-bottom: 0;
+  padding: 24px 27px;
+  border-radius: 22px;
+}
+
+/* Daily mascot */
+.moyu-motivator {
+  position: absolute;
+  z-index: 3;
+  top: -2px;
+  right: 4px;
+  width: 410px;
+  height: 285px;
+  pointer-events: none;
+}
+
+.moyu-art {
+  position: absolute;
+  right: 2px;
+  bottom: 0;
+  width: 240px;
+  transform-origin: 58% 85%;
+  animation: moyu-bob 4.4s ease-in-out infinite;
+}
+
+.moyu-art img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 15px 20px rgba(78, 61, 40, .10));
+}
+
+.moyu-bubble {
+  position: absolute;
+  left: 0;
+  top: 34px;
+  width: 185px;
+  padding: 13px 15px;
+  border: 1px solid rgba(183, 139, 67, .34);
+  border-radius: 18px 18px 7px 18px;
+  background: rgba(255, 251, 242, .92);
+  box-shadow: 0 10px 26px rgba(74, 57, 37, .07);
+  pointer-events: auto;
+}
+
+.moyu-bubble::after {
+  content: "";
+  position: absolute;
+  right: -13px;
+  bottom: 17px;
+  width: 22px;
+  height: 22px;
+  border-right: 1px solid rgba(183, 139, 67, .34);
+  border-bottom: 1px solid rgba(183, 139, 67, .34);
+  background: rgba(255, 251, 242, .92);
+  transform: rotate(-45deg);
+}
+
+.moyu-bubble strong,
+.moyu-bubble span { display: block; }
+.moyu-bubble strong {
+  color: #6f5534;
+  font-family: "Songti SC", "STSong", Georgia, serif;
+  font-size: 15px;
+  line-height: 1.45;
+}
+.moyu-bubble span {
+  margin-top: 5px;
+  color: #817468;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.moyu-note {
+  position: absolute;
+  color: #bd8c34;
+  font-style: normal;
+  font-weight: 900;
+  opacity: 0;
+  animation: moyu-note 3.4s ease-in-out infinite;
+}
+.moyu-note.n1 { right: 184px; top: 18px; font-size: 22px; animation-delay: .1s; }
+.moyu-note.n2 { right: 150px; top: 2px; font-size: 18px; animation-delay: 1.1s; }
+.moyu-note.n3 { right: 115px; top: 32px; font-size: 15px; animation-delay: 2s; }
+
+@keyframes moyu-bob {
+  0%, 100% { transform: translateY(0) rotate(-.5deg); }
+  45% { transform: translateY(-7px) rotate(1.2deg); }
+  68% { transform: translateY(-3px) rotate(.3deg); }
+}
+
+@keyframes moyu-note {
+  0% { opacity: 0; transform: translate(0, 8px) scale(.8) rotate(-8deg); }
+  25% { opacity: .85; }
+  70% { opacity: .55; }
+  100% { opacity: 0; transform: translate(18px, -27px) scale(1.08) rotate(8deg); }
+}
+
+/* ---------- Main skill cards ---------- */
+.training-grid {
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.training-card {
+  min-width: 0;
+  min-height: 330px;
+  padding: 23px 25px 27px;
+  border: 1px solid rgba(159, 121, 67, .20);
+  border-radius: 22px;
+  background: rgba(255, 252, 246, .77);
+  box-shadow: 0 10px 30px rgba(76, 59, 39, .05);
+}
+
+.training-card + .training-card { border-left: 1px solid rgba(159, 121, 67, .20); }
+
+.circle {
+  width: 108px;
+  height: 108px;
+  margin-bottom: 15px;
+  border: 3px solid rgba(255,255,255,.64);
+  font-size: 49px;
+  box-shadow:
+    inset 0 0 0 1px rgba(83, 68, 48, .08),
+    0 8px 18px rgba(82, 61, 38, .09);
+}
+
+.vocabulary .circle { background: linear-gradient(145deg, #d6a34f, #ba7b29); }
+.listening .circle { background: linear-gradient(145deg, #7794a5, #5c778a); }
+.speaking .circle { background: linear-gradient(145deg, #af7057, #92513c); }
+
+.training-card h3 { font-size: 20px; }
+.training-card p { min-height: 52px; font-size: 15px; color: #6f655b; }
+
+.training-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 800;
+}
+.vocabulary-link { background: #c58b39 !important; color: #fff !important; }
+.listening-link { background: #667f91 !important; color: #fff !important; }
+.speaking-link { background: #9c5d46 !important; color: #fff !important; }
+
+/* ---------- Optional skills: six-color system ---------- */
+.extras-grid {
+  gap: 10px;
+  border: 0 !important;
+}
+
+.extra-item {
+  min-width: 0;
+  border: 1px solid rgba(150, 116, 71, .17) !important;
+  border-radius: 18px;
+  background: rgba(255,252,246,.72);
+  transition: transform .16s ease, box-shadow .16s ease;
+}
+.extra-item:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(75,58,39,.07); }
+.extra-item:nth-child(1) .extra-icon { color: #6d806f; }
+.extra-item:nth-child(2) .extra-icon { color: #a86d4c; }
+.extra-item:nth-child(3) .extra-icon { color: #817293; }
+.extra-item:nth-child(4) .extra-icon { color: #b88636; }
+
+/* ---------- Review / Chengyu banners ---------- */
+.home-review-banner,
+.home-chengyu-banner {
+  border-radius: 20px !important;
+  border: 1px solid rgba(159, 121, 67, .20) !important;
+  background: rgba(255,252,246,.77) !important;
+  box-shadow: 0 9px 27px rgba(75,58,39,.045);
+}
+.review-home-seal,
+.chengyu-home-seal {
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.28);
+}
+.review-home-seal { background: #657a6d !important; }
+.chengyu-home-seal { background: linear-gradient(145deg,#c5964d,#9e672d) !important; }
+
+/* ---------- Dynamic dashboard ---------- */
+.home-dynamic-dashboard { gap: 12px; }
+.home-dash-card {
+  border: 1px solid rgba(150, 116, 71, .18) !important;
+  border-radius: 20px !important;
+  background: rgba(255,252,246,.76) !important;
+  box-shadow: 0 8px 24px rgba(75,58,39,.045);
+}
+
+/* ---------- Diagnostic: keep all existing content, restyle only ---------- */
+.diagnostic-page {
+  background: transparent !important;
+}
+
+.diagnostic-shell { width: min(1120px, 100%); }
+
+.diagnostic-card {
+  border-color: rgba(155, 118, 67, .20);
+  border-radius: 25px;
+  background: rgba(255,253,248,.86);
+  box-shadow: var(--p7-shadow);
+}
+
+.diagnostic-intro {
+  position: relative;
+  min-height: 510px;
+  padding: 32px 300px 30px 34px;
+}
+
+.diagnostic-intro::after {
+  content: "";
+  position: absolute;
+  right: 25px;
+  top: 28px;
+  width: 270px;
+  height: 300px;
+  pointer-events: none;
+  background: url('./assets/design/moyu-wave.png') center bottom / contain no-repeat;
+  filter: drop-shadow(0 14px 18px rgba(75,58,39,.09));
+  animation: moyu-bob 4.6s ease-in-out infinite;
+}
+
+.diagnostic-intro h1 {
+  max-width: 700px;
+  font-size: clamp(31px, 4.4vw, 54px);
+  line-height: 1.06;
+  letter-spacing: -.02em;
+  color: #29342e;
+}
+
+.diagnostic-lead {
+  max-width: 690px;
+  font-size: 15px;
+}
+
+.diagnostic-overview {
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 11px;
+  margin-top: 24px;
+}
+
+.diagnostic-overview article {
+  position: relative;
+  min-height: 82px;
+  padding: 14px 14px 14px 18px;
+  border: 1px solid rgba(150, 116, 71, .14);
+  border-radius: 16px;
+  background: rgba(255,252,247,.8);
+}
+
+.diagnostic-overview article:nth-child(1){border-left:4px solid #c69647;}
+.diagnostic-overview article:nth-child(2){border-left:4px solid #718375;}
+.diagnostic-overview article:nth-child(3){border-left:4px solid #688397;}
+.diagnostic-overview article:nth-child(4){border-left:4px solid #aa6f50;}
+.diagnostic-overview article:nth-child(5){border-left:4px solid #817293;}
+.diagnostic-overview article:nth-child(6){border-left:4px solid #a7533e;}
+
+.diagnostic-overview strong { font-size: 19px; }
+.diagnostic-overview span { font-size: 11px; }
+
+.diagnostic-rules {
+  padding: 16px 18px;
+  border: 1px solid rgba(183, 139, 67, .18);
+  background: rgba(250,242,225,.72);
+  font-size: 13px;
+}
+
+.diagnostic-main-button {
+  min-height: 48px;
+  border: 1px solid #b68b49;
+  background: linear-gradient(180deg,#60776a,#4e6559);
+  box-shadow: 0 9px 22px rgba(72,91,80,.16);
+}
+
+/* ---------- Other main modules: gentle paper treatment only ---------- */
+.review-page,
+.chengyu-page,
+.dashboard-page,
+.today-plan-page,
+.courses-page,
+.checkpoint-page,
+.final-week-page,
+.exam-strategies-page {
+  background: transparent !important;
+}
+
+.review-card,
+.review-panel,
+.chengyu-panel,
+.chengyu-section,
+.chengyu-today-main,
+.chengyu-must-card,
+.checkpoint-card,
+.final-week-card,
+.dashboard-card {
+  border-color: rgba(150,116,71,.18) !important;
+  background-color: rgba(255,252,246,.80) !important;
+  box-shadow: 0 9px 28px rgba(75,58,39,.045);
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 1080px) {
+  .moyu-motivator { width: 360px; height: 255px; }
+  .moyu-art { width: 205px; }
+  .moyu-bubble { width: 165px; }
+  .hero-area { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 900px) {
+  .topbar { align-items: flex-start; }
+  .hero-area {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    gap: 15px;
+    padding-inline: 10px;
+  }
+  .moyu-motivator {
+    position: relative;
+    top: auto;
+    right: auto;
+    order: -1;
+    width: 100%;
+    height: 150px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .moyu-art {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    width: 135px;
+    flex: 0 0 auto;
+  }
+  .moyu-bubble {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: min(62vw, 330px);
+    margin-right: 6px;
+  }
+  .moyu-bubble::after { right: -11px; }
+  .moyu-note.n1 { right: 100px; top: 10px; }
+  .moyu-note.n2 { right: 74px; top: 0; }
+  .moyu-note.n3 { right: 55px; top: 23px; }
+  .daily-card,
+  .focus-card { width: 100%; justify-self: stretch; }
+
+  .training-grid { grid-template-columns: 1fr; gap: 10px; }
+  .training-card { min-height: auto; display: grid; grid-template-columns: 86px 1fr; grid-template-areas: "icon title" "icon desc" "icon progress" "icon action"; text-align: left; align-items: center; gap: 3px 15px; }
+  .training-card .circle { grid-area: icon; width: 82px; height: 82px; margin: 0; font-size: 36px; }
+  .training-card h3 { grid-area: title; }
+  .training-card p { grid-area: desc; min-height: 0; margin: 5px 0; }
+  .training-card strong { grid-area: progress; margin: 2px 0 7px; }
+  .training-card .training-link { grid-area: action; justify-self: start; }
+
+  .diagnostic-intro { min-height: 0; padding: 25px 180px 25px 25px; }
+  .diagnostic-intro::after { width: 170px; height: 210px; right: 8px; top: 40px; }
+}
+
+@media (max-width: 650px) {
+  .page-shell { width: min(100% - 20px, 1240px); padding-top: 10px; }
+  .topbar { padding: 10px 11px; border-radius: 18px; }
+  .brand-mark { width: 44px; height: 50px; font-size: 25px; }
+  .brand h1 { font-size: 20px; }
+  .brand p { font-size: 11px; }
+
+  .moyu-motivator { height: 135px; }
+  .moyu-art { width: 116px; }
+  .moyu-bubble { padding: 10px 12px; }
+  .moyu-bubble strong { font-size: 13px; }
+  .moyu-bubble span { font-size: 9px; }
+
+  .daily-card { padding: 22px 20px; }
+  .focus-card { padding: 20px; }
+
+  .training-card { grid-template-columns: 70px 1fr; padding: 17px; }
+  .training-card .circle { width: 66px; height: 66px; font-size: 30px; }
+
+  .diagnostic-intro {
+    padding: 22px 18px 160px;
+  }
+  .diagnostic-intro::after {
+    width: 150px;
+    height: 160px;
+    top: auto;
+    right: 6px;
+    bottom: 2px;
+  }
+  .diagnostic-intro h1 { font-size: clamp(29px, 9vw, 40px); }
+  .diagnostic-overview { grid-template-columns: 1fr 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moyu-art,
+  .moyu-note,
+  .diagnostic-intro::after { animation: none !important; }
+}
+
+
+/* Phase 7.0.1 — compact Review / Chengyu navigation cards */
+.home-review-banner,
+.home-chengyu-banner {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  align-items: center !important;
+  gap: 18px !important;
+  min-height: 82px !important;
+  padding: 14px 18px !important;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.home-review-banner > div:first-child,
+.home-chengyu-banner > div:first-child {
+  display: flex !important;
+  align-items: center !important;
+  gap: 13px !important;
+  min-width: 0;
+}
+
+.home-review-banner > div:first-child > div,
+.home-chengyu-banner > div:first-child > div {
+  min-width: 0;
+}
+
+.review-home-seal,
+.chengyu-home-seal {
+  flex: 0 0 46px !important;
+  width: 46px !important;
+  height: 46px !important;
+  min-width: 46px !important;
+  min-height: 46px !important;
+  display: grid !important;
+  place-items: center !important;
+  line-height: 1 !important;
+  font-size: 22px !important;
+  border-radius: 50% !important;
+}
+
+.home-review-banner > div:first-child strong,
+.home-chengyu-banner > div:first-child strong {
+  display: block !important;
+  margin: 0 !important;
+  font-size: 17px !important;
+  line-height: 1.2 !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.home-review-banner > div:first-child small,
+.home-chengyu-banner > div:first-child small {
+  display: block !important;
+  margin-top: 5px !important;
+  color: #85796d !important;
+  font-size: 12.5px !important;
+  line-height: 1.25 !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.home-review-count,
+.home-chengyu-count {
+  min-width: 94px;
+  text-align: right;
+  line-height: 1.2;
+}
+
+.home-review-count strong,
+.home-chengyu-count strong {
+  display: block;
+  font-size: 19px !important;
+  white-space: nowrap;
+}
+
+.home-review-count span,
+.home-chengyu-count span {
+  display: block;
+  margin-top: 4px;
+  color: #887b6e;
+  font-size: 11px !important;
+  line-height: 1.25 !important;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .home-review-banner,
+  .home-chengyu-banner {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+    padding: 14px 15px !important;
+  }
+  .home-review-count,
+  .home-chengyu-count {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding-left: 59px;
+    min-width: 0;
+    text-align: left;
+  }
+  .home-review-count span,
+  .home-chengyu-count span {
+    margin-top: 0;
+  }
+}

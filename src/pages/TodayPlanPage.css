@@ -1,0 +1,78 @@
+.today-boundary-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: linear-gradient(180deg, #f5edde 0%, #fbf7ef 100%);
+  color: #39342f;
+}
+
+.today-boundary-card {
+  width: min(680px, 100%);
+  padding: 34px 28px;
+  border: 1px solid rgba(93, 79, 64, .14);
+  border-radius: 24px;
+  background: rgba(255, 252, 246, .94);
+  text-align: center;
+  box-shadow: 0 14px 36px rgba(76, 62, 42, .06);
+}
+
+.today-boundary-seal {
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  background: #e7efdd;
+  color: #71843e;
+  font-size: 30px;
+  font-weight: 900;
+}
+
+.today-boundary-card > p:first-of-type {
+  color: #8a6444;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .08em;
+}
+
+.today-boundary-card h1,
+.today-boundary-card h2 {
+  margin: 8px 0 0;
+}
+
+.today-boundary-text {
+  margin: 16px auto 0;
+  color: #746b62;
+  line-height: 1.6;
+}
+
+.today-boundary-actions {
+  display: flex;
+  justify-content: center;
+  gap: 9px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+
+.today-boundary-actions a,
+.today-boundary-actions button {
+  padding: 10px 16px;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.today-boundary-primary {
+  background: #816246;
+  color: white;
+  text-decoration: none;
+}
+
+.today-boundary-actions button {
+  border: 1px solid #d1c1af;
+  background: transparent;
+  color: #6c5d50;
+}

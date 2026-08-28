@@ -1,0 +1,261 @@
+/* =====================================================================
+   PHASE 9 — FULL HOME REDESIGN, built as a safe visual overlay.
+   It intentionally preserves all React learning logic and tooltip markup.
+   ===================================================================== */
+
+:root {
+  --paper:#fbf5e9;
+  --paper-strong:#fffaf0;
+  --paper-glass:rgba(255,252,244,.86);
+  --ink:#30352f;
+  --muted:#756c61;
+  --jade:#587568;
+  --jade-dark:#415f52;
+  --gold:#b9863c;
+  --gold-light:#dfc58f;
+  --cinnabar:#a94d3b;
+  --blue:#5d7f96;
+  --terracotta:#ad7151;
+  --violet:#7d6c92;
+  --line:rgba(158,115,58,.20);
+  --line-soft:rgba(158,115,58,.12);
+  --shadow:0 14px 36px rgba(74,55,34,.08);
+  --shadow-soft:0 8px 22px rgba(74,55,34,.055);
+}
+
+html{background:var(--paper)}
+body{
+  color:var(--ink)!important;
+  background-color:var(--paper)!important;
+  background-image:url('./assets/design/watercolor-wash.svg')!important;
+  background-size:cover!important;
+  background-position:center top!important;
+  background-attachment:fixed!important;
+  background-repeat:no-repeat!important;
+}
+#root{min-height:100vh;background:transparent!important}
+
+/* ---------- tooltip safety ---------- */
+.chinese-text,.chinese-title{position:relative;z-index:30}
+.chinese-tooltip{z-index:100000!important}
+.home-review-banner,.home-chengyu-banner,.training-card,.extra-item,.daily-card,.focus-card{overflow:visible!important}
+
+/* ---------- base page ---------- */
+.page-shell{
+  width:min(1420px,calc(100% - 34px))!important;
+  margin:0 auto!important;
+  padding:18px 0 56px!important;
+  background:transparent!important;
+}
+.page-shell h1,.page-shell h2,.page-shell h3{color:var(--ink);text-wrap:balance}
+.page-shell p{color:var(--muted)}
+
+/* ---------- top navigation ---------- */
+.topbar{
+  position:relative!important;
+  z-index:80!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:22px!important;
+  margin:0 0 24px!important;
+  padding:12px 16px!important;
+  border:1px solid rgba(171,126,61,.22)!important;
+  border-radius:18px!important;
+  background:rgba(255,251,242,.82)!important;
+  box-shadow:0 8px 25px rgba(71,52,32,.055)!important;
+  backdrop-filter:blur(12px);
+}
+.topbar::before{
+  content:"";position:absolute;left:24px;right:24px;bottom:-1px;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(185,134,60,.58),transparent);pointer-events:none
+}
+.topbar::after{display:none!important}
+.brand{display:flex!important;align-items:center!important;gap:13px!important;min-width:0}
+.brand-mark{
+  position:relative;flex:0 0 45px;width:45px!important;height:51px!important;display:grid!important;place-items:center!important;
+  border-radius:10px 10px 14px 14px!important;background:linear-gradient(180deg,#b45b46,#913e31)!important;
+  color:#fff6e3!important;border:1px solid rgba(107,43,35,.35)!important;
+  box-shadow:inset 0 0 0 2px rgba(255,239,211,.25),0 6px 15px rgba(112,51,40,.13)!important;
+  font-family:"Songti SC","STSong",Georgia,serif!important;font-size:27px!important;line-height:1!important
+}
+.brand-mark::before{content:"";position:absolute;inset:5px;border:1px solid rgba(255,240,212,.38);border-radius:7px 7px 10px 10px;pointer-events:none}
+.brand-mark::after{display:none!important}
+.brand>div:last-child{min-width:0}
+.brand h1{margin:0!important;font-size:clamp(21px,1.8vw,29px)!important;line-height:1.08!important;font-weight:720!important;white-space:nowrap}
+.brand p{margin:4px 0 0!important;font-size:11.5px!important;line-height:1.25!important;color:#7e7468!important}
+.top-actions{display:flex!important;align-items:center!important;justify-content:flex-end;gap:7px!important;flex-wrap:wrap;min-width:0}
+.course-catalog-link,.days-left{
+  min-height:37px;display:inline-flex!important;align-items:center;justify-content:center;padding:7px 12px!important;
+  border:1px solid rgba(151,109,58,.18)!important;border-radius:999px!important;background:rgba(255,251,243,.76)!important;
+  color:#5c5145!important;text-decoration:none!important;font-size:12px!important;font-weight:720!important;white-space:nowrap
+}
+.course-catalog-link:hover{border-color:rgba(88,117,104,.42)!important;color:var(--jade-dark)!important;background:#fbf8ee!important}
+.days-left{margin:0!important;color:#785e3c!important}
+.icon-button,.profile-button{
+  flex:0 0 38px;width:38px!important;height:38px!important;min-width:38px!important;min-height:38px!important;display:inline-grid!important;place-items:center!important;
+  padding:0!important;border:1px solid rgba(151,109,58,.20)!important;border-radius:50%!important;background:rgba(255,251,243,.82)!important;
+  color:#755a36!important;box-shadow:none!important;font-size:0!important
+}
+.icon-button:hover,.profile-button:hover{background:#fff8e9!important;color:var(--jade-dark)!important;border-color:rgba(88,117,104,.36)!important}
+
+/* ---------- hero composition ---------- */
+.hero-area{
+  position:relative!important;isolation:isolate;display:grid!important;
+  grid-template-columns:minmax(0,1.14fr) minmax(360px,.86fr)!important;
+  grid-template-areas:"daily mascot" "focus mascot"!important;
+  grid-template-rows:auto 1fr!important;gap:15px 34px!important;min-height:510px!important;
+  padding:31px 34px 28px!important;margin:0 0 22px!important;
+}
+.hero-area::before{
+  content:"";position:absolute;inset:0;z-index:-2;border:1px solid rgba(173,128,64,.18);border-radius:31px;
+  background:
+    linear-gradient(90deg,rgba(255,253,248,.84) 0%,rgba(255,253,248,.70) 45%,rgba(255,251,244,.34) 100%),
+    url('./assets/design/watercolor-wash.svg') center 36%/cover no-repeat!important;
+  box-shadow:inset 0 -70px 100px rgba(183,134,60,.035),0 10px 30px rgba(72,54,33,.04)!important
+}
+.hero-area::after{
+  content:"";position:absolute;right:1.5%;bottom:18px;width:38%;height:62%;z-index:-1;pointer-events:none;
+  border-radius:50%;background:radial-gradient(ellipse at center,rgba(93,123,105,.10),rgba(185,137,65,.045) 42%,transparent 70%)
+}
+.daily-card{grid-area:daily!important;align-self:start!important;width:100%!important;max-width:none!important;margin:0!important;padding:28px 30px!important;border:1px solid rgba(167,126,69,.21)!important;border-radius:22px!important;background:rgba(255,253,248,.86)!important;box-shadow:var(--shadow)!important;backdrop-filter:blur(7px)}
+.daily-card h2{margin:0!important;font-size:clamp(25px,2.35vw,35px)!important;line-height:1.12!important;letter-spacing:0!important}
+.daily-card .translation{margin:8px 0 20px!important;font-size:13px!important;color:#81776b!important}
+.daily-card .progress-row{align-items:center!important;gap:14px!important}
+.daily-card .progress-track{background:#e8dfd0!important;height:8px!important}
+.daily-card .progress-fill{background:linear-gradient(90deg,var(--jade-dark),#88a08f)!important}
+.daily-card .divider{margin:20px 0!important;border-color:rgba(168,126,68,.20)!important}
+.daily-card .eyebrow{margin:0 0 6px!important;color:var(--cinnabar)!important;font-weight:850!important;letter-spacing:.04em!important}
+.daily-card h3{margin:0!important;font-size:clamp(29px,3vw,42px)!important;line-height:1.10!important}
+.daily-card .skills,.daily-card .duration{font-size:13px!important;line-height:1.55!important}
+.daily-card>a{
+  min-height:44px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;margin-top:15px!important;padding:10px 20px!important;
+  border:1px solid #b8883d!important;border-radius:999px!important;background:linear-gradient(180deg,#5f7b6d,#476457)!important;color:white!important;
+  box-shadow:0 9px 20px rgba(65,95,82,.17)!important;font-size:12.5px!important;font-weight:850!important;text-decoration:none!important
+}
+.focus-card{grid-area:focus!important;align-self:start!important;width:100%!important;max-width:none!important;margin:0!important;padding:19px 24px!important;border:1px solid rgba(167,126,69,.16)!important;border-radius:20px!important;background:rgba(255,252,245,.75)!important;box-shadow:var(--shadow-soft)!important}
+.focus-card h3{margin:0 0 8px!important;font-size:17px!important}
+.focus-card .quote{padding:0!important}
+.focus-card .quote p{margin:0!important;font-size:14px!important;line-height:1.62!important;color:#6f665d!important}
+.focus-card .quote-mark{color:var(--gold)!important;font-size:30px!important;opacity:.85}
+
+/* ---------- mascot: always full body, never cropped ---------- */
+.moyu-motivator{
+  grid-area:mascot!important;position:relative!important;inset:auto!important;z-index:4!important;width:100%!important;height:auto!important;min-height:440px!important;
+  display:flex!important;align-items:flex-end!important;justify-content:center!important;overflow:visible!important;pointer-events:none!important
+}
+.moyu-art{
+  position:relative!important;right:auto!important;bottom:auto!important;width:min(360px,86%)!important;max-width:360px!important;margin:60px auto 8px!important;
+  transform-origin:52% 88%!important;animation:moyu-bob 4.6s ease-in-out infinite!important;overflow:visible!important
+}
+.moyu-art img{
+  display:block!important;width:100%!important;height:auto!important;max-height:none!important;object-fit:contain!important;object-position:center!important;
+  border-radius:0!important;filter:drop-shadow(0 16px 24px rgba(69,53,35,.11))!important;mix-blend-mode:multiply
+}
+.moyu-bubble{
+  position:absolute!important;left:2%!important;top:31px!important;width:min(205px,48%)!important;padding:12px 14px!important;z-index:7!important;
+  border:1px solid rgba(185,135,60,.32)!important;border-radius:17px 17px 6px 17px!important;background:rgba(255,251,241,.95)!important;
+  box-shadow:0 9px 22px rgba(73,55,35,.07)!important;pointer-events:auto!important
+}
+.moyu-bubble::after{content:"";position:absolute;right:-10px;bottom:18px;width:18px;height:18px;border-right:1px solid rgba(185,135,60,.32);border-bottom:1px solid rgba(185,135,60,.32);background:rgba(255,251,241,.95);transform:rotate(-45deg)}
+.moyu-bubble small{display:block;margin-bottom:5px;color:#9b7139;font-size:9px;font-weight:800;letter-spacing:.08em}
+.moyu-bubble strong{display:block;color:#674f32;font-family:"Songti SC","STSong",Georgia,serif;font-size:14px!important;line-height:1.48!important;font-weight:700!important}
+.moyu-note{position:absolute;color:#ba8534!important;font-style:normal!important;font-weight:900!important;opacity:0;animation:moyu-note 3.5s ease-in-out infinite!important;text-shadow:0 1px rgba(255,255,255,.7)}
+.moyu-note.n1{right:68%;top:23%;font-size:24px;animation-delay:.1s!important}.moyu-note.n2{right:54%;top:13%;font-size:19px;animation-delay:1.05s!important}.moyu-note.n3{right:39%;top:25%;font-size:16px;animation-delay:2s!important}
+@keyframes moyu-bob{0%,100%{transform:translateY(0) rotate(-.4deg)}45%{transform:translateY(-7px) rotate(1deg)}68%{transform:translateY(-3px) rotate(.2deg)}}
+@keyframes moyu-note{0%{opacity:0;transform:translate(0,8px) scale(.8) rotate(-8deg)}26%{opacity:.88}70%{opacity:.55}100%{opacity:0;transform:translate(18px,-29px) scale(1.08) rotate(8deg)}}
+
+/* ---------- main training cards ---------- */
+.training-grid{gap:14px!important;margin-top:10px!important}
+.training-grid[style*="opacity"]{opacity:.76!important}
+.training-card{
+  position:relative!important;min-width:0!important;min-height:305px!important;padding:23px 24px 24px!important;border:1px solid var(--line)!important;border-radius:21px!important;
+  background:rgba(255,252,245,.82)!important;box-shadow:var(--shadow-soft)!important;transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease!important
+}
+.training-card:hover{transform:translateY(-2px);box-shadow:0 14px 31px rgba(68,52,34,.085)!important}
+.training-card+.training-card{border-left:1px solid var(--line)!important}
+.training-card .circle{
+  width:88px!important;height:88px!important;display:grid!important;place-items:center!important;margin:0 auto 13px!important;border-radius:50%!important;
+  color:#fffdf7!important;font-family:"Songti SC","STSong",Georgia,serif!important;font-size:39px!important;
+  border:3px solid rgba(255,255,255,.56)!important;box-shadow:inset 0 0 0 1px rgba(78,59,39,.08),0 8px 18px rgba(82,61,38,.09)!important
+}
+.training-card.vocabulary .circle{background:linear-gradient(145deg,#d0a052,#af782f)!important}
+.training-card.listening .circle{background:linear-gradient(145deg,#7593a7,#55758b)!important}
+.training-card.speaking .circle{background:linear-gradient(145deg,#c07359,#a14c3b)!important}
+.training-card h3{margin:12px 0 7px!important;text-align:center!important;color:#343830!important;font-size:18px!important;line-height:1.28!important}
+.training-card h3>span:first-child{opacity:.78}
+.training-card p{min-height:53px!important;margin:0!important;text-align:center!important;color:#776d62!important;font-size:13.5px!important;line-height:1.55!important}
+.training-card>strong{display:block!important;margin:13px 0 8px!important;text-align:center!important;color:#4c514b!important;font-size:18px!important}
+.training-link{display:flex!important;width:max-content!important;max-width:100%!important;min-height:38px!important;align-items:center!important;justify-content:center!important;margin:0 auto!important;padding:8px 15px!important;border-radius:999px!important;font-size:12px!important;font-weight:800!important}
+.vocabulary-link{background:#b9863c!important;color:#fff!important}.listening-link{background:#5d7f96!important;color:#fff!important}.speaking-link{background:#a94d3b!important;color:#fff!important}
+
+/* ---------- optional modules ---------- */
+.extras-section{margin-top:24px!important}.extras-title{color:#776b5d!important}.extras-grid{gap:11px!important;border:0!important}
+.extra-item{
+  min-width:0!important;padding:19px 14px!important;border:1px solid var(--line-soft)!important;border-radius:18px!important;background:rgba(255,252,245,.78)!important;
+  box-shadow:0 7px 18px rgba(68,52,34,.045)!important;transition:transform .16s ease,box-shadow .16s ease!important
+}
+.extra-item:hover{transform:translateY(-2px);box-shadow:0 11px 24px rgba(70,53,34,.07)!important}
+.extra-icon{width:56px!important;height:56px!important;display:grid!important;place-items:center!important;margin:0 auto 10px!important;border-radius:50%!important;color:#fffdf8!important;font-size:26px!important;font-family:"Songti SC",serif!important;box-shadow:inset 0 0 0 3px rgba(255,255,255,.22)!important}
+.extra-item:nth-child(1) .extra-icon{background:linear-gradient(145deg,#769080,#587568)!important}
+.extra-item:nth-child(2) .extra-icon{background:linear-gradient(145deg,#bf805e,#a56548)!important}
+.extra-item:nth-child(3) .extra-icon{background:linear-gradient(145deg,#9583a8,#7b698e)!important}
+.extra-item:nth-child(4) .extra-icon{background:linear-gradient(145deg,#c49a51,#a27631)!important}
+.extra-item h4{margin:0!important;color:#343830!important;font-size:14.5px!important}.extra-item p{margin:7px 0 0!important;color:#81776b!important;font-size:11.5px!important}.extra-item strong{color:#514d46!important}
+
+/* ---------- Review + Chengyu: strong contrast, compact, tooltip-safe ---------- */
+.home-quick-tools{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px!important;margin:19px 0 0!important;position:relative!important;z-index:50!important}
+.home-review-banner,.home-chengyu-banner{
+  position:relative!important;display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;align-items:center!important;gap:16px!important;min-height:108px!important;
+  margin:0!important;padding:17px 19px!important;border-radius:21px!important;text-decoration:none!important;box-shadow:var(--shadow-soft)!important;overflow:visible!important
+}
+.home-review-banner{border:1px solid rgba(88,117,104,.28)!important;background:linear-gradient(115deg,rgba(247,252,247,.94),rgba(224,237,227,.88))!important}
+.home-chengyu-banner{border:1px solid rgba(169,77,59,.24)!important;background:linear-gradient(115deg,rgba(255,250,241,.96),rgba(249,231,217,.86))!important}
+.home-review-banner>div:first-child,.home-chengyu-banner>div:first-child{display:flex!important;align-items:center!important;gap:14px!important;min-width:0}
+.review-home-seal,.chengyu-home-seal{
+  flex:0 0 56px!important;width:56px!important;height:56px!important;display:grid!important;place-items:center!important;border-radius:50%!important;
+  color:white!important;font-family:"Songti SC","STSong",serif!important;font-size:25px!important;line-height:1!important;box-shadow:inset 0 0 0 3px rgba(255,255,255,.24),0 7px 16px rgba(69,52,34,.08)!important
+}
+.review-home-seal{background:linear-gradient(145deg,#6f8978,#4e6d5d)!important}.chengyu-home-seal{background:linear-gradient(145deg,#be6b50,#9e4637)!important}
+.home-review-banner strong,.home-chengyu-banner strong{display:block!important;color:#2f342f!important;font-size:17px!important;font-weight:800!important;line-height:1.22!important;overflow:visible!important}
+.home-review-banner small,.home-chengyu-banner small{display:block!important;margin-top:5px!important;color:#6e675f!important;font-size:12px!important;line-height:1.38!important;overflow:visible!important}
+.home-review-count,.home-chengyu-count{min-width:104px!important;text-align:right!important;position:relative!important;z-index:2!important}
+.home-review-count strong,.home-chengyu-count strong{color:#2f342f!important;font-size:21px!important;line-height:1.05!important}.home-review-count span,.home-chengyu-count span{display:block!important;margin-top:5px!important;color:#786f65!important;font-size:10.5px!important;line-height:1.35!important}
+
+/* ---------- dashboard and other pages: same material language ---------- */
+.home-dynamic-dashboard{gap:13px!important;margin-top:15px!important}.home-dash-card{border:1px solid var(--line-soft)!important;border-radius:20px!important;background:rgba(255,252,245,.82)!important;box-shadow:var(--shadow-soft)!important;overflow:visible!important}
+.home-dash-card a{color:var(--jade-dark)!important;font-weight:750!important}.home-mini-track{background:#e5dccd!important}.home-mini-track span{background:linear-gradient(90deg,var(--jade),#8ea08e)!important}
+
+.dashboard-page,.today-plan-page,.courses-page,.checkpoint-page,.final-week-page,.review-page,.chengyu-page,.admin-page,.diagnostic-page,.lesson-engine-page,.exam-strategies-page{background:transparent!important;color:var(--ink)!important}
+.dashboard-panel,.dashboard-action-card,.dashboard-skill-card,.dashboard-exam-card,.dashboard-diagnostic-profile,.today-boundary-card,.lesson-engine-hero,.lesson-engine-progress-card,.lesson-mode-section,.engine-activity,.checkpoint-card,.checkpoint-rules,.final-week-card,.final-week-hero,.final-repair-day,.final-report,.review-card,.review-panel,.chengyu-header,.chengyu-panel,.chengyu-section,.chengyu-today-main,.chengyu-must-card,.course-card,.exam-strategies-hero,.admin-info-card,.admin-editor,.admin-progress-grid>*,.admin-attempt-card,.diagnostic-card{
+  border-color:var(--line-soft)!important;background-color:rgba(255,252,245,.86)!important;box-shadow:var(--shadow-soft)!important
+}
+.diagnostic-main-button,.engine-check-button,.engine-complete-button,.today-boundary-primary,.final-primary,.chengyu-main{background:linear-gradient(180deg,#5d786a,#456154)!important;border-color:#4d685b!important;color:white!important;box-shadow:0 8px 18px rgba(70,97,84,.14)!important}
+.firebase-cloud-badge{border-color:var(--line-soft)!important;background:rgba(255,251,243,.96)!important;box-shadow:0 8px 22px rgba(68,52,34,.08)!important}
+
+/* ---------- responsive ---------- */
+@media(max-width:1080px){
+  .topbar{align-items:flex-start!important}.top-actions{max-width:56%}
+  .hero-area{grid-template-columns:minmax(0,1fr) minmax(300px,.78fr)!important;gap:16px 22px!important;padding:25px!important}
+  .moyu-art{width:min(315px,88%)!important}.moyu-bubble{width:min(185px,52%)!important}
+}
+@media(max-width:900px){
+  body{background-attachment:scroll!important}.topbar{flex-direction:column!important;gap:11px!important}.top-actions{width:100%;max-width:none;justify-content:flex-start}
+  .hero-area{grid-template-columns:1fr!important;grid-template-areas:"daily" "mascot" "focus"!important;grid-template-rows:auto auto auto!important;min-height:0!important}
+  .moyu-motivator{min-height:330px!important}.moyu-art{width:min(300px,62%)!important;margin:42px auto 0!important}.moyu-bubble{left:8%!important;top:20px!important;width:190px!important}
+  .home-quick-tools{grid-template-columns:1fr!important}
+}
+@media(max-width:650px){
+  .page-shell{width:min(100% - 18px,1420px)!important;padding-top:9px!important}.topbar{padding:10px 11px!important;border-radius:16px!important;margin-bottom:16px!important}
+  .brand-mark{flex-basis:41px;width:41px!important;height:47px!important;font-size:24px!important}.brand h1{font-size:18px!important;white-space:normal}.brand p{font-size:10px!important}
+  .top-actions{gap:5px!important}.course-catalog-link,.days-left{min-height:34px;padding:6px 9px!important;font-size:10.5px!important}.icon-button,.profile-button{width:34px!important;height:34px!important;min-width:34px!important;min-height:34px!important;flex-basis:34px}
+  .hero-area{padding:17px 14px 18px!important;border-radius:22px!important}.daily-card{padding:20px 18px!important}.focus-card{padding:17px!important}.daily-card h2{font-size:23px!important}.daily-card h3{font-size:29px!important}
+  .moyu-motivator{min-height:290px!important}.moyu-art{width:min(260px,72%)!important;margin-top:45px!important}.moyu-bubble{left:2%!important;top:18px!important;width:165px!important;padding:10px 12px!important}.moyu-bubble strong{font-size:12.5px!important}
+  .training-card{min-height:0!important;padding:18px!important}.training-card .circle{width:68px!important;height:68px!important;font-size:30px!important}.training-card h3{font-size:16px!important}.training-card p{min-height:0!important;font-size:12px!important}
+  .home-review-banner,.home-chengyu-banner{min-height:92px!important;padding:14px!important;gap:9px!important}.review-home-seal,.chengyu-home-seal{flex-basis:46px!important;width:46px!important;height:46px!important;font-size:21px!important}.home-review-count,.home-chengyu-count{min-width:78px!important}.home-review-count strong,.home-chengyu-count strong{font-size:18px!important}
+}
+@media(max-width:430px){
+  .top-actions .course-catalog-link:nth-of-type(2){display:none!important}.home-review-banner,.home-chengyu-banner{grid-template-columns:1fr!important}.home-review-count,.home-chengyu-count{text-align:left!important;padding-left:60px!important}
+  .moyu-art{width:min(235px,78%)!important}.moyu-bubble{width:150px!important}
+}
+@media(prefers-reduced-motion:reduce){.moyu-art,.moyu-note,.training-card,.extra-item{animation:none!important;transition:none!important;transform:none!important}}

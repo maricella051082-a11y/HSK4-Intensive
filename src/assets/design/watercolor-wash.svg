@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <filter id="paper" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency=".62" numOctaves="4" seed="19"/>
+      <feColorMatrix values="1 0 0 0 .13 0 1 0 0 .10 0 0 1 0 .05 0 0 0 .065 0"/>
+    </filter>
+    <filter id="soft"><feGaussianBlur stdDeviation="7"/></filter>
+    <linearGradient id="mist" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#607769" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#607769" stop-opacity=".018"/>
+    </linearGradient>
+    <linearGradient id="mist2" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#4e6470" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#4e6470" stop-opacity=".012"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#b8883d" stop-opacity=".35"/>
+      <stop offset=".65" stop-color="#d5b675" stop-opacity=".10"/>
+      <stop offset="1" stop-color="#d5b675" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="1000" fill="#fbf4e7"/>
+  <rect width="1600" height="1000" filter="url(#paper)" opacity=".9"/>
+
+  <!-- distant mountains -->
+  <g filter="url(#soft)" opacity=".8">
+    <path d="M-40 600L95 470l92 88 120-188 132 172 100-89 116 118 92-71 124 138V790H-40Z" fill="url(#mist)"/>
+    <path d="M700 650l120-128 90 73 125-205 126 168 108-98 122 134 104-85 165 153v150H700Z" fill="url(#mist2)"/>
+  </g>
+
+  <!-- foreground ink silhouettes -->
+  <g fill="none" stroke="#4f6659" stroke-linecap="round" opacity=".13">
+    <path d="M1478 50Q1438 180 1428 365Q1420 565 1398 790" stroke-width="9"/>
+    <path d="M1438 155l-122-60M1433 208l132-76M1428 276l-148-23M1422 338l132-18M1415 442l-112 42M1408 520l128-55" stroke-width="6"/>
+    <path d="M115 675Q92 790 82 970" stroke-width="9"/>
+    <path d="M101 730l-88-42M96 786l98-43M91 842l-86-14M88 902l84-35" stroke-width="6"/>
+  </g>
+
+  <!-- lotus wash lower left -->
+  <g transform="translate(92 805)" opacity=".13" fill="#aa604d">
+    <ellipse cx="0" cy="12" rx="54" ry="16" fill="#6e806e" opacity=".6"/>
+    <path d="M0 0C-34-18-42-58-8-68C2-48 8-28 0 0Z"/>
+    <path d="M0 0C24-32 60-40 69-8C48 4 28 8 0 0Z"/>
+    <path d="M0 0C30 14 34 52 4 63C-7 43-12 23 0 0Z"/>
+    <path d="M0 0C-26 25-59 22-65-10C-44-16-24-12 0 0Z"/>
+  </g>
+
+  <!-- small blossom branch top left -->
+  <g opacity=".11" stroke="#7e6451" fill="none" stroke-width="3">
+    <path d="M0 155C85 135 125 94 190 48"/>
+    <path d="M80 125l-16-34M126 91l24-25"/>
+  </g>
+  <g fill="#a95345" opacity=".13">
+    <circle cx="68" cy="117" r="12"/><circle cx="103" cy="98" r="10"/><circle cx="146" cy="72" r="9"/><circle cx="53" cy="133" r="7"/>
+  </g>
+
+  <!-- gold flow -->
+  <g fill="none" stroke="url(#gold)" stroke-linecap="round">
+    <path d="M870 790c180-95 320-27 620-166" stroke-width="4"/>
+    <path d="M910 806c165-68 294-10 518-102" stroke-width="2" opacity=".55"/>
+    <path d="M72 230c140-76 272 30 410-55" stroke-width="3" opacity=".52"/>
+  </g>
+
+  <!-- cloud curls -->
+  <g fill="none" stroke="#b8883d" opacity=".12" stroke-width="4">
+    <path d="M1335 865c20-26 54-22 58 2 12-18 45-16 50 8 26-11 49 3 52 20"/>
+    <path d="M65 330c17-21 42-19 48 1 14-17 39-13 42 7 23-8 42 6 43 23"/>
+  </g>
+</svg>

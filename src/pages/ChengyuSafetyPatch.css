@@ -1,0 +1,174 @@
+/* =========================================================
+   CHENGYU SAFE UI PATCH
+   1) Restores the header layout without changing header JSX.
+   2) Adds local helper UI only inside the chengyu module.
+   ========================================================= */
+
+/* Header repair: the header contains top/main/progress rows, so it must not
+   behave as a two-column grid. This override intentionally lives in a
+   separate file imported after ChengyuPage.css. */
+.chengyu-page .chengyu-header {
+  display: block !important;
+  grid-template-columns: none !important;
+  gap: 0 !important;
+}
+
+.chengyu-page .chengyu-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.chengyu-page .chengyu-header-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+
+.chengyu-page .chengyu-header-main > div:first-child {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+.chengyu-page .chengyu-header-stats {
+  display: flex;
+  gap: 18px;
+  flex: 0 0 auto;
+  text-align: right;
+}
+
+.chengyu-page .chengyu-header-stats article {
+  min-width: 58px;
+}
+
+.chengyu-page .chengyu-core-track {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 7px;
+  height: auto !important;
+  min-height: 9px;
+  margin-top: 18px;
+  overflow: visible !important;
+  background: transparent !important;
+}
+
+.chengyu-page .chengyu-core-track::before {
+  content: "";
+  grid-row: 1;
+  grid-column: 1;
+  height: 9px;
+  border-radius: 999px;
+  background: #e8dfd1;
+}
+
+.chengyu-page .chengyu-core-track > span {
+  grid-row: 1;
+  grid-column: 1;
+  z-index: 1;
+  display: block;
+  height: 9px;
+  border-radius: 999px;
+  background: #839050;
+}
+
+.chengyu-page .chengyu-core-track > small {
+  grid-row: 2;
+  display: block;
+  color: #81766b;
+  font-size: 11px;
+}
+
+/* Explicit pinyin / translation helper used in exercises. */
+.chengyu-exercise-help {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 8px 0 12px;
+}
+
+.chengyu-exercise-help button {
+  border: 1px solid rgba(126, 101, 72, .20);
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: #f2ebdf;
+  color: #665746;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.chengyu-exercise-help button.active {
+  background: #e5ead6;
+  border-color: rgba(117, 132, 77, .35);
+  color: #56643a;
+}
+
+.chengyu-exercise-help .help-value {
+  flex-basis: 100%;
+  padding: 8px 11px;
+  border-radius: 11px;
+  background: #f6f1e8;
+  color: #6c6054;
+  line-height: 1.5;
+}
+
+.chengyu-exercise-help .help-pinyin {
+  color: #95673d;
+  font-family: "Segoe UI", Arial, "Microsoft YaHei", sans-serif;
+  font-weight: 650;
+}
+
+.chengyu-reading-help-note {
+  margin: 5px 0 10px;
+  color: #8b7d6e;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.chengyu-page .chengyu-option .chinese-text,
+.chengyu-page .chengyu-exercise-prompt .chinese-text,
+.chengyu-page .chengyu-text-prompt .chinese-text,
+.chengyu-page .chengyu-zh-explain .chinese-text,
+.chengyu-page .chengyu-example-box .chinese-text,
+.chengyu-page .chengyu-detail-section .chinese-text,
+.chengyu-page .chengyu-feedback .chinese-text {
+  text-underline-offset: 4px;
+}
+
+@media (max-width: 850px) {
+  .chengyu-page .chengyu-header-main {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .chengyu-page .chengyu-header-stats {
+    justify-content: flex-start;
+    text-align: left;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 560px) {
+  .chengyu-page .chengyu-header-top {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .chengyu-page .chengyu-header-main > div:first-child {
+    align-items: flex-start;
+  }
+
+  .chengyu-page .chengyu-header-stats {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
