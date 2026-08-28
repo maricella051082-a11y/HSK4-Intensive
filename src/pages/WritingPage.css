@@ -209,6 +209,34 @@
   font-size: 12px;
 }
 
+.writing-progressive-hint {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.writing-hint-button {
+  border: 1px solid #cdbda9;
+  border-radius: 999px;
+  padding: 8px 14px;
+  background: #f4ecdf;
+  color: #665846;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.writing-hint-button:disabled {
+  opacity: .55;
+  cursor: default;
+}
+
+.writing-progressive-hint > span {
+  color: #887765;
+  font-size: 12px;
+}
+
 .writing-card textarea {
   width: 100%;
   box-sizing: border-box;

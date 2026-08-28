@@ -173,6 +173,7 @@ function WritingPage() {
   const [builtPieces, setBuiltPieces] = useState([])
   const [inputValue, setInputValue] = useState('')
   const [checked, setChecked] = useState(false)
+  const [revealedSupportCount, setRevealedSupportCount] = useState(0)
 
   const [pictureResponses, setPictureResponses] = useState(
     initial?.pictureResponses ?? {},
@@ -297,6 +298,7 @@ function WritingPage() {
         : '',
     )
     setChecked(false)
+    setRevealedSupportCount(0)
     setPictureSubmitted(false)
   }, [
     stage,
@@ -835,13 +837,33 @@ function WritingPage() {
               {currentTask.prompt}
             </div>
 
-            <div className="writing-support">
-              {currentTask.support.map(
-                (item) => (
-                  <span key={item}>{item}</span>
-                ),
+            <div className="writing-progressive-hint">
+              <button
+                type="button"
+                className="writing-hint-button"
+                disabled={checked || revealedSupportCount >= (currentTask.tokens ?? currentTask.support).length}
+                onClick={() => setRevealedSupportCount((count) => Math.min(count + 1, (currentTask.tokens ?? currentTask.support).length))}
+              >
+                Подсказка
+              </button>
+              {revealedSupportCount > 0 && (
+                <span>{revealedSupportCount} / {(currentTask.tokens ?? currentTask.support).length}</span>
               )}
             </div>
+
+            {revealedSupportCount > 0 && (
+              <div className="writing-support">
+                {(currentTask.tokens ?? currentTask.support).slice(0, revealedSupportCount).map(
+                (item, index) => (
+                  <span key={`${typeof item === 'string' ? item : item.hanzi}-${index}`}>
+                    {typeof item === 'string' ? item : (
+                      <ChineseText pinyin={item.pinyin} translation={item.translation}>{item.hanzi}</ChineseText>
+                    )}
+                  </span>
+                ),
+                )}
+              </div>
+            )}
 
             <textarea
               value={inputValue}
