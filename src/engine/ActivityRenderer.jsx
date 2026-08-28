@@ -12,6 +12,7 @@ import {
 import HskkCloudRecording from '../firebase/HskkCloudRecording.jsx'
 import { saveHskkAudio } from '../firebase/hskkAudioStore.js'
 import { analyzeHskkResponse } from '../utils/hskkAutoFeedback.js'
+import { shuffleOptions } from '../utils/shuffleOptions.js'
 import './ActivityRenderer.css'
 
 function normalize(value) {
@@ -493,6 +494,10 @@ function GrammarGuideActivity({ activity }) {
 }
 
 function ChoiceActivity({ activity, onStatusChange }) {
+  const options = useMemo(
+    () => shuffleOptions(activity.options, activity.id),
+    [activity.id, activity.options],
+  )
   const [selected, setSelected] = useState('')
   const [checked, setChecked] = useState(false)
   const [record, setRecord] = useState(() => getActivityRecord(activity.id))
@@ -539,7 +544,7 @@ function ChoiceActivity({ activity, onStatusChange }) {
       <p className="engine-prompt">{activity.prompt}</p>
 
       <div className="engine-choice-grid">
-        {(activity.options || []).map((option) => (
+        {options.map((option) => (
           <button
             type="button"
             key={option}
@@ -585,6 +590,10 @@ function ChoiceActivity({ activity, onStatusChange }) {
 }
 
 function TtsChoiceActivity({ activity, onStatusChange }) {
+  const options = useMemo(
+    () => shuffleOptions(activity.options, activity.id),
+    [activity.id, activity.options],
+  )
   const [selected, setSelected] = useState('')
   const [checked, setChecked] = useState(false)
   const [plays, setPlays] = useState(0)
@@ -657,7 +666,7 @@ function TtsChoiceActivity({ activity, onStatusChange }) {
       <p className="engine-prompt">{activity.prompt}</p>
 
       <div className="engine-choice-grid">
-        {(activity.options || []).map((option) => (
+        {options.map((option) => (
           <button
             type="button"
             key={option}
@@ -716,6 +725,10 @@ function TtsChoiceActivity({ activity, onStatusChange }) {
 
 
 function ListeningLadderActivity({ activity, onStatusChange }) {
+  const options = useMemo(
+    () => shuffleOptions(activity.options, activity.id),
+    [activity.id, activity.options],
+  )
   const [stage, setStage] = useState('exam')
   const [firstAnswer, setFirstAnswer] = useState('')
   const [secondAnswer, setSecondAnswer] = useState('')
@@ -861,7 +874,7 @@ function ListeningLadderActivity({ activity, onStatusChange }) {
           </button>
           <p className="engine-prompt">{activity.prompt}</p>
           <div className="engine-choice-grid">
-            {(activity.options || []).map((option) => (
+            {options.map((option) => (
               <button
                 type="button"
                 key={option}
@@ -898,7 +911,7 @@ function ListeningLadderActivity({ activity, onStatusChange }) {
           </button>
           <p className="engine-prompt">{activity.prompt}</p>
           <div className="engine-choice-grid">
-            {(activity.options || []).map((option) => (
+            {options.map((option) => (
               <button
                 type="button"
                 key={option}

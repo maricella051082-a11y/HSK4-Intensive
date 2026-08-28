@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { shuffleOptions } from '../utils/shuffleOptions.js'
 import ChineseText from '../components/ChineseText.jsx'
 import { chengyuById, chengyuData, chengyuThemes } from '../data/chengyuData.js'
 import { getChengyuExerciseHint } from '../data/chengyuExerciseHints.js'
@@ -644,12 +645,16 @@ function StoryMiniQuiz({ exercise }) {
   const [selected, setSelected] = useState(null)
   const [checked, setChecked] = useState(false)
   const correct = selected === exercise.answer
+  const options = shuffleOptions(
+    exercise.options.map((option, index) => ({ option, index })),
+    exercise.id ?? exercise.prompt,
+  )
 
   return (
     <div className="chengyu-story-quiz">
       <strong>{exercise.prompt}</strong>
       <div className="chengyu-story-quiz-options">
-        {exercise.options.map((option, index) => (
+        {options.map(({ option, index }) => (
           <button
             type="button"
             key={option}

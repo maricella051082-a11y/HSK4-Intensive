@@ -16,6 +16,7 @@ import {
 import { setPlannerDay, setStudyMode } from '../utils/coursePlanner.js'
 import { saveHskkAudio } from '../firebase/hskkAudioStore.js'
 import { analyzeHskkResponse } from '../utils/hskkAutoFeedback.js'
+import { shuffleOptions } from '../utils/shuffleOptions.js'
 import './DiagnosticPage.css'
 
 const STAGES = [
@@ -772,7 +773,7 @@ function ObjectiveSection({
             </div>
 
             <div className="diagnostic-options">
-              {item.options.map((option) => (
+              {shuffleOptions(item.options, item.id).map((option) => (
                 <button
                   type="button"
                   key={option}
@@ -858,7 +859,7 @@ function ListeningStage({
                   </div>
 
                   <div className="diagnostic-options">
-                    {item.options.map((option) => (
+                    {shuffleOptions(item.options, item.id).map((option) => (
                       <button
                         type="button"
                         key={option}
@@ -909,7 +910,7 @@ function ReadingStage({ answers, choose, onContinue }) {
             <strong className="diagnostic-reading-question">{item.prompt}</strong>
 
             <div className="diagnostic-options">
-              {item.options.map((option) => (
+              {shuffleOptions(item.options, item.id).map((option) => (
                 <button
                   type="button"
                   key={option}

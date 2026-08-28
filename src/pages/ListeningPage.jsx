@@ -7,6 +7,7 @@ import listeningLesson1, {
 } from '../data/listeningLesson1.js'
 import './ListeningPage.css'
 import { recordLearningError } from '../utils/learningStore.js'
+import { shuffleOptions } from '../utils/shuffleOptions.js'
 
 const STORAGE_KEY = 'hsk4-listening-lesson1-session'
 const RESULT_KEY = 'hsk4-listening-lesson1-result'
@@ -455,7 +456,7 @@ function TextbookStage({
       <div className="listen-question">{track.question}</div>
 
       <div className="listen-options">
-        {track.options.map((option) => (
+        {shuffleOptions(track.options, track.id).map((option) => (
           <button
             type="button"
             key={option}
@@ -854,7 +855,7 @@ function WorkbookStage({
               <strong>{item.question}</strong>
 
               <div className="workbook-options">
-                {item.options.map((option, optionIndex) => (
+                {shuffleOptions(item.options, item.number).map((option, optionIndex) => (
                   <button
                     type="button"
                     key={option}
@@ -1099,7 +1100,7 @@ function TransferStage({
             <strong>{item.number}. {item.question}</strong>
 
             <div className="listen-options">
-              {item.options.map((option) => (
+              {shuffleOptions(item.options, item.id).map((option) => (
                 <button
                   type="button"
                   key={option}

@@ -13,6 +13,7 @@ import {
   recordLearningError,
   recordVocabularyExposure,
 } from '../utils/learningStore.js'
+import { shuffleOptions } from '../utils/shuffleOptions.js'
 
 const STORAGE_KEY = 'hsk4-vocabulary-lesson1-session'
 const RESULT_KEY = 'hsk4-vocabulary-lesson1-result'
@@ -1062,7 +1063,7 @@ function GenericChoiceTask({
       <div className="generic-prompt">{prompt}</div>
 
       <div className="generic-options">
-        {task.options.map((option) => (
+        {shuffleOptions(task.options, task.id).map((option) => (
           <button
             type="button"
             key={option}

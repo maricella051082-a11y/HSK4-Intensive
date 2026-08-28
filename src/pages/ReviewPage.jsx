@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { shuffleOptions } from '../utils/shuffleOptions.js'
 import ChineseText from '../components/ChineseText.jsx'
 import ChineseTitle from '../components/ChineseTitle.jsx'
 import {
@@ -393,7 +394,7 @@ function ErrorQueue({ items, onChanged }) {
 
       {item.mode === 'choice' ? (
         <div className="error-choice-grid">
-          {item.options.map((option) => (
+          {shuffleOptions(item.options, item.key).map((option) => (
             <button
               type="button"
               key={option}

@@ -7,6 +7,7 @@ import grammarLesson1, {
 import './GrammarPage.css'
 import { getGrammarLesson1Tokens } from '../data/grammarLesson1TokenMap.js'
 import { recordLearningError } from '../utils/learningStore.js'
+import { shuffleOptions } from '../utils/shuffleOptions.js'
 
 const STORAGE_KEY = 'hsk4-grammar-lesson1-session'
 const RESULT_KEY = 'hsk4-grammar-lesson1-result'
@@ -884,7 +885,7 @@ function GrammarPage() {
 
           {currentTask.type === 'choice' && (
             <div className="grammar-options">
-              {currentTask.options.map((option) => {
+              {shuffleOptions(currentTask.options, currentTask.id).map((option) => {
                 const isSelected =
                   selected === option
 

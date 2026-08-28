@@ -5,6 +5,7 @@ import MoyuCompanion from '../components/MoyuCompanion.jsx'
 import readingLesson1 from '../data/readingLesson1.js'
 import './ReadingPage.css'
 import { recordLearningError } from '../utils/learningStore.js'
+import { shuffleOptions } from '../utils/shuffleOptions.js'
 
 const STORAGE_KEY = 'hsk4-reading-lesson1-session'
 const RESULT_KEY = 'hsk4-reading-lesson1-result'
@@ -524,7 +525,7 @@ function ReadingPage() {
 
             {currentTask.type === 'choice' && (
               <div className="reading-options">
-                {currentTask.options.map((option) => {
+                {shuffleOptions(currentTask.options, currentTask.id).map((option) => {
                   const isSelected = selected === option
                   const isCorrect =
                     checked &&

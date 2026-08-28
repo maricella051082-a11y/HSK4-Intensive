@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { shuffleOptions } from '../utils/shuffleOptions.js'
 import ChineseText from '../components/ChineseText.jsx'
 import examTrainingLesson1, {
   examTrainingLesson1Meta,
@@ -687,7 +688,7 @@ function ExamItem({
         </p>
 
         <div className="exam-options">
-          {item.options.map(
+          {shuffleOptions(item.options, item.id ?? item.number).map(
             (option, index) => (
               <button
                 type="button"
