@@ -459,8 +459,18 @@ function HomePage() {
           </div>
 
           <h2 className="home-v11-slogan">
-            <span><ChineseText pinyin="xiān nòng qīngchu yǐjīng huì de" translation="Сначала выясним, что уже умеешь" tooltipPosition="bottom">先弄清楚已经会的，</ChineseText></span>
-            <span><ChineseText pinyin="zài gèng kuài biàn qiáng" translation="а затем быстрее станем сильнее" tooltipPosition="bottom">再更快变强。</ChineseText></span>
+            <span>
+              <ChineseText pinyin="xiān" translation="сначала" tooltipPosition="bottom">先</ChineseText>
+              <ChineseText pinyin="nòng qīngchu" translation="выяснить; разобраться" tooltipPosition="bottom">弄清楚</ChineseText>
+              <ChineseText pinyin="yǐjīng" translation="уже" tooltipPosition="bottom">已经</ChineseText>
+              <ChineseText pinyin="huì" translation="уметь" tooltipPosition="bottom">会</ChineseText>
+              <ChineseText pinyin="de" translation="то, что…" tooltipPosition="bottom">的</ChineseText>，
+            </span>
+            <span>
+              <ChineseText pinyin="zài" translation="затем" tooltipPosition="bottom">再</ChineseText>
+              <ChineseText pinyin="gèng kuài" translation="ещё быстрее" tooltipPosition="bottom">更快</ChineseText>
+              <ChineseText pinyin="biàn qiáng" translation="стать сильнее" tooltipPosition="bottom">变强</ChineseText>。
+            </span>
           </h2>
           <p className="home-v11-slogan-ru">Сначала выясним, что уже получается, а затем точечно усилим слабые места.</p>
 
