@@ -641,6 +641,20 @@ function WritingPage() {
             </p>
 
             <div className="writing-finish-actions">
+              <Link
+                to="/lesson/lesson-1/day/3?activity=lesson1-day3-order-transfer"
+                className="writing-primary-link"
+              >
+                Следующее задание →
+              </Link>
+
+              <Link
+                to="/lesson/lesson-1/day/3"
+                className="writing-secondary"
+              >
+                К заданиям урока
+              </Link>
+
               <button
                 type="button"
                 className="writing-secondary"
@@ -649,12 +663,6 @@ function WritingPage() {
                 Пройти ещё раз
               </button>
 
-              <Link
-                to="/"
-                className="writing-primary-link"
-              >
-                Вернуться на главную
-              </Link>
             </div>
           </section>
         </div>
