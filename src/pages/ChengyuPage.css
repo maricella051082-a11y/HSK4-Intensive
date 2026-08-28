@@ -29,6 +29,44 @@
 .chengyu-story-pinyin,.chengyu-story-ru{display:block;margin-top:5px;line-height:1.6}
 .chengyu-story-pinyin{color:#9b6b3e}.chengyu-story-ru{color:#6d6257}
 
+.chengyu-task-guide {
+  margin: 0 0 24px;
+  padding: 15px 17px;
+  border-left: 4px solid #7d8c50;
+  border-radius: 13px;
+  background: #eef1df;
+  text-align: left;
+}
+
+.chengyu-task-guide strong,
+.chengyu-task-guide small {
+  display: block;
+}
+
+.chengyu-task-guide ol {
+  margin: 8px 0;
+  padding-left: 21px;
+  line-height: 1.55;
+}
+
+.chengyu-task-guide small {
+  color: #6f675d;
+  line-height: 1.45;
+}
+
+.chengyu-meaning-ru {
+  margin: 10px auto 14px;
+  max-width: 620px;
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+.chengyu-collocation-label {
+  margin: 16px 0 8px;
+  color: #74695e;
+  font-size: 13px;
+}
+
 .chengyu-big-pinyin,
 .chengyu-detail-pinyin,
 .chengyu-story-pinyin,

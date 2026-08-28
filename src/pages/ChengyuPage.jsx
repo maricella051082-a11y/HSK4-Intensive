@@ -61,6 +61,22 @@ function HintedChinese({ text, showPinyin = false, showTranslation = false, clas
   )
 }
 
+function ChineseWithTooltip({ text, className = '' }) {
+  const hint = getChengyuExerciseHint(text)
+  if (!hint?.pinyin && !hint?.translation) return text
+
+  return (
+    <ChineseText
+      className={className}
+      pinyin={hint.pinyin || ''}
+      translation={neutralHintTranslation(hint.translation)}
+      tooltipPosition="bottom"
+    >
+      {text}
+    </ChineseText>
+  )
+}
+
 function HintControls({ showPinyin, showTranslation, onTogglePinyin, onToggleTranslation }) {
   return (
     <div className="chengyu-hint-controls">
@@ -242,21 +258,42 @@ function StoryQuickAccess({ item, compact = false }) {
 }
 
 function IdiomLearningCard({ item, onContinue }) {
+  const meaning = item.storyRich?.shortMeaningRu || item.translation
+
   return (
     <div className="chengyu-learn-card">
-      <div className="chengyu-big-hanzi">{item.hanzi}</div>
-      <div className="chengyu-big-pinyin">{item.pinyin}</div>
-      <p className="chengyu-zh-explain">{item.explanation}</p>
-      <p className="chengyu-translation">{item.translation}</p>
-      <div className="chengyu-example-box">
-        <span>自然表达</span>
-        <strong>{item.example}</strong>
+      <div className="chengyu-task-guide">
+        <strong>Что делать на этом шаге</strong>
+        <ol>
+          <li>Прочитай идиому и её значение.</li>
+          <li>Посмотри, как она используется в естественном примере.</li>
+          <li>Нажми кнопку внизу — дальше будет короткое задание без готового ответа.</li>
+        </ol>
+        <small>На китайский текст можно нажать или навести курсор: появятся pinyin и перевод.</small>
       </div>
+
+      <div className="chengyu-big-hanzi">
+        <ChineseWithTooltip text={item.hanzi} />
+      </div>
+      <div className="chengyu-big-pinyin">{item.pinyin}</div>
+      <p className="chengyu-translation chengyu-meaning-ru">{meaning}</p>
+      <p className="chengyu-zh-explain">
+        <ChineseWithTooltip text={item.explanation} />
+      </p>
+      <div className="chengyu-example-box">
+        <span>自然表达 · естественный пример</span>
+        <strong><ChineseWithTooltip text={item.example} /></strong>
+      </div>
+      <p className="chengyu-collocation-label">Часто употребляется рядом со словами:</p>
       <div className="chengyu-context-row">
-        {item.collocations.map((word) => <span key={word}>{word}</span>)}
+        {item.collocations.map((word) => (
+          <span key={word}><ChineseWithTooltip text={word} /></span>
+        ))}
       </div>
       <StoryQuickAccess item={item} />
-      <button type="button" className="chengyu-main" onClick={onContinue}>Проверить, запомнилось ли →</button>
+      <button type="button" className="chengyu-main" onClick={onContinue}>
+        Я прочитала — перейти к проверке →
+      </button>
     </div>
   )
 }
